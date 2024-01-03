@@ -39,4 +39,4 @@ fi
 
 wget https://raw.githubusercontent.com/Azumi67/Rathole_reverseTunnel/main/install.go
 
-go run insall.go
+go run install.go

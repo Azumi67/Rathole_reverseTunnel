@@ -25,23 +25,23 @@
 ![307981](https://github.com/Azumi67/V2ray_loadbalance_multipleServers/assets/119934376/39b2794b-fd04-4ae5-baea-d4b66138766e)
  **فهرست :**
  ----------------------
- - **دسترسی سریع به اسکریپت** >> **[کلیک]()**
-- **نصب go به صورت دستی یا با اسکریپت** >> [کلیک]()
-- **نصب پروژه** >> [کلیک]()
-- **امکانات** >> [کلیک]()
-- **تانل ریورس TCP ایپی 4**  >> **[کلیک]()**
-- **تانل ریورس TCP ایپی 6** >> **[کلیک]()
-- **تانل ریورس UDP ایپی 4**  >> **[کلیک]()
-- **تانل ریورس UDP ایپی 6**  >> **[کلیک]()
-- **تانل ریورس TLS + WS ایپی 4** >> [کلیک]()
-- **تانل ریورس TLS + WS ایپی 6** >> [کلیک]()
-- **اسکریپت های کارآمد** >> [کلیک]()
+ - **دسترسی سریع به اسکریپت** >> **[کلیک](https://github.com/Azumi67/Rathole_reverseTunnel#%D8%A7%D8%B3%DA%A9%D8%B1%DB%8C%D9%BE%D8%AA-%D9%85%D9%86)**
+- **نصب go به صورت دستی یا با اسکریپت** >> [کلیک](https://github.com/Azumi67/Rathole_reverseTunnel#%D8%A7%D9%85%D9%88%D8%B2%D8%B4-%D9%86%D8%B5%D8%A8-go-%D9%85%D9%88%D8%B1%D8%AF-%D9%86%DB%8C%D8%A7%D8%B2-%D8%A8%D8%B1%D8%A7%DB%8C-%D8%A7%D8%AC%D8%B1%D8%A7%DB%8C-%D8%A7%D8%B3%DA%A9%D8%B1%DB%8C%D9%BE%D8%AA)
+- **نصب پروژه** >> [کلیک](https://github.com/Azumi67/Rathole_reverseTunnel#%D9%86%D8%B5%D8%A8-%D9%BE%D8%B1%D9%88%DA%98%D9%87)
+- **امکانات** >> [کلیک](https://github.com/Azumi67/Rathole_reverseTunnel#%D8%A7%D9%85%DA%A9%D8%A7%D9%86%D8%A7%D8%AA)
+- **تانل ریورس TCP ایپی 4**  >> **[کلیک](https://github.com/Azumi67/Rathole_reverseTunnel#%D8%AA%D8%A7%D9%86%D9%84-%D8%B1%DB%8C%D9%88%D8%B1%D8%B3-tcp-%D8%A7%DB%8C%D9%BE%DB%8C-4)**
+- **تانل ریورس TCP ایپی 6** >> **[کلیک](https://github.com/Azumi67/Rathole_reverseTunnel#%D8%AA%D8%A7%D9%86%D9%84-%D8%B1%DB%8C%D9%88%D8%B1%D8%B3-tcp-%D8%A7%DB%8C%D9%BE%DB%8C-6)
+- **تانل ریورس UDP ایپی 4**  >> **[کلیک](https://github.com/Azumi67/Rathole_reverseTunnel#%D8%AA%D8%A7%D9%86%D9%84-%D8%B1%DB%8C%D9%88%D8%B1%D8%B3-udp-%D8%A7%DB%8C%D9%BE%DB%8C-4)
+- **تانل ریورس UDP ایپی 6**  >> **[کلیک](https://github.com/Azumi67/Rathole_reverseTunnel#%D8%AA%D8%A7%D9%86%D9%84-%D8%B1%DB%8C%D9%88%D8%B1%D8%B3-udp-%D8%A7%DB%8C%D9%BE%DB%8C-6)
+- **تانل ریورس TLS + WS ایپی 4** >> [کلیک](https://github.com/Azumi67/Rathole_reverseTunnel#%D8%AA%D8%A7%D9%86%D9%84-%D8%B1%DB%8C%D9%88%D8%B1%D8%B3-tls--ws-%D8%A7%DB%8C%D9%BE%DB%8C-4)
+- **تانل ریورس TLS + WS ایپی 6** >> [کلیک](https://github.com/Azumi67/Rathole_reverseTunnel#%D8%AA%D8%A7%D9%86%D9%84-%D8%B1%DB%8C%D9%88%D8%B1%D8%B3-tls--ws-%D8%A7%DB%8C%D9%BE%DB%8C-6)
+- **اسکریپت های کارآمد** >> [کلیک](https://github.com/Azumi67/Rathole_reverseTunnel#%D8%A7%D8%B3%DA%A9%D8%B1%DB%8C%D9%BE%D8%AA-%D9%87%D8%A7%DB%8C-%DA%A9%D8%A7%D8%B1%D8%A2%D9%85%D8%AF-)
 
 --------------
 ![4961639](https://github.com/Azumi67/Fast_reverseTunnel/assets/119934376/ac38de6c-00d6-47e8-a455-e0201143db1c)**نصب پروژه**
 -
 
-- با این اسکریپت [click]() ، نخست پروژه را بر روی تمامی سرور ها نصب نمایید. من تنها بر روی amd64 و سیستم عامل های دبیان و اوبونتو تست کردم و دسترسی به سایر را نداشتم.
+- با این اسکریپت [click](https://github.com/Azumi67/Rathole_reverseTunnel#%D8%A7%D8%B3%DA%A9%D8%B1%DB%8C%D9%BE%D8%AA-%D9%85%D9%86) ، نخست پروژه را بر روی تمامی سرور ها نصب نمایید. من تنها بر روی amd64 و سیستم عامل های دبیان و اوبونتو تست کردم و دسترسی به سایر را نداشتم.
 - وقتی اسکریپت اجرا شد گزینه یک را انتخاب کنید تا rust برای شما نصب شود.
 - اگر خطای مبنی بر [profile.release] گرفتید، داخل مسیر nano rathole/Cargo.toml شوید و زیر [profile.release] این strip = true را به strip = "symbols" تغییر دهید اگر خطا در این باب بود.
 - هر خطایی در compile پروژه گرفتید در داخل اینترنت سرچ نمایید و مشکل خود را حل نمایید.
@@ -51,7 +51,7 @@
 
 ![Go_(programming_language)-Logo wine](https://github.com/Azumi67/UDP2RAW_FEC/assets/119934376/71b80a34-9515-42de-8238-9065986104a1)**اموزش نصب go مورد نیاز برای اجرای اسکریپت**
 -
-- شما میتوانید از طریق اسکریپت [Here]() ، این پیش نیاز را نصب کنید یا به صورت دستی نصب نمایید.
+- شما میتوانید از طریق اسکریپت [Here](https://github.com/Azumi67/Rathole_reverseTunnel#%D8%A7%D8%B3%DA%A9%D8%B1%DB%8C%D9%BE%D8%AA-%D9%85%D9%86) ، این پیش نیاز را نصب کنید یا به صورت دستی نصب نمایید.
 - حتما در صورت مشکل دانلود، dns های خود را تغییر دهید.
 - پس از نصب پیش نیاز ، اجرای اسکریپت go برای بار اول، ممکن است تا 10 ثانیه طول بکشد اما بعد از آن سریع اجرا میشود.
 ```
@@ -188,7 +188,6 @@ go get github.com/fatih/color
 </p>
 
 
-
 - نخست سرور ایران را کانفیگ میکنم
 - قبلش باید پروژه را بر روی سرورهای خود نصب و compile نماییم.
 - من دو سرور خارج دارم و هر سرور خارج من دو کانفیگ دارد.
@@ -259,7 +258,6 @@ go get github.com/fatih/color
 </p>
 
 
-
 - نخست سرور ایران را کانفیگ میکنم
 - قبلش باید پروژه را بر روی سرورهای خود نصب و compile نماییم.
 - من یک سرور خارج دارم و سرور خارج من یک کانفیگ دارد.
@@ -303,7 +301,6 @@ go get github.com/fatih/color
 </p>
 
 
-
 - نخست سرور ایران را کانفیگ میکنم
 - قبلش باید پروژه را بر روی سرورهای خود نصب و compile نماییم.
 - من یک سرور خارج دارم و سرور خارج من یک کانفیگ دارد.
@@ -343,12 +340,15 @@ go get github.com/fatih/color
  <p align="right">
   <img src="https://github.com/Azumi67/Fast_reverseTunnel/assets/119934376/b761011a-1401-43fa-87c7-cad23c160051" alt="Image" />
 </p>
+
 - از منو، گزینه اول را انتخاب میکنیم تا سرور ایران را کانفیگ نماییم و cert لازمه رو برای سرور دریافت نماییم.باید rootCA.crt را در تمامی سرور های خارج در پوشه rathole پیست کنیم. شما میتوانید یا از طریق copy cert اینکار از طریق اسکریپت انجام دهید یا خودتان به صورت دستی ، rootCA.crt را در سرور خارج کپی کنید.
 - اگر اینکار را نکنید ، ارتباط برقرار نخواهد شد.
+
 
 <p align="right">
   <img src="https://github.com/Azumi67/Fast_reverseTunnel/assets/119934376/5155020d-86bc-490d-860b-b9ee75cead3c" alt="Image" />
 </p>
+
 - سرور ایران را کانفیگ میکنیم
 - قبلش باید پروژه را بر روی سرورهای خود نصب و compile نماییم.
 - من دو سرور خارج دارم و هر سرور خارج من دو کانفیگ دارد.
@@ -358,9 +358,11 @@ go get github.com/fatih/color
 - به طور مثال اگر در سرور اول خارج، دو کانفیگ با پورت های 8080 و 8081 و در سرور دوم خارج، دو کانفیگ دیگر با پورت های 8082 و 8083 دارم. پس به ترتیب، تمام این پورت ها را وارد میکنم.
 - ریست تایمر را هم هر 2 ساعت انتخاب میکنم.
 
+
 <p align="right">
   <img src="https://github.com/Azumi67/Fast_reverseTunnel/assets/119934376/e222732b-463a-461c-8da9-50b186cbb7f8" alt="Image" />
 </p>
+
 - خب پس از کانفیگ ایران، باید rootCA.crt را در تمامی سرورهای خارجمان، کپی کنیم. من در اینجا بوسیله اسکریپت اینکار را انجام میدم.
 - دقت نمایید که باید بتوانید به صورت دستی هم از سرور ایران به سرور خارج، ssh بزنید در غیر اینصورت با اسکریپت هم امکان پذیر نخواهد بود.
 - ایپی 4 خارج و پورت ssh سرور خارج هم وارد میکنم.
@@ -418,11 +420,13 @@ go get github.com/fatih/color
  <p align="right">
   <img src="https://github.com/Azumi67/Fast_reverseTunnel/assets/119934376/b761011a-1401-43fa-87c7-cad23c160051" alt="Image" />
 </p>
+
 - از منو، گزینه اول را انتخاب میکنیم تا سرور ایران را کانفیگ نماییم و cert لازمه رو برای سرور دریافت نماییم.باید rootCA.crt را در تمامی سرور های خارج در پوشه rathole پیست کنیم. شما میتوانید یا از طریق copy cert اینکار از طریق اسکریپت انجام دهید یا خودتان به صورت دستی ، rootCA.crt را در سرور خارج کپی کنید.
 - اگر اینکار را نکنید ، ارتباط برقرار نخواهد شد.
 <p align="right">
   <img src="https://github.com/Azumi67/Fast_reverseTunnel/assets/119934376/044bf137-6195-4716-81bf-a54ed2b8f3fc" alt="Image" />
 </p>
+
 - سرور ایران را کانفیگ میکنیم
 - قبلش باید پروژه را بر روی سرورهای خود نصب و compile نماییم.
 - من یک سرور خارج دارم و سرور خارج من دو کانفیگ دارد.
@@ -435,6 +439,7 @@ go get github.com/fatih/color
 <p align="right">
   <img src="https://github.com/Azumi67/Fast_reverseTunnel/assets/119934376/e222732b-463a-461c-8da9-50b186cbb7f8" alt="Image" />
 </p>
+
 - خب پس از کانفیگ ایران، باید rootCA.crt را در سرور خارج، کپی کنیم. من در اینجا بوسیله اسکریپت اینکار را انجام میدم.
 - دقت نمایید که باید بتوانید به صورت دستی هم از سرور ایران به سرور خارج، ssh بزنید در غیر اینصورت با اسکریپت هم امکان پذیر نخواهد بود.
 - ایپی 4 خارج و پورت ssh سرور خارج هم وارد میکنم.
@@ -502,19 +507,20 @@ wget "https://raw.githubusercontent.com/hawshemi/Linux-Optimizer/main/linux-opti
 **اسکریپت من**
 ----------------
 
-- دستور زیر پروژه را بر روی سرور شما compile میکند. نخست این را اجرا نمایید.
+- دستور زیر پروژه را بر روی سرور شما compile میکند. نخست این را اجرا نمایید
 ```
+sudo apt install curl -y && bash <(curl -s https://raw.githubusercontent.com/Azumi67/Rathole_reverseTunnel/main/install.sh)
 
 ```
 
 - دستور زیر فایل های پیش نیاز را نصب میکند و سپس اقدام به اجرای اسکریپت میکند. اگر مشکلی داشتید به صورت دستی هم میتوانید نصب کنید
 ```
-
+sudo apt install curl -y && bash <(curl -s https://raw.githubusercontent.com/Azumi67/Rathole_reverseTunnel/main/go.sh)
 ```
 
 - اگر به صورت دستی نصب کردید و پیش نیاز ها را هم دارید و میخواهید به صورت دستی هم اسکریپت را اجرا کنید میتوانید با دستور زیر اینکار را انجام دهید
 ```
-
+sudo apt install wget -y && wget https://raw.githubusercontent.com/Azumi67/Rathole_reverseTunnel/main/rat.go && go run rat.go
 ```
 
 ---------------------------------------------

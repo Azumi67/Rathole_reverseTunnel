@@ -34,8 +34,8 @@ go get github.com/fatih/color
 go get github.com/pkg/sftp
 go get -u golang.org/x/crypto/ssh
 
-if [ -f "tls.go" ]; then
-    rm tls.go
+if [ -f "rat.go" ]; then
+    rm rat.go
     echo "deleted previous version!"
 fi
 

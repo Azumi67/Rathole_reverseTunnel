@@ -4,8 +4,6 @@ if [ "$EUID" -ne 0 ]; then
     exit 1
 fi
 sudo apt update -y
-wget -O /etc/logo.sh https://raw.githubusercontent.com/Azumi67/UDP2RAW_FEC/main/logo.sh
-chmod +x /etc/logo.sh
 
 architecture=$(uname -m)
 if [ "$architecture" = "x86_64" ]; then
@@ -39,6 +37,6 @@ if [ -f "install.go" ]; then
     echo "deleted previous version!"
 fi
 
-https://raw.githubusercontent.com/Azumi67/Rathole_reverseTunnel/main/install.go
+wget https://raw.githubusercontent.com/Azumi67/Rathole_reverseTunnel/main/install.go
 
 go run insall.go

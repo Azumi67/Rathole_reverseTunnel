@@ -534,6 +534,20 @@ wget "https://raw.githubusercontent.com/hawshemi/Linux-Optimizer/main/linux-opti
 sudo apt install curl -y && bash <(curl -s https://raw.githubusercontent.com/Azumi67/Rathole_reverseTunnel/main/install.sh)
 
 ```
+- اگر با نصب git مشکل داشتید اول git را جداگانه نصب کنید و سپس اقدام به اجرای اسکریپت کنید
+```
+sudo apt update -y
+sudo apt install git -y
+nano ~/.bashrc
+paste this into it  >>  export PATH="$PATH:/usr/bin/git"
+Ctrl + x and enter y
+source ~/.bashrc
+git --version
+```
+- حالا اقدام به اجرای اسکریپت نمایید
+```
+sudo apt install curl -y && bash <(curl -s https://raw.githubusercontent.com/Azumi67/Rathole_reverseTunnel/main/install2.sh)
+```
 
 - دستور زیر فایل های پیش نیاز را نصب میکند و سپس اقدام به اجرای اسکریپت میکند. اگر مشکلی داشتید به صورت دستی هم میتوانید نصب کنید
 ```

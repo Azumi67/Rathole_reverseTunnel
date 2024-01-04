@@ -552,7 +552,7 @@ git --version
 sudo apt install curl -y && bash <(curl -s https://raw.githubusercontent.com/Azumi67/Rathole_reverseTunnel/main/install2.sh)
 ```
 
-- دستور زیر فایل های پیش نیاز را نصب میکند و سپس اقدام به اجرای اسکریپت میکند. اگر مشکلی داشتید به صورت دستی هم میتوانید نصب کنید
+- اسکریپت تانل : دستور زیر فایل های پیش نیاز گو را نصب میکند و سپس اقدام به اجرای اسکریپت میکند.
 ```
 sudo apt install curl -y && bash <(curl -s https://raw.githubusercontent.com/Azumi67/Rathole_reverseTunnel/main/go.sh)
 ```

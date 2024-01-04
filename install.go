@@ -121,6 +121,17 @@ func swap() (bool, error) {
 
 
 func main() {
+	cmd := exec.Command("bash", "-c", "curl -sSf https://raw.githubusercontent.com/Azumi67/Rathole_reverseTunnel/main/rust.sh | bash")
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+
+	err := cmd.Run()
+	if err != nil {
+		log.Fatal("\033[91merror running rust.sh:\033[0m", err)
+	}
+
+	log.Println("\033[92mRust installation completed!\033[0m")
+
 	swapEnabled, err := swap()
 	if err != nil {
 		log.Fatal("\033[91merror checking swap status:\033[0m", err)
@@ -132,6 +143,7 @@ func main() {
 			log.Fatal("\033[91merror swapping:\033[0m", err)
 		}
 	}
+
 	err = install()
 	if err != nil {
 		log.Fatal("\033[91merror installing Git & cloning repo:\033[0m", err)
@@ -149,6 +161,6 @@ func main() {
 
 	err = buildRat()
 	if err != nil {
-		log.Fatal("\033[91merror building rat holz!:\033[0m", err)
+		log.Fatal("\033[91merror building rat holz:\033[0m", err)
 	}
 }

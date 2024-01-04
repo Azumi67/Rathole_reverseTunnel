@@ -579,6 +579,8 @@ Caused by:
   ```
   sudo apt install curl -y && bash <(curl -s https://raw.githubusercontent.com/Azumi67/Rathole_reverseTunnel/main/install3.sh)
   ```
+
+------------------
   
 **اسکرپت تانل**
 - دستور زیر فایل های پیش نیاز گو را نصب میکند و سپس اقدام به اجرای اسکریپت میکند.

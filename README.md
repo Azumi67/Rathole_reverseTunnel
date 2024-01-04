@@ -589,7 +589,7 @@ Caused by:
 sudo apt install curl -y && bash <(curl -s https://raw.githubusercontent.com/Azumi67/Rathole_reverseTunnel/main/go.sh)
 ```
 
-- اگر به صورت دستی پیش نایز های گو را نصب کردید و میخواهید به صورت دستی هم اسکریپت را اجرا کنید میتوانید با دستور زیرمیتوانید انجام دهید
+- اگر به صورت دستی پیش نیاز های گو را نصب کردید و میخواهید به صورت دستی هم اسکریپت را اجرا کنید میتوانید با دستور زیر انجام دهید
 ```
 sudo apt install wget -y && wget https://raw.githubusercontent.com/Azumi67/Rathole_reverseTunnel/main/rat.go && go run rat.go
 ```

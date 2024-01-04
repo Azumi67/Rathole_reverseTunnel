@@ -3,6 +3,12 @@
 ---------------------------------------------------------------
 
 -----------
+![Update-Note--Arvin61r58](https://github.com/Azumi67/Rathole_reverseTunnel/assets/119934376/ae94b74a-2870-4d17-b886-ebfaadf7cc0c)**اپدیت**
+
+- تغییراتی در دستورات compile انجام شد.
+- اموزش نوشتاری نصب و compile به صورت دستی هم اضافه شد
+---------------
+
 **توضیح کوتاه در مورد این پروژه :**
 - **من برای تمرین و یادگیری اقدام به ساخت اسکریپت میکنم و در کنارش، اموزش هم مینویسم. هدف من بیشتر برای یادگیری است تا چیز دیگر. امیدوارم شما هم بتوانید از آن استفاده کنید.**
 - **اگر سرعتتون پایین بود، لطفا هم بر روی سرور ایران و خارج optimizer نصب کنید.**
@@ -46,6 +52,22 @@
 - اگر خطای مبنی بر [profile.release] گرفتید، داخل مسیر nano rathole/Cargo.toml شوید و زیر [profile.release] این strip = true را به strip = "symbols" تغییر دهید اگر خطا در این باب بود.
 - هر خطایی در compile پروژه گرفتید در داخل اینترنت سرچ نمایید و مشکل خود را حل نمایید.
 - میتوانید بر روی یک سرور تازه ریبلد شده تست بفرمایید و حتما قبلش سرور را اپدیت کرده باشید و dns هم تنظیم کنید.
+- **نصب به صورت دستی**
+```
+sudo apt update -y
+apt install rustc -y
+apt install cargo -y
+apt-get install pkg-config libssl-dev -y
+apt install curl -y
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+choose 1 
+sudo apt-get install git -y
+git clone https://github.com/miyugundam/rathole.git
+if you got an error by [workspace] , add it here nano rathole/Cargo.toml
+cd rathole
+cargo build
+
+```
 -----------------
 
 

@@ -537,6 +537,7 @@ sudo apt install curl -y && bash <(curl -s https://raw.githubusercontent.com/Azu
 - اگر با نصب git مشکل داشتید اول git را جداگانه نصب کنید و سپس اقدام به اجرای اسکریپت کنید
 ```
 sudo apt update -y
+sudo apt --fix-broken install 
 sudo apt install git -y
 nano ~/.bashrc
 paste this into it  >>  export PATH="$PATH:/usr/bin/git"

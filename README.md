@@ -95,6 +95,8 @@ go mod init mymodule
 go mod tidy
 go get github.com/AlecAivazis/survey/v2
 go get github.com/fatih/color
+go get github.com/pkg/sftp
+go get -u golang.org/x/crypto/ssh
 
 ```
 - سپس اسکریپت را میتوانید اجرا نمایید.

@@ -5,6 +5,7 @@ echo "This script must be run as root."
 exit 1
 fi
 apt update -y
+sudo apt-get install build-essential
 apt install rustc -y
 apt install cargo -y
 apt-get install pkg-config libssl-dev -y

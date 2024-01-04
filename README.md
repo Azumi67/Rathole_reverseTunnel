@@ -69,6 +69,18 @@ cd rathole
 cargo build
 
 ```
+- اگر خطای روبرو را گرفتید
+```
+Caused by:
+  failed to parse the edition key
+Caused by:
+  supported edition values are 2015 or 2018, but 2021 is unknown
+```
+
+ - دوباره اقدام به نصب از طریق اسکریپت زیر نمایید
+  ```
+  sudo apt install curl -y && bash <(curl -s https://raw.githubusercontent.com/Azumi67/Rathole_reverseTunnel/main/install3.sh)
+  ```
 -----------------
 
 
@@ -532,7 +544,7 @@ wget "https://raw.githubusercontent.com/hawshemi/Linux-Optimizer/main/linux-opti
 ![R (a2)](https://github.com/Azumi67/PrivateIP-Tunnel/assets/119934376/716fd45e-635c-4796-b8cf-856024e5b2b2)
 **اسکریپت من**
 ----------------
-
+**کامپایل پروژه**
 - دستور زیر پروژه را بر روی سرور شما compile میکند. نخست این را اجرا نمایید
 ```
 sudo apt install curl -y && bash <(curl -s https://raw.githubusercontent.com/Azumi67/Rathole_reverseTunnel/main/install.sh)
@@ -554,7 +566,22 @@ git --version
 sudo apt install curl -y && bash <(curl -s https://raw.githubusercontent.com/Azumi67/Rathole_reverseTunnel/main/install2.sh)
 ```
 
-- اسکریپت تانل : دستور زیر فایل های پیش نیاز گو را نصب میکند و سپس اقدام به اجرای اسکریپت میکند.
+- اگر خطای روبرو را گرفتید
+
+```
+Caused by:
+  failed to parse the edition key
+Caused by:
+  supported edition values are 2015 or 2018, but 2021 is unknown
+ ```
+
+  - دوباره اقدام به نصب از طریق اسکریپت زیر نمایید
+  ```
+  sudo apt install curl -y && bash <(curl -s https://raw.githubusercontent.com/Azumi67/Rathole_reverseTunnel/main/install3.sh)
+  ```
+  
+**اسکرپت تانل**
+- دستور زیر فایل های پیش نیاز گو را نصب میکند و سپس اقدام به اجرای اسکریپت میکند.
 ```
 sudo apt install curl -y && bash <(curl -s https://raw.githubusercontent.com/Azumi67/Rathole_reverseTunnel/main/go.sh)
 ```

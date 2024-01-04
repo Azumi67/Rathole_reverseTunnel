@@ -61,7 +61,7 @@ apt-get install pkg-config libssl-dev -y
 apt install curl -y
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 choose 1 
-sudo apt-get install git -y
+sudo apt install git -y
 git clone https://github.com/miyugundam/rathole.git
 if you got an error by [workspace] , add it here nano rathole/Cargo.toml
 cd rathole

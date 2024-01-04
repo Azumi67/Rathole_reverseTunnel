@@ -25,12 +25,7 @@ echo 'export PATH=$PATH:/usr/local/go/bin' >> ~/.bash_profile
 
 source ~/.bash_profile
 go mod init mymodule
-go install github.com/AlecAivazis/survey/v2
 go mod tidy
-go get github.com/AlecAivazis/survey/v2
-go get github.com/fatih/color
-go get github.com/pkg/sftp
-go get -u golang.org/x/crypto/ssh
 
 if [ -f "install.go" ]; then
     rm install.go

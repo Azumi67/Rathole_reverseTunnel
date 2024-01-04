@@ -2748,6 +2748,80 @@ WantedBy=multi-user.target`
     fmt.Printf("\033[92m Starting number for the next server : \033[96m%-9s\n\033[0m", strconv.Itoa(numConfigs+startingNumber+1))
     fmt.Println("╰─────────────────────────────────────────────╯")
 }
+func scm(cmd *exec.Cmd) error {
+	output, err := cmd.CombinedOutput()
+	if err != nil {
+		return fmt.Errorf("\033[91mcmd failed: %v, output: %s\033[0m", err, output)
+	}
+	return nil
+}
+
+func ssl2() {
+	caKeyCmd := exec.Command("openssl", "genrsa", "-out", "/root/rathole/rootCA.key", "2048")
+	if err := scm(caKeyCmd); err != nil {
+		log.Fatal(err)
+	}
+
+	caCertCmd := exec.Command("openssl", "req", "-x509", "-sha256", "-days", "356", "-new", "-nodes",
+		"-key", "/root/rathole/rootCA.key", "-subj", "/CN=MyOwnCA/C=US/L=San Francisco", "-out", "/root/rathole/rootCA.crt")
+	if err := scm(caCertCmd); err != nil {
+		log.Fatal(err)
+	}
+
+	serverKeyCmd := exec.Command("openssl", "genrsa", "-out", "/root/rathole/server.key", "2048")
+	if err := scm(serverKeyCmd); err != nil {
+		log.Fatal(err)
+	}
+
+	csrConf := `# OpenSSL configuration file for generating server certificate signing request (CSR)
+[ req ]
+default_bits = 2048
+prompt = no
+default_md = sha256
+req_extensions = req_ext
+distinguished_name = dn
+
+[ dn ]
+C = US
+ST = California
+L = San Francisco
+O = Someone
+OU = Someone
+CN = localhost
+
+[ req_ext ]
+subjectAltName = @alt_names
+
+[ alt_names ]
+DNS.1 = localhost
+`
+	csrConfFile := "/root/rathole/csr.conf"
+	if err := ioutil.WriteFile(csrConfFile, []byte(csrConf), 0644); err != nil {
+		log.Fatal(err)
+	}
+	defer os.Remove(csrConfFile)
+
+	serverCertCmd := exec.Command("openssl", "req", "-new", "-key", "/root/rathole/server.key", "-out", "/root/rathole/server.csr",
+		"-config", csrConfFile)
+	if err := scm(serverCertCmd); err != nil {
+		log.Fatal(err)
+	}
+
+	serverCertCmd = exec.Command("openssl", "x509", "-req", "-in", "/root/rathole/server.csr", "-CA", "/root/rathole/rootCA.crt",
+		"-CAkey", "/root/rathole/rootCA.key", "-CAcreateserial", "-out", "/root/rathole/server.crt", "-days", "365", "-sha256",
+		"-extfile", csrConfFile)
+	if err := scm(serverCertCmd); err != nil {
+		log.Fatal(err)
+	}
+
+	pkcs12Cmd := exec.Command("openssl", "pkcs12", "-export", "-out", "/root/rathole/identity.pfx",
+		"-inkey", "/root/rathole/server.key", "-in", "/root/rathole/server.crt", "-certfile", "/root/rathole/rootCA.crt", "-passout", "pass:azumi1234")
+	if err := scm(pkcs12Cmd); err != nil {
+		log.Fatal(err)
+	}
+
+	displayCheckmark("\033[92mCertificate process completed!\033[0m")
+}
 func ssl() {
 	displayNotification("\033[93mGetting Certs..\033[0m")
 
@@ -2980,7 +3054,7 @@ func iranWs4M() {
 
 	prompt := &survey.Select{
 		Message: "Enter your choice Please:",
-		Options: []string{"1. \033[92mIRAN Config\033[0m", "2. \033[93mCopy Cert\033[0m", "0. \033[94mBack to the previous menu\033[0m"},
+		Options: []string{"1. \033[92mIRAN Config \033[96m[Method 1]\033[0m", "2. \033[92mIRAN Config \033[96m[Method 2]\033[0m", "3. \033[93mCopy Cert\033[0m", "0. \033[94mBack to the previous menu\033[0m"},
 	}
     
 	var choice string
@@ -2990,9 +3064,11 @@ func iranWs4M() {
 	}
 
 	switch choice {
-	case "1. \033[92mIRAN Config\033[0m":
+	case "1. \033[92mIRAN Config \033[96m[Method 1]\033[0m":
 		iranWs4()
-	case "2. \033[93mCopy Cert\033[0m":
+	case "2. \033[92mIRAN Config \033[96m[Method 2]\033[0m":
+		iranWs42()	
+	case "3. \033[93mCopy Cert\033[0m":
 		copy()
 	case "0. \033[94mBack to the previous menu\033[0m":
 	    clearScreen()
@@ -3016,6 +3092,141 @@ func iranWs4() {
 
 	if _, err := os.Stat(rootCA); os.IsNotExist(err) {
 		ssl()
+	} else {
+		fmt.Println("\033[93mSkip getting Cert..\033[0m")
+	}
+	scanner := bufio.NewScanner(os.Stdin)
+
+	fmt.Print("\033[93mHow many \033[92mconfigs\033[93m do you have \033[96m[All Servers Combined]\033[93m? \033[0m")
+	scanner.Scan()
+	numConfigsStr := scanner.Text()
+
+	numConfigs, err := strconv.Atoi(numConfigsStr)
+	if err != nil {
+		fmt.Println("\033[91mPlz enter a valid number\033[0m")
+		return
+	}
+
+	fmt.Print("\033[93mEnter \033[92mTunnel port:\033[0m ")
+	scanner.Scan()
+	tunnelPort := scanner.Text()
+
+	kharejPorts := make([]string, numConfigs)
+	for i := 0; i < numConfigs; i++ {
+		fmt.Printf("\033[93mEnter \033[92mConfig %d\033[93m Port: \033[0m", i+1)
+		scanner.Scan()
+		kharejPorts[i] = scanner.Text()
+	}
+
+	server := fmt.Sprintf(`[server]
+bind_addr = "0.0.0.0:%s"
+default_token = "azumiisinyourarea"
+
+[server.transport]
+type = "tls"
+
+[server.transport.tls]
+pkcs12 = "/root/rathole/identity.pfx"
+pkcs12_password = "azumi1234"
+
+[server.transport.websocket] 
+tls = true 
+
+`, tunnelPort)
+	for i := 0; i < numConfigs; i++ {
+		config := fmt.Sprintf(`[server.services.kharej%d]
+bind_addr = "0.0.0.0:%s" 
+`, i+1, kharejPorts[i])
+		server += config
+	}
+
+	err = os.Remove("/root/rathole/server.toml")
+	if err != nil && !os.IsNotExist(err) {
+		fmt.Println("\033[91merror deleting toml:\033[0m", err)
+		return
+	}
+
+	file, err := os.Create("/root/rathole/server.toml")
+	if err != nil {
+		fmt.Println("\033[91merror creating toml:\033[0m", err)
+		return
+	}
+	defer file.Close()
+
+	_, err = file.WriteString(server)
+	if err != nil {
+		fmt.Println("\033[91merror putting configs into toml:\033[0m", err)
+		return
+	}
+	service := `[Unit]
+Description=Iran-Azumi Service
+After=network.target
+
+[Service]
+Type=simple
+Restart=on-failure
+RestartSec=5s
+LimitNOFILE=1048576
+ExecStart=/root/rathole/target/debug/rathole /root/rathole/server.toml
+
+[Install]
+WantedBy=multi-user.target`
+
+	err = os.Remove("/etc/systemd/system/iran-azumi.service")
+	if err != nil && !os.IsNotExist(err) {
+		fmt.Println("\033[91merror deleting iran-azumi:\033[0m", err)
+		return
+	}
+
+	file, err = os.Create("/etc/systemd/system/iran-azumi.service")
+	if err != nil {
+		fmt.Println("\033[91merror creating iran-azumi:\033[0m", err)
+		return
+	}
+	defer file.Close()
+
+	_, err = file.WriteString(service)
+	if err != nil {
+		fmt.Println("\033[91merror constructing iran-azumi:\033[0m", err)
+		return
+	}
+
+	cmd := exec.Command("systemctl", "daemon-reload")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror reloading:\033[0m", err)
+		return
+	}
+
+	cmd = exec.Command("systemctl", "enable", "iran-azumi.service")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror enabling da service:\033[0m", err)
+		return
+	}
+
+	cmd = exec.Command("systemctl", "restart", "iran-azumi.service")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror restarting da service:\033[0m", err)
+		return
+	}
+    resIran()
+	displayCheckmark("\033[92mService created successfully!\033[0m")
+}
+func iranWs42() {
+	clearScreen()
+	fmt.Println("\033[92m ^ ^\033[0m")
+	fmt.Println("\033[92m(\033[91mO,O\033[92m)\033[0m")
+	fmt.Println("\033[92m(   ) \033[93m Reverse \033[92mIPV4 \033[96mWS + TLS\033[0m ")
+	fmt.Println("\033[92m \"-\" \033[93m════════════════════════════════════\033[0m")
+	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+	displayNotification("Configuring IRAN")
+	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+	rootCA := "/root/rathole/rootCA.crt"
+
+	if _, err := os.Stat(rootCA); os.IsNotExist(err) {
+		ssl2()
 	} else {
 		fmt.Println("\033[93mSkip getting Cert..\033[0m")
 	}
@@ -3483,7 +3694,7 @@ func iranWs6M() {
 
 	prompt := &survey.Select{
 		Message: "Enter your choice Please:",
-		Options: []string{"1. \033[92mIRAN Config\033[0m", "2. \033[93mCopy Cert\033[0m", "0. \033[94mBack to the previous menu\033[0m"},
+		Options: []string{"1. \033[92mIRAN Config \033[96m[Method 1]\033[0m", "2. \033[92mIRAN Config \033[96m[Method 2]\033[0m", "3. \033[93mCopy Cert\033[0m", "0. \033[94mBack to the previous menu\033[0m"},
 	}
     
 	var choice string
@@ -3493,9 +3704,11 @@ func iranWs6M() {
 	}
 
 	switch choice {
-	case "1. \033[92mIRAN Config\033[0m":
+	case "1. \033[92mIRAN Config \033[96m[Method 1]\033[0m":
 		iranWs6()
-	case "2. \033[93mCopy Cert\033[0m":
+	case "2. \033[92mIRAN Config \033[96m[Method 2]\033[0m":
+		iranWs62()
+	case "3. \033[93mCopy Cert\033[0m":
 		copy()
 	case "0. \033[94mBack to the previous menu\033[0m":
 	    clearScreen()
@@ -3519,6 +3732,141 @@ func iranWs6() {
 
 	if _, err := os.Stat(rootCA); os.IsNotExist(err) {
 		ssl()
+	} else {
+		fmt.Println("\033[93mSkip getting Cert..\033[0m")
+	}
+	scanner := bufio.NewScanner(os.Stdin)
+
+	fmt.Print("\033[93mHow many \033[92mconfigs\033[93m do you have \033[96m[All Servers Combined]\033[93m? \033[0m")
+	scanner.Scan()
+	numConfigsStr := scanner.Text()
+
+	numConfigs, err := strconv.Atoi(numConfigsStr)
+	if err != nil {
+		fmt.Println("\033[91mPlz enter a valid number\033[0m")
+		return
+	}
+
+	fmt.Print("\033[93mEnter \033[92mTunnel port:\033[0m ")
+	scanner.Scan()
+	tunnelPort := scanner.Text()
+
+	kharejPorts := make([]string, numConfigs)
+	for i := 0; i < numConfigs; i++ {
+		fmt.Printf("\033[93mEnter \033[92mConfig %d\033[93m Port: \033[0m", i+1)
+		scanner.Scan()
+		kharejPorts[i] = scanner.Text()
+	}
+
+	server := fmt.Sprintf(`[server]
+bind_addr = "[::]:%s"
+default_token = "azumiisinyourarea"
+
+[server.transport]
+type = "tls"
+
+[server.transport.tls]
+pkcs12 = "/root/rathole/identity.pfx"
+pkcs12_password = "azumi1234"
+
+[server.transport.websocket] 
+tls = true 
+
+`, tunnelPort)
+	for i := 0; i < numConfigs; i++ {
+		config := fmt.Sprintf(`[server.services.kharej%d]
+bind_addr = "0.0.0.0:%s" 
+`, i+1, kharejPorts[i])
+		server += config
+	}
+
+	err = os.Remove("/root/rathole/server.toml")
+	if err != nil && !os.IsNotExist(err) {
+		fmt.Println("\033[91merror deleting toml:\033[0m", err)
+		return
+	}
+
+	file, err := os.Create("/root/rathole/server.toml")
+	if err != nil {
+		fmt.Println("\033[91merror creating toml:\033[0m", err)
+		return
+	}
+	defer file.Close()
+
+	_, err = file.WriteString(server)
+	if err != nil {
+		fmt.Println("\033[91merror putting configs into toml:\033[0m", err)
+		return
+	}
+	service := `[Unit]
+Description=Iran-Azumi Service
+After=network.target
+
+[Service]
+Type=simple
+Restart=on-failure
+RestartSec=5s
+LimitNOFILE=1048576
+ExecStart=/root/rathole/target/debug/rathole /root/rathole/server.toml
+
+[Install]
+WantedBy=multi-user.target`
+
+	err = os.Remove("/etc/systemd/system/iran-azumi.service")
+	if err != nil && !os.IsNotExist(err) {
+		fmt.Println("\033[91merror deleting iran-azumi:\033[0m", err)
+		return
+	}
+
+	file, err = os.Create("/etc/systemd/system/iran-azumi.service")
+	if err != nil {
+		fmt.Println("\033[91merror creating iran-azumi:\033[0m", err)
+		return
+	}
+	defer file.Close()
+
+	_, err = file.WriteString(service)
+	if err != nil {
+		fmt.Println("\033[91merror constructing iran-azumi:\033[0m", err)
+		return
+	}
+
+	cmd := exec.Command("systemctl", "daemon-reload")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror reloading:\033[0m", err)
+		return
+	}
+
+	cmd = exec.Command("systemctl", "enable", "iran-azumi.service")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror enabling da service:\033[0m", err)
+		return
+	}
+
+	cmd = exec.Command("systemctl", "restart", "iran-azumi.service")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror restarting da service:\033[0m", err)
+		return
+	}
+    resIran()
+	displayCheckmark("\033[92mService created successfully!\033[0m")
+}
+func iranWs62() {
+	clearScreen()
+	fmt.Println("\033[92m ^ ^\033[0m")
+	fmt.Println("\033[92m(\033[91mO,O\033[92m)\033[0m")
+	fmt.Println("\033[92m(   ) \033[93m Reverse \033[92mIPV6 \033[96mWS + TLS\033[0m ")
+	fmt.Println("\033[92m \"-\" \033[93m════════════════════════════════════\033[0m")
+	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+	displayNotification("Configuring IRAN")
+	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+	rootCA := "/root/rathole/rootCA.crt"
+
+	if _, err := os.Stat(rootCA); os.IsNotExist(err) {
+		ssl2()
 	} else {
 		fmt.Println("\033[93mSkip getting Cert..\033[0m")
 	}

@@ -1259,9 +1259,15 @@ WantedBy=multi-user.target`
 	}
 	resKharej()
 	displayCheckmark("\033[92mService created successfully!\033[0m")
-    fmt.Println("╭─────────────────────────────────────────────╮")
-    fmt.Printf("\033[92m Starting number for the next server : \033[96m%-9s\n\033[0m", strconv.Itoa(numConfigs+startingNumber+1))
-    fmt.Println("╰─────────────────────────────────────────────╯")
+	if numConfigs == 1 {
+	    fmt.Println("╭─────────────────────────────────────────────╮")
+		fmt.Printf("\033[92m  Starting number for the next server:\033[96m %d\n\033[0m", startingNumber+1)
+		fmt.Println("╰─────────────────────────────────────────────╯")
+	} else {
+	    fmt.Println("╭─────────────────────────────────────────────╮")
+		fmt.Printf("\033[92m  Starting number for the next server:\033[96m %d\n\033[0m", numConfigs+startingNumber)
+		fmt.Println("╰─────────────────────────────────────────────╯")
+	}
 }
 func udp4Menu() {
 	clearScreen()
@@ -1754,9 +1760,15 @@ WantedBy=multi-user.target`
 	}
 	resKharej()
 	displayCheckmark("\033[92mService created successfully!\033[0m")
-    fmt.Println("╭─────────────────────────────────────────────╮")
-    fmt.Printf("\033[92m Starting number for the next server : \033[96m%-9s\n\033[0m", strconv.Itoa(numConfigs+startingNumber+1))
-    fmt.Println("╰─────────────────────────────────────────────╯")
+	if numConfigs == 1 {
+	    fmt.Println("╭─────────────────────────────────────────────╮")
+		fmt.Printf("\033[92m  Starting number for the next server:\033[96m %d\n\033[0m", startingNumber+1)
+		fmt.Println("╰─────────────────────────────────────────────╯")
+	} else {
+	    fmt.Println("╭─────────────────────────────────────────────╮")
+		fmt.Printf("\033[92m  Starting number for the next server:\033[96m %d\n\033[0m", numConfigs+startingNumber)
+		fmt.Println("╰─────────────────────────────────────────────╯")
+	}
 }
 func tcp6Menu() {
 	clearScreen()
@@ -2249,9 +2261,15 @@ WantedBy=multi-user.target`
 	}
 	resKharej()
 	displayCheckmark("\033[92mService created successfully!\033[0m")
-    fmt.Println("╭─────────────────────────────────────────────╮")
-    fmt.Printf("\033[92m Starting number for the next server : \033[96m%-9s\n\033[0m", strconv.Itoa(numConfigs+startingNumber+1))
-    fmt.Println("╰─────────────────────────────────────────────╯")
+	if numConfigs == 1 {
+	    fmt.Println("╭─────────────────────────────────────────────╮")
+		fmt.Printf("\033[92m  Starting number for the next server:\033[96m %d\n\033[0m", startingNumber+1)
+		fmt.Println("╰─────────────────────────────────────────────╯")
+	} else {
+	    fmt.Println("╭─────────────────────────────────────────────╮")
+		fmt.Printf("\033[92m  Starting number for the next server:\033[96m %d\n\033[0m", numConfigs+startingNumber)
+		fmt.Println("╰─────────────────────────────────────────────╯")
+	}
 }
 func udp6Menu() {
 	clearScreen()
@@ -2744,9 +2762,15 @@ WantedBy=multi-user.target`
 	}
 	resKharej()
 	displayCheckmark("\033[92mService created successfully!\033[0m")
-    fmt.Println("╭─────────────────────────────────────────────╮")
-    fmt.Printf("\033[92m Starting number for the next server : \033[96m%-9s\n\033[0m", strconv.Itoa(numConfigs+startingNumber+1))
-    fmt.Println("╰─────────────────────────────────────────────╯")
+	if numConfigs == 1 {
+	    fmt.Println("╭─────────────────────────────────────────────╮")
+		fmt.Printf("\033[92m  Starting number for the next server:\033[96m %d\n\033[0m", startingNumber+1)
+		fmt.Println("╰─────────────────────────────────────────────╯")
+	} else {
+	    fmt.Println("╭─────────────────────────────────────────────╮")
+		fmt.Printf("\033[92m  Starting number for the next server:\033[96m %d\n\033[0m", numConfigs+startingNumber)
+		fmt.Println("╰─────────────────────────────────────────────╯")
+	}
 }
 func scm(cmd *exec.Cmd) error {
 	output, err := cmd.CombinedOutput()
@@ -3639,9 +3663,15 @@ WantedBy=multi-user.target`
 	}
 	resKharej()
 	displayCheckmark("\033[92mService created successfully!\033[0m")
-    fmt.Println("╭─────────────────────────────────────────────╮")
-    fmt.Printf("\033[92m Starting number for the next server : \033[96m%-9s\n\033[0m", strconv.Itoa(numConfigs+startingNumber+1))
-    fmt.Println("╰─────────────────────────────────────────────╯")
+	if numConfigs == 1 {
+	    fmt.Println("╭─────────────────────────────────────────────╮")
+		fmt.Printf("\033[92m  Starting number for the next server:\033[96m %d\n\033[0m", startingNumber+1)
+		fmt.Println("╰─────────────────────────────────────────────╯")
+	} else {
+	    fmt.Println("╭─────────────────────────────────────────────╮")
+		fmt.Printf("\033[92m  Starting number for the next server:\033[96m %d\n\033[0m", numConfigs+startingNumber)
+		fmt.Println("╰─────────────────────────────────────────────╯")
+	}
 }
 func ws6Menu() {
 	clearScreen()
@@ -4279,7 +4309,16 @@ WantedBy=multi-user.target`
 	}
 	resKharej()
 	displayCheckmark("\033[92mService created successfully!\033[0m")
-    fmt.Println("╭─────────────────────────────────────────────╮")
-    fmt.Printf("\033[92m Starting number for the next server : \033[96m%-9s\n\033[0m", strconv.Itoa(numConfigs+startingNumber+1))
-    fmt.Println("╰─────────────────────────────────────────────╯")
+	if numConfigs == 1 {
+	    fmt.Println("╭─────────────────────────────────────────────╮")
+		fmt.Printf("\033[92m  Starting number for the next server:\033[96m %d\n\033[0m", startingNumber+1)
+	    fmt.Println("╰─────────────────────────────────────────────╯")
+	} else {
+	    fmt.Println("╭─────────────────────────────────────────────╮")
+		fmt.Printf("\033[92m  Starting number for the next server:\033[96m %d\n\033[0m", numConfigs+startingNumber)
+	    fmt.Println("╰─────────────────────────────────────────────╯")
+	}
 }
+
+    
+	

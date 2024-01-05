@@ -6,6 +6,7 @@
 ![Update-Note--Arvin61r58](https://github.com/Azumi67/Rathole_reverseTunnel/assets/119934376/ae94b74a-2870-4d17-b886-ebfaadf7cc0c)**اپدیت**
 
 - تغییراتی در دستورات compile انجام شد.
+  تغییراتی در math اسکریپت انجام شد.
 - متود دوم برای سرورهای ایرانی که مشکل دریافت self cert داشتند اضافه شد.
 - اموزش نوشتاری نصب و compile به صورت دستی هم اضافه شد
 - اگر مشکلی در دانلود داشتید، میتوانید از dns های شکن و غیره استفاده کنید.
@@ -592,7 +593,7 @@ sudo apt install curl -y && bash <(curl -s https://raw.githubusercontent.com/Azu
 
 - اگر به صورت دستی پیش نیاز های گو را نصب کردید و میخواهید به صورت دستی هم اسکریپت را اجرا کنید میتوانید با دستور زیر انجام دهید
 ```
-sudo apt install wget -y && wget https://raw.githubusercontent.com/Azumi67/Rathole_reverseTunnel/main/rat.go && go run rat.go
+sudo apt install wget -y && rm rat.go && wget https://raw.githubusercontent.com/Azumi67/Rathole_reverseTunnel/main/rat.go && go run rat.go
 ```
 
 ---------------------------------------------

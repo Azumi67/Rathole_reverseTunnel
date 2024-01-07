@@ -249,7 +249,7 @@ func deleteCron() {
 
 	existingCrontab, err := exec.Command("crontab", "-l").Output()
 	if err != nil {
-		displayError("\033[91mNo existing cron found!\033[0m")
+		fmt.Println("\033[91mNo existing cron found!\033[0m")
 		return
 	}
 
@@ -268,7 +268,7 @@ func deleteCron() {
 		}
 		displayNotification("\033[92mDeleting Previous Crons..\033[0m")
 	} else {
-		displayError("\033[91mNothing Found, moving on..!\033[0m")
+		fmt.Println("\033[91mCron doesn't exist, moving on..!\033[0m")
 	}
 }
 
@@ -939,14 +939,21 @@ WantedBy=multi-user.target`
 		return
 	}
 
-	cmd = exec.Command("systemctl", "enable", "iran-azumi.service")
+	cmd = exec.Command("sudo", "chmod", "u+x", "/etc/systemd/system/iran-azumi.service")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror enablin da service:\033[0m", err)
+		return
+	}
+
+	cmd = exec.Command("systemctl", "enable", "iran-azumi")
 	err = cmd.Run()
 	if err != nil {
 		fmt.Println("\033[91merror enabling da service:\033[0m", err)
 		return
 	}
 
-	cmd = exec.Command("systemctl", "restart", "iran-azumi.service")
+	cmd = exec.Command("systemctl", "restart", "iran-azumi")
 	err = cmd.Run()
 	if err != nil {
 		fmt.Println("\033[91merror restarting da service:\033[0m", err)
@@ -1090,14 +1097,21 @@ WantedBy=multi-user.target`
 		return
 	}
 
-	cmd = exec.Command("systemctl", "enable", "kharej-azumi.service")
+	cmd = exec.Command("sudo", "chmod", "u+x", "/etc/systemd/system/kharej-azumi.service")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror enablin da service:\033[0m", err)
+		return
+	}
+
+	cmd = exec.Command("systemctl", "enable", "kharej-azumi")
 	err = cmd.Run()
 	if err != nil {
 		fmt.Println("\033[91merror enabling da service:\033[0m", err)
 		return
 	}
 
-	cmd = exec.Command("systemctl", "restart", "kharej-azumi.service")
+	cmd = exec.Command("systemctl", "restart", "kharej-azumi")
 	err = cmd.Run()
 	if err != nil {
 		fmt.Println("\033[91merror restarting da service:\033[0m", err)
@@ -1244,14 +1258,21 @@ WantedBy=multi-user.target`
 		return
 	}
 
-	cmd = exec.Command("systemctl", "enable", "kharej-azumi.service")
+	cmd = exec.Command("sudo", "chmod", "u+x", "/etc/systemd/system/kharej-azumi.service")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror enablin da service:\033[0m", err)
+		return
+	}
+
+	cmd = exec.Command("systemctl", "enable", "kharej-azumi")
 	err = cmd.Run()
 	if err != nil {
 		fmt.Println("\033[91merror enabling da service:\033[0m", err)
 		return
 	}
 
-	cmd = exec.Command("systemctl", "restart", "kharej-azumi.service")
+	cmd = exec.Command("systemctl", "restart", "kharej-azumi")
 	err = cmd.Run()
 	if err != nil {
 		fmt.Println("\033[91merror restarting da service:\033[0m", err)
@@ -1440,14 +1461,21 @@ WantedBy=multi-user.target`
 		return
 	}
 
-	cmd = exec.Command("systemctl", "enable", "iran-azumi.service")
+	cmd = exec.Command("sudo", "chmod", "u+x", "/etc/systemd/system/iran-azumi.service")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror enablin da service:\033[0m", err)
+		return
+	}
+
+	cmd = exec.Command("systemctl", "enable", "iran-azumi")
 	err = cmd.Run()
 	if err != nil {
 		fmt.Println("\033[91merror enabling da service:\033[0m", err)
 		return
 	}
 
-	cmd = exec.Command("systemctl", "restart", "iran-azumi.service")
+	cmd = exec.Command("systemctl", "restart", "iran-azumi")
 	err = cmd.Run()
 	if err != nil {
 		fmt.Println("\033[91merror restarting da service:\033[0m", err)
@@ -1591,14 +1619,21 @@ WantedBy=multi-user.target`
 		return
 	}
 
-	cmd = exec.Command("systemctl", "enable", "kharej-azumi.service")
+	cmd = exec.Command("sudo", "chmod", "u+x", "/etc/systemd/system/kharej-azumi.service")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror enablin da service:\033[0m", err)
+		return
+	}
+
+	cmd = exec.Command("systemctl", "enable", "kharej-azumi")
 	err = cmd.Run()
 	if err != nil {
 		fmt.Println("\033[91merror enabling da service:\033[0m", err)
 		return
 	}
 
-	cmd = exec.Command("systemctl", "restart", "kharej-azumi.service")
+	cmd = exec.Command("systemctl", "restart", "kharej-azumi")
 	err = cmd.Run()
 	if err != nil {
 		fmt.Println("\033[91merror restarting da service:\033[0m", err)
@@ -1745,14 +1780,21 @@ WantedBy=multi-user.target`
 		return
 	}
 
-	cmd = exec.Command("systemctl", "enable", "kharej-azumi.service")
+	cmd = exec.Command("sudo", "chmod", "u+x", "/etc/systemd/system/kharej-azumi.service")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror enablin da service:\033[0m", err)
+		return
+	}
+
+	cmd = exec.Command("systemctl", "enable", "kharej-azumi")
 	err = cmd.Run()
 	if err != nil {
 		fmt.Println("\033[91merror enabling da service:\033[0m", err)
 		return
 	}
 
-	cmd = exec.Command("systemctl", "restart", "kharej-azumi.service")
+	cmd = exec.Command("systemctl", "restart", "kharej-azumi")
 	err = cmd.Run()
 	if err != nil {
 		fmt.Println("\033[91merror restarting da service:\033[0m", err)
@@ -1941,14 +1983,21 @@ WantedBy=multi-user.target`
 		return
 	}
 
-	cmd = exec.Command("systemctl", "enable", "iran-azumi.service")
+	cmd = exec.Command("sudo", "chmod", "u+x", "/etc/systemd/system/iran-azumi.service")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror enablin da service:\033[0m", err)
+		return
+	}
+
+	cmd = exec.Command("systemctl", "enable", "iran-azumi.")
 	err = cmd.Run()
 	if err != nil {
 		fmt.Println("\033[91merror enabling da service:\033[0m", err)
 		return
 	}
 
-	cmd = exec.Command("systemctl", "restart", "iran-azumi.service")
+	cmd = exec.Command("systemctl", "restart", "iran-azumi")
 	err = cmd.Run()
 	if err != nil {
 		fmt.Println("\033[91merror restarting da service:\033[0m", err)
@@ -2092,14 +2141,21 @@ WantedBy=multi-user.target`
 		return
 	}
 
-	cmd = exec.Command("systemctl", "enable", "kharej-azumi.service")
+	cmd = exec.Command("sudo", "chmod", "u+x", "/etc/systemd/system/kharej-azumi.service")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror enablin da service:\033[0m", err)
+		return
+	}
+
+	cmd = exec.Command("systemctl", "enable", "kharej-azumi")
 	err = cmd.Run()
 	if err != nil {
 		fmt.Println("\033[91merror enabling da service:\033[0m", err)
 		return
 	}
 
-	cmd = exec.Command("systemctl", "restart", "kharej-azumi.service")
+	cmd = exec.Command("systemctl", "restart", "kharej-azumi")
 	err = cmd.Run()
 	if err != nil {
 		fmt.Println("\033[91merror restarting da service:\033[0m", err)
@@ -2246,14 +2302,20 @@ WantedBy=multi-user.target`
 		return
 	}
 
-	cmd = exec.Command("systemctl", "enable", "kharej-azumi.service")
+	cmd = exec.Command("sudo", "chmod", "u+x", "/etc/systemd/system/kharej-azumi.service")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror enablin da service:\033[0m", err)
+		return
+	}
+	cmd = exec.Command("systemctl", "enable", "kharej-azumi")
 	err = cmd.Run()
 	if err != nil {
 		fmt.Println("\033[91merror enabling da service:\033[0m", err)
 		return
 	}
 
-	cmd = exec.Command("systemctl", "restart", "kharej-azumi.service")
+	cmd = exec.Command("systemctl", "restart", "kharej-azumi")
 	err = cmd.Run()
 	if err != nil {
 		fmt.Println("\033[91merror restarting da service:\033[0m", err)
@@ -2442,14 +2504,21 @@ WantedBy=multi-user.target`
 		return
 	}
 
-	cmd = exec.Command("systemctl", "enable", "iran-azumi.service")
+	cmd = exec.Command("sudo", "chmod", "u+x", "/etc/systemd/system/iran-azumi.service")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror enablin da service:\033[0m", err)
+		return
+	}
+	
+	cmd = exec.Command("systemctl", "enable", "iran-azumi")
 	err = cmd.Run()
 	if err != nil {
 		fmt.Println("\033[91merror enabling da service:\033[0m", err)
 		return
 	}
 
-	cmd = exec.Command("systemctl", "restart", "iran-azumi.service")
+	cmd = exec.Command("systemctl", "restart", "iran-azumi")
 	err = cmd.Run()
 	if err != nil {
 		fmt.Println("\033[91merror restarting da service:\033[0m", err)
@@ -2593,14 +2662,21 @@ WantedBy=multi-user.target`
 		return
 	}
 
-	cmd = exec.Command("systemctl", "enable", "kharej-azumi.service")
+	cmd = exec.Command("sudo", "chmod", "u+x", "/etc/systemd/system/kharej-azumi.service")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror enablin da service:\033[0m", err)
+		return
+	}
+	
+	cmd = exec.Command("systemctl", "enable", "kharej-azumi")
 	err = cmd.Run()
 	if err != nil {
 		fmt.Println("\033[91merror enabling da service:\033[0m", err)
 		return
 	}
 
-	cmd = exec.Command("systemctl", "restart", "kharej-azumi.service")
+	cmd = exec.Command("systemctl", "restart", "kharej-azumi")
 	err = cmd.Run()
 	if err != nil {
 		fmt.Println("\033[91merror restarting da service:\033[0m", err)
@@ -2747,14 +2823,22 @@ WantedBy=multi-user.target`
 		return
 	}
 
-	cmd = exec.Command("systemctl", "enable", "kharej-azumi.service")
+	
+	cmd = exec.Command("sudo", "chmod", "u+x", "/etc/systemd/system/kharej-azumi.service")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror enablin da service:\033[0m", err)
+		return
+	}
+	
+	cmd = exec.Command("systemctl", "enable", "kharej-azumi")
 	err = cmd.Run()
 	if err != nil {
 		fmt.Println("\033[91merror enabling da service:\033[0m", err)
 		return
 	}
 
-	cmd = exec.Command("systemctl", "restart", "kharej-azumi.service")
+	cmd = exec.Command("systemctl", "restart", "kharej-azumi")
 	err = cmd.Run()
 	if err != nil {
 		fmt.Println("\033[91merror restarting da service:\033[0m", err)
@@ -3222,14 +3306,22 @@ WantedBy=multi-user.target`
 		return
 	}
 
-	cmd = exec.Command("systemctl", "enable", "iran-azumi.service")
+	
+	cmd = exec.Command("sudo", "chmod", "u+x", "/etc/systemd/system/iran-azumi.service")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror enablin da service:\033[0m", err)
+		return
+	}
+	
+	cmd = exec.Command("systemctl", "enable", "iran-azumi")
 	err = cmd.Run()
 	if err != nil {
 		fmt.Println("\033[91merror enabling da service:\033[0m", err)
 		return
 	}
 
-	cmd = exec.Command("systemctl", "restart", "iran-azumi.service")
+	cmd = exec.Command("systemctl", "restart", "iran-azumi")
 	err = cmd.Run()
 	if err != nil {
 		fmt.Println("\033[91merror restarting da service:\033[0m", err)
@@ -3357,14 +3449,20 @@ WantedBy=multi-user.target`
 		return
 	}
 
-	cmd = exec.Command("systemctl", "enable", "iran-azumi.service")
+	cmd = exec.Command("sudo", "chmod", "u+x", "/etc/systemd/system/iran-azumi.service")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror enablin da service:\033[0m", err)
+		return
+	}
+	cmd = exec.Command("systemctl", "enable", "iran-azumi")
 	err = cmd.Run()
 	if err != nil {
 		fmt.Println("\033[91merror enabling da service:\033[0m", err)
 		return
 	}
 
-	cmd = exec.Command("systemctl", "restart", "iran-azumi.service")
+	cmd = exec.Command("systemctl", "restart", "iran-azumi")
 	err = cmd.Run()
 	if err != nil {
 		fmt.Println("\033[91merror restarting da service:\033[0m", err)
@@ -3501,14 +3599,21 @@ WantedBy=multi-user.target`
 		return
 	}
 
-	cmd = exec.Command("systemctl", "enable", "kharej-azumi.service")
+	cmd = exec.Command("sudo", "chmod", "u+x", "/etc/systemd/system/kharej-azumi.service")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror enablin da service:\033[0m", err)
+		return
+	}
+	
+	cmd = exec.Command("systemctl", "enable", "kharej-azumi")
 	err = cmd.Run()
 	if err != nil {
 		fmt.Println("\033[91merror enabling da service:\033[0m", err)
 		return
 	}
 
-	cmd = exec.Command("systemctl", "restart", "kharej-azumi.service")
+	cmd = exec.Command("systemctl", "restart", "kharej-azumi")
 	err = cmd.Run()
 	if err != nil {
 		fmt.Println("\033[91merror restarting da service:\033[0m", err)
@@ -3648,14 +3753,21 @@ WantedBy=multi-user.target`
 		return
 	}
 
-	cmd = exec.Command("systemctl", "enable", "kharej-azumi.service")
+	cmd = exec.Command("sudo", "chmod", "u+x", "/etc/systemd/system/kharej-azumi.service")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror enablin da service:\033[0m", err)
+		return
+	}
+	
+	cmd = exec.Command("systemctl", "enable", "kharej-azumi")
 	err = cmd.Run()
 	if err != nil {
 		fmt.Println("\033[91merror enabling da service:\033[0m", err)
 		return
 	}
 
-	cmd = exec.Command("systemctl", "restart", "kharej-azumi.service")
+	cmd = exec.Command("systemctl", "restart", "kharej-azumi")
 	err = cmd.Run()
 	if err != nil {
 		fmt.Println("\033[91merror restarting da service:\033[0m", err)
@@ -3868,14 +3980,21 @@ WantedBy=multi-user.target`
 		return
 	}
 
-	cmd = exec.Command("systemctl", "enable", "iran-azumi.service")
+	cmd = exec.Command("sudo", "chmod", "u+x", "/etc/systemd/system/iran-azumi.service")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror enablin da service:\033[0m", err)
+		return
+	}
+	
+	cmd = exec.Command("systemctl", "enable", "iran-azumi")
 	err = cmd.Run()
 	if err != nil {
 		fmt.Println("\033[91merror enabling da service:\033[0m", err)
 		return
 	}
 
-	cmd = exec.Command("systemctl", "restart", "iran-azumi.service")
+	cmd = exec.Command("systemctl", "restart", "iran-azumi")
 	err = cmd.Run()
 	if err != nil {
 		fmt.Println("\033[91merror restarting da service:\033[0m", err)
@@ -4003,14 +4122,21 @@ WantedBy=multi-user.target`
 		return
 	}
 
-	cmd = exec.Command("systemctl", "enable", "iran-azumi.service")
+	cmd = exec.Command("sudo", "chmod", "u+x", "/etc/systemd/system/iran-azumi.service")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror enablin da service:\033[0m", err)
+		return
+	}
+	
+	cmd = exec.Command("systemctl", "enable", "iran-azumi")
 	err = cmd.Run()
 	if err != nil {
 		fmt.Println("\033[91merror enabling da service:\033[0m", err)
 		return
 	}
 
-	cmd = exec.Command("systemctl", "restart", "iran-azumi.service")
+	cmd = exec.Command("systemctl", "restart", "iran-azumi")
 	err = cmd.Run()
 	if err != nil {
 		fmt.Println("\033[91merror restarting da service:\033[0m", err)
@@ -4147,14 +4273,21 @@ WantedBy=multi-user.target`
 		return
 	}
 
-	cmd = exec.Command("systemctl", "enable", "kharej-azumi.service")
+	cmd = exec.Command("sudo", "chmod", "u+x", "/etc/systemd/system/kharej-azumi.service")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror enablin da service:\033[0m", err)
+		return
+	}
+	
+	cmd = exec.Command("systemctl", "enable", "kharej-azumi")
 	err = cmd.Run()
 	if err != nil {
 		fmt.Println("\033[91merror enabling da service:\033[0m", err)
 		return
 	}
 
-	cmd = exec.Command("systemctl", "restart", "kharej-azumi.service")
+	cmd = exec.Command("systemctl", "restart", "kharej-azumi")
 	err = cmd.Run()
 	if err != nil {
 		fmt.Println("\033[91merror restarting da service:\033[0m", err)
@@ -4294,14 +4427,21 @@ WantedBy=multi-user.target`
 		return
 	}
 
-	cmd = exec.Command("systemctl", "enable", "kharej-azumi.service")
+	cmd = exec.Command("sudo", "chmod", "u+x", "/etc/systemd/system/kharej-azumi.service")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror enablin da service:\033[0m", err)
+		return
+	}
+	
+	cmd = exec.Command("systemctl", "enable", "kharej-azumi")
 	err = cmd.Run()
 	if err != nil {
 		fmt.Println("\033[91merror enabling da service:\033[0m", err)
 		return
 	}
 
-	cmd = exec.Command("systemctl", "restart", "kharej-azumi.service")
+	cmd = exec.Command("systemctl", "restart", "kharej-azumi")
 	err = cmd.Run()
 	if err != nil {
 		fmt.Println("\033[91merror restarting da service:\033[0m", err)

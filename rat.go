@@ -1990,7 +1990,7 @@ WantedBy=multi-user.target`
 		return
 	}
 
-	cmd = exec.Command("systemctl", "enable", "iran-azumi.")
+	cmd = exec.Command("systemctl", "enable", "iran-azumi")
 	err = cmd.Run()
 	if err != nil {
 		fmt.Println("\033[91merror enabling da service:\033[0m", err)

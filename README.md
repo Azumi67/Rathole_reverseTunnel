@@ -2,17 +2,30 @@
 نام پروژه : ریورس تانل Rathole [ با TCP - UDP - WS + TLS ]
 ---------------------------------------------------------------
 
------------
-![Update-Note--Arvin61r58](https://github.com/Azumi67/Rathole_reverseTunnel/assets/119934376/ae94b74a-2870-4d17-b886-ebfaadf7cc0c)**اپدیت**
+![check](https://github.com/Azumi67/PrivateIP-Tunnel/assets/119934376/13de8d36-dcfe-498b-9d99-440049c0cf14)
+**امکانات**
 
-- تغییراتی در دستورات compile انجام شد.
-- تغییراتی در math اسکریپت انجام شد.
-- متود دوم برای سرورهای ایرانی که مشکل دریافت self cert داشتند اضافه شد.
-- اموزش نوشتاری نصب و compile به صورت دستی هم اضافه شد
-- اگر مشکلی در دانلود داشتید، میتوانید از dns های شکن و غیره استفاده کنید.
----------------
 
-**توضیح کوتاه در مورد این پروژه :**
+- پشتیبانی از TCP و UDP
+- قابلیت تانل بر روی چندین پورت
+- امکان استفاده از ایپی 4 و 6
+- ریست تایمر انتخابی توسط شما
+- مناسب برای v2ray , Wireguard
+- امکان تانل بر روی ایپی فیلتر شده
+- امکان استفاده از ریورس تانل Ws + TLS
+- امکان تانل بر روی 10 سرور خارج و یک سرور ایران
+- امکان استفاده از nodelay برای بهبود پینگ
+- امکان ترکیب ریورس تانل udp با fec در آینده 
+- امکان حذف تمامی تانل ها و سرویس ها
+
+ ------------------------------------------------------
+ <div align="right">
+  <details>
+    <summary><strong>توضیحات</strong></summary>
+  
+------------------------------------ 
+
+
 - **اگر سرعتتون پایین بود، لطفا هم بر روی سرور ایران و خارج optimizer نصب کنید.**
 - اسکریپت بارها تست شده و باگ هایش گرفته شده است.
 - حتما در سرور تست، نخست تانل را ازمایش کنید و سپس اقدام به استفاده از آن بکنید.
@@ -29,26 +42,32 @@
 - اگر به هر دلیلی پیش نیاز ها برای شما نصب نشد و خطا گرفتید، لطفا با قرار دادن DNS دوباره امتحان بفرمایید.
 - اگر اختلالی در تانل داشتید همیشه وارد مسیر روبرو شوید cd /etc/systemd/system و با دستور ls ، سرویس های خارج و ایران را بیابید و با دستور systemctl status servicename و یا journalctl -u servicename.service ، دلیل اختلال تانل را بیابید
 
-------------------------
+  </details>
+</div>
 
-![307981](https://github.com/Azumi67/V2ray_loadbalance_multipleServers/assets/119934376/39b2794b-fd04-4ae5-baea-d4b66138766e)
- **فهرست :**
- ----------------------
- - **دسترسی سریع به اسکریپت** >> **[کلیک](https://github.com/Azumi67/Rathole_reverseTunnel#%D8%A7%D8%B3%DA%A9%D8%B1%DB%8C%D9%BE%D8%AA-%D9%85%D9%86)**
-- **نصب go به صورت دستی یا با اسکریپت** >> [کلیک](https://github.com/Azumi67/Rathole_reverseTunnel#%D8%A7%D9%85%D9%88%D8%B2%D8%B4-%D9%86%D8%B5%D8%A8-go-%D9%85%D9%88%D8%B1%D8%AF-%D9%86%DB%8C%D8%A7%D8%B2-%D8%A8%D8%B1%D8%A7%DB%8C-%D8%A7%D8%AC%D8%B1%D8%A7%DB%8C-%D8%A7%D8%B3%DA%A9%D8%B1%DB%8C%D9%BE%D8%AA)
-- **نصب پروژه** >> [کلیک](https://github.com/Azumi67/Rathole_reverseTunnel#%D9%86%D8%B5%D8%A8-%D9%BE%D8%B1%D9%88%DA%98%D9%87)
-- **امکانات** >> [کلیک](https://github.com/Azumi67/Rathole_reverseTunnel#%D8%A7%D9%85%DA%A9%D8%A7%D9%86%D8%A7%D8%AA)
-- **تانل ریورس TCP ایپی 4**  >> **[کلیک](https://github.com/Azumi67/Rathole_reverseTunnel#%D8%AA%D8%A7%D9%86%D9%84-%D8%B1%DB%8C%D9%88%D8%B1%D8%B3-tcp-%D8%A7%DB%8C%D9%BE%DB%8C-4)**
-- **تانل ریورس TCP ایپی 6** >> **[کلیک](https://github.com/Azumi67/Rathole_reverseTunnel#%D8%AA%D8%A7%D9%86%D9%84-%D8%B1%DB%8C%D9%88%D8%B1%D8%B3-tcp-%D8%A7%DB%8C%D9%BE%DB%8C-6)
-- **تانل ریورس UDP ایپی 4**  >> **[کلیک](https://github.com/Azumi67/Rathole_reverseTunnel#%D8%AA%D8%A7%D9%86%D9%84-%D8%B1%DB%8C%D9%88%D8%B1%D8%B3-udp-%D8%A7%DB%8C%D9%BE%DB%8C-4)
-- **تانل ریورس UDP ایپی 6**  >> **[کلیک](https://github.com/Azumi67/Rathole_reverseTunnel#%D8%AA%D8%A7%D9%86%D9%84-%D8%B1%DB%8C%D9%88%D8%B1%D8%B3-udp-%D8%A7%DB%8C%D9%BE%DB%8C-6)
-- **تانل ریورس TLS + WS ایپی 4** >> [کلیک](https://github.com/Azumi67/Rathole_reverseTunnel#%D8%AA%D8%A7%D9%86%D9%84-%D8%B1%DB%8C%D9%88%D8%B1%D8%B3-tls--ws-%D8%A7%DB%8C%D9%BE%DB%8C-4)
-- **تانل ریورس TLS + WS ایپی 6** >> [کلیک](https://github.com/Azumi67/Rathole_reverseTunnel#%D8%AA%D8%A7%D9%86%D9%84-%D8%B1%DB%8C%D9%88%D8%B1%D8%B3-tls--ws-%D8%A7%DB%8C%D9%BE%DB%8C-6)
-- **اسکریپت های کارآمد** >> [کلیک](https://github.com/Azumi67/Rathole_reverseTunnel#%D8%A7%D8%B3%DA%A9%D8%B1%DB%8C%D9%BE%D8%AA-%D9%87%D8%A7%DB%8C-%DA%A9%D8%A7%D8%B1%D8%A2%D9%85%D8%AF-)
+-----------
+  <div align="right">
+  <details>
+    <summary><strong><img src="https://github.com/Azumi67/Rathole_reverseTunnel/assets/119934376/3cfd920d-30da-4085-8234-1eec16a67460" alt="Image"> آپدیت</strong></summary>
+  
+------------------------------------ 
 
---------------
-![4961639](https://github.com/Azumi67/Fast_reverseTunnel/assets/119934376/ac38de6c-00d6-47e8-a455-e0201143db1c)**نصب پروژه**
--
+- تغییراتی در دستورات compile انجام شد.
+- تغییراتی در math اسکریپت انجام شد.
+- متود دوم برای سرورهای ایرانی که مشکل دریافت self cert داشتند اضافه شد.
+- اموزش نوشتاری نصب و compile به صورت دستی هم اضافه شد
+- اگر مشکلی در دانلود داشتید، میتوانید از dns های شکن و غیره استفاده کنید.
+  </details>
+</div>
+
+-----------
+
+  <div align="right">
+  <details>
+    <summary><strong><img src="https://github.com/Azumi67/Rathole_reverseTunnel/assets/119934376/dc708cac-6967-4ee6-92f7-0612b7d3d757" alt="Image">نصب پروژه</strong></summary>
+  
+------------------------------------ 
+
 
 - با این اسکریپت [click](https://github.com/Azumi67/Rathole_reverseTunnel#%D8%A7%D8%B3%DA%A9%D8%B1%DB%8C%D9%BE%D8%AA-%D9%85%D9%86) ، نخست پروژه را بر روی تمامی سرور ها نصب نمایید. من تنها بر روی amd64 و سیستم عامل های دبیان و اوبونتو تست کردم و دسترسی به سایر را نداشتم.
 - توجه فرمایید که نردیک به 2 گیگ فضای خالی برای compile نیاز دارید.
@@ -84,11 +103,18 @@ Caused by:
   ```
   sudo apt install curl -y && bash <(curl -s https://raw.githubusercontent.com/Azumi67/Rathole_reverseTunnel/main/install3.sh)
   ```
------------------
+  </details>
+</div>
 
 
-![Go_(programming_language)-Logo wine](https://github.com/Azumi67/UDP2RAW_FEC/assets/119934376/71b80a34-9515-42de-8238-9065986104a1)**اموزش نصب go مورد نیاز برای اجرای اسکریپت**
--
+--------------
+  <div align="right">
+  <details>
+    <summary><strong><img src="https://github.com/Azumi67/UDP2RAW_FEC/assets/119934376/71b80a34-9515-42de-8238-9065986104a1" alt="Image"> اموزش نصب go مورد نیاز برای اجرای اسکریپت</strong></summary>
+  
+------------------------------------ 
+
+
 - شما میتوانید از طریق اسکریپت [Here](https://github.com/Azumi67/Rathole_reverseTunnel#%D8%A7%D8%B3%DA%A9%D8%B1%DB%8C%D9%BE%D8%AA-%D9%85%D9%86) ، این پیش نیاز را نصب کنید یا به صورت دستی نصب نمایید.
 - حتما در صورت مشکل دانلود، dns های خود را تغییر دهید.
 - پس از نصب پیش نیاز ، اجرای اسکریپت go برای بار اول، ممکن است تا 10 ثانیه طول بکشد اما بعد از آن سریع اجرا میشود.
@@ -115,30 +141,19 @@ go get -u golang.org/x/crypto/ssh
 
 ```
 - سپس اسکریپت را میتوانید اجرا نمایید.
-------------------
-![check](https://github.com/Azumi67/PrivateIP-Tunnel/assets/119934376/13de8d36-dcfe-498b-9d99-440049c0cf14)
-**امکانات**
--
+  </details>
+</div>
 
-- پشتیبانی از TCP و UDP
-- قابلیت تانل بر روی چندین پورت
-- امکان استفاده از ایپی 4 و 6
-- ریست تایمر انتخابی توسط شما
-- مناسب برای v2ray , Wireguard
-- امکان تانل بر روی ایپی فیلتر شده
-- امکان استفاده از ریورس تانل Ws + TLS
-- امکان تانل بر روی 10 سرور خارج و یک سرور ایران
-- امکان استفاده از nodelay برای بهبود پینگ
-- امکان ترکیب ریورس تانل udp با fec در آینده 
-- امکان حذف تمامی تانل ها و سرویس ها
 
- ------------------------------------------------------
+-------------
+
+
 
 ![147-1472495_no-requirements-icon-vector-graphics-clipart](https://github.com/Azumi67/V2ray_loadbalance_multipleServers/assets/119934376/98d8c2bd-c9d2-4ecf-8db9-246b90e1ef0f)
  **پیش نیازها**
 
  - لطفا سرور اپدیت شده باشه.
- - میتوانید از اسکریپت اقای [Hwashemi](https://github.com/hawshemi/Linux-Optimizer) و یا [OPIRAN](https://github.com/opiran-club/VPS-Optimizer) هم برای بهینه سازی سرور در صورت تمایل استفاده نمایید. (پیش نیاز نیست)
+ - میتوانید از اسکریپت اقای [Hwashemi](https://github.com/hawshemi/Linux-Optimizer) و یا [OPIRAN](https://github.com/opiran-club/VPS-Optimizer) هم برای بهینه سازی سرور در صورت تمایل استفاده نمایید.
 
 
 ----------------------------
@@ -147,9 +162,14 @@ go get -u golang.org/x/crypto/ssh
   ![6348248](https://github.com/Azumi67/PrivateIP-Tunnel/assets/119934376/398f8b07-65be-472e-9821-631f7b70f783)
 **آموزش**
 -
-![OIP2 (1)](https://github.com/Azumi67/V2ray_loadbalance_multipleServers/assets/119934376/3ec2f05f-3308-4441-8cce-62ab4776f4e2)
-**تانل ریورس TCP ایپی 4** 
-----------------------------------
+
+  <div align="right">
+  <details>
+    <summary><strong><img src="https://github.com/Azumi67/Rathole_reverseTunnel/assets/119934376/fcbbdc62-2de5-48aa-bbdd-e323e96a62b5" alt="Image"> </strong>تانل ریورس TCP ایپی 4</summary>
+  
+------------------------------------ 
+
+
 ![green-dot-clipart-3](https://github.com/Azumi67/6TO4-PrivateIP/assets/119934376/902a2efa-f48f-4048-bc2a-5be12143bef3) **سرور ایران**
 
 **مسیر : IPV4 TCP > IRAN**
@@ -214,11 +234,17 @@ go get -u golang.org/x/crypto/ssh
 - گزیینه nodelay هم که در سرور ایران فعال کرده بودیم پس در اینجا هم فعال میکنم.
 - ریست تایمر هم که عدد 2 را وارد کرده بودیم. ( باید ریست تایمر یکسان باشد که همه سرویس ها همزمان ریست شوند)
 - در اخر یک عدد به شما نشان داده میشود. در سرور خارج بعدی وقتی از شما مقدار starting number را خواست، عددی که به شما نمایش داده شده است را وارد نمایید.
+  </details>
+</div>
 
---------------------------------------
-![OIP2 (1)](https://github.com/Azumi67/V2ray_loadbalance_multipleServers/assets/119934376/3ec2f05f-3308-4441-8cce-62ab4776f4e2)
-**تانل ریورس TCP ایپی 6** 
--
+ <div align="right">
+  <details>
+    <summary><strong><img src="https://github.com/Azumi67/Rathole_reverseTunnel/assets/119934376/fcbbdc62-2de5-48aa-bbdd-e323e96a62b5" alt="Image"> </strong>تانل ریورس TCP ایپی 6</summary>
+  
+  
+------------------------------------ 
+
+
 ![green-dot-clipart-3](https://github.com/Azumi67/6TO4-PrivateIP/assets/119934376/902a2efa-f48f-4048-bc2a-5be12143bef3) **سرور ایران**
 
 **مسیر : IPV6 TCP > IRAN**
@@ -283,12 +309,17 @@ go get -u golang.org/x/crypto/ssh
 - ریست تایمر هم که عدد 2 را وارد کرده بودیم. ( باید ریست تایمر یکسان باشد که همه سرویس ها همزمان ریست شوند)
 - در اخر یک عدد به شما نشان داده میشود. در سرور خارج بعدی وقتی از شما مقدار starting number را خواست، عددی که به شما نمایش داده شده است را وارد نمایید.
 
+  </details>
+</div>
+
+ <div align="right">
+  <details>
+    <summary><strong><img src="https://github.com/Azumi67/Rathole_reverseTunnel/assets/119934376/fcbbdc62-2de5-48aa-bbdd-e323e96a62b5" alt="Image"> </strong>تانل ریورس UDP ایپی 4</summary>
+  
+  
+------------------------------------ 
 
 
---------------------------------------
-![OIP2 (1)](https://github.com/Azumi67/V2ray_loadbalance_multipleServers/assets/119934376/3ec2f05f-3308-4441-8cce-62ab4776f4e2)
-**تانل ریورس UDP ایپی 4** 
--
 ![green-dot-clipart-3](https://github.com/Azumi67/6TO4-PrivateIP/assets/119934376/902a2efa-f48f-4048-bc2a-5be12143bef3) **سرور ایران**
 
 **مسیر : IPV4 UDP > IRAN**
@@ -328,10 +359,17 @@ go get -u golang.org/x/crypto/ssh
 - ریست تایمر هم که عدد 2 را وارد کرده بودیم. ( باید ریست تایمر یکسان باشد که همه سرویس ها همزمان ریست شوند)
 - در اخر یک عدد به شما نشان داده میشود. در سرور خارج بعدی وقتی از شما مقدار starting number را خواست، عددی که به شما نمایش داده شده است را وارد نمایید.
 
---------------------------------------
-![OIP2 (1)](https://github.com/Azumi67/V2ray_loadbalance_multipleServers/assets/119934376/3ec2f05f-3308-4441-8cce-62ab4776f4e2)
-**تانل ریورس UDP ایپی 6** 
--
+  </details>
+</div>
+
+ <div align="right">
+  <details>
+    <summary><strong><img src="https://github.com/Azumi67/Rathole_reverseTunnel/assets/119934376/fcbbdc62-2de5-48aa-bbdd-e323e96a62b5" alt="Image"> </strong>تانل ریورس UDP ایپی 6</summary>
+  
+  
+------------------------------------ 
+
+
 ![green-dot-clipart-3](https://github.com/Azumi67/6TO4-PrivateIP/assets/119934376/902a2efa-f48f-4048-bc2a-5be12143bef3) **سرور ایران**
 
 **مسیر : IPV6 UDP > IRAN**
@@ -370,10 +408,17 @@ go get -u golang.org/x/crypto/ssh
 - پورت کانفیگ سرور  خارج 50820 بود.
 - ریست تایمر هم که عدد 2 را وارد کرده بودیم. ( باید ریست تایمر یکسان باشد که همه سرویس ها همزمان ریست شوند)
 - در اخر یک عدد به شما نشان داده میشود. در سرور خارج بعدی وقتی از شما مقدار starting number را خواست، عددی که به شما نمایش داده شده است را وارد نمایید.
-----------------------------------
-![OIP2 (1)](https://github.com/Azumi67/V2ray_loadbalance_multipleServers/assets/119934376/3ec2f05f-3308-4441-8cce-62ab4776f4e2)
-**تانل ریورس TLS + WS ایپی 4** 
--
+  </details>
+</div>
+
+ <div align="right">
+  <details>
+    <summary><strong><img src="https://github.com/Azumi67/Rathole_reverseTunnel/assets/119934376/fcbbdc62-2de5-48aa-bbdd-e323e96a62b5" alt="Image"> </strong>تانل ریورس TLS + WS ایپی 4</summary>
+  
+  
+------------------------------------ 
+
+
 ![green-dot-clipart-3](https://github.com/Azumi67/6TO4-PrivateIP/assets/119934376/902a2efa-f48f-4048-bc2a-5be12143bef3) **سرور ایران**
 
 **مسیر : IPV4 WS + TLS > IRAN**
@@ -450,10 +495,17 @@ go get -u golang.org/x/crypto/ssh
 - پورت های کانفیگ سرور دوم خارج 8082 و 8083 بود.
 - ریست تایمر هم که عدد 2 را وارد کرده بودیم. ( باید ریست تایمر یکسان باشد که همه سرویس ها همزمان ریست شوند)
 - در اخر یک عدد به شما نشان داده میشود. در سرور خارج بعدی وقتی از شما مقدار starting number را خواست، عددی که به شما نمایش داده شده است را وارد نمایید.
---------------------------------------
-![OIP2 (1)](https://github.com/Azumi67/V2ray_loadbalance_multipleServers/assets/119934376/3ec2f05f-3308-4441-8cce-62ab4776f4e2)
-**تانل ریورس TLS + WS ایپی 6** 
--
+  </details>
+</div>
+
+ <div align="right">
+  <details>
+    <summary><strong><img src="https://github.com/Azumi67/Rathole_reverseTunnel/assets/119934376/fcbbdc62-2de5-48aa-bbdd-e323e96a62b5" alt="Image"> </strong>تانل ریورس TLS + WS ایپی 6</summary>
+  
+  
+------------------------------------ 
+
+
 ![green-dot-clipart-3](https://github.com/Azumi67/6TO4-PrivateIP/assets/119934376/902a2efa-f48f-4048-bc2a-5be12143bef3) **سرور ایران**
 
 **مسیر : IPV6 WS + TLS > IRAN**
@@ -505,16 +557,18 @@ go get -u golang.org/x/crypto/ssh
 - ریست تایمر هم که عدد 2 را وارد کرده بودیم. ( باید ریست تایمر یکسان باشد که همه سرویس ها همزمان ریست شوند)
 - در اخر یک عدد به شما نشان داده میشود. در سرور خارج بعدی وقتی از شما مقدار starting number را خواست، عددی که به شما نمایش داده شده است را وارد نمایید.
 
+  </details>
+</div>
 
 --------------------------------------
 
 **اسکرین شات**
 
 <details>
-  <summary align="right">Click to reveal image</summary>
+  <summary align="right">برای مشاهده اسکرین کلیک کنید</summary>
   
   <p align="right">
-    <img src="https://github.com/Azumi67/Fast_reverseTunnel/assets/119934376/eb2a6a2b-0628-41de-9ca3-1d442a05ee24" alt="menu screen" />
+    <img src="https://github.com/Azumi67/Rathole_reverseTunnel/assets/119934376/9e744610-6651-4f20-8375-20505742cbbf" alt="menu screen" />
   </p>
 </details>
 
@@ -547,7 +601,12 @@ wget "https://raw.githubusercontent.com/hawshemi/Linux-Optimizer/main/linux-opti
 ![R (a2)](https://github.com/Azumi67/PrivateIP-Tunnel/assets/119934376/716fd45e-635c-4796-b8cf-856024e5b2b2)
 **اسکریپت من**
 ----------------
-**کامپایل پروژه**
+
+<div align="right">
+  <details>
+    <summary><strong>کامپایل پروژه</strong></summary>
+  
+
 - دستور زیر پروژه را بر روی سرور شما compile میکند. نخست این را اجرا نمایید
 ```
 sudo apt install curl -y && bash <(curl -s https://raw.githubusercontent.com/Azumi67/Rathole_reverseTunnel/main/install.sh)
@@ -582,10 +641,14 @@ Caused by:
   ```
   sudo apt install curl -y && bash <(curl -s https://raw.githubusercontent.com/Azumi67/Rathole_reverseTunnel/main/install3.sh)
   ```
+  </details>
+</div>
 
-------------------
+<div align="right">
+  <details>
+    <summary><strong>اسکرپت تانل</strong></summary>
   
-**اسکرپت تانل**
+
 - پس از انکه کامپایل پروژه تمام شد، با دستور زیر، پیش نیاز گو را نصب میکنید و سپس اقدام به اجرای اسکریپت میکنید.
 ```
 sudo apt install curl -y && bash <(curl -s https://raw.githubusercontent.com/Azumi67/Rathole_reverseTunnel/main/go.sh)
@@ -596,6 +659,10 @@ sudo apt install curl -y && bash <(curl -s https://raw.githubusercontent.com/Azu
 sudo apt install wget -y && rm rat.go && wget https://raw.githubusercontent.com/Azumi67/Rathole_reverseTunnel/main/rat.go && go run rat.go
 ```
 
+  </details>
+</div>
+
+  
 ---------------------------------------------
 ![R23 (1)](https://github.com/Azumi67/FRP-V2ray-Loadbalance/assets/119934376/18d12405-d354-48ac-9084-fff98d61d91c)
 **سورس ها**

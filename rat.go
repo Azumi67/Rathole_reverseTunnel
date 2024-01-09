@@ -22,6 +22,7 @@ import (
 	"net"
 	"io/ioutil"
 	"io"
+
 )
 func getIPv4() string {
 	interfaces, err := net.Interfaces()
@@ -168,7 +169,7 @@ func mainMenu() {
 		fmt.Println(border)
 		prompt := &survey.Select{
 			Message: "Enter your choice Please:",
-			Options: []string{"0. \033[91mSTATUS Menu\033[0m", "1. \033[96mIPV4 \033[92mTCP \033[0m", "2. \033[93mIPV4 \033[92mUDP\033[0m", "3. \033[96mIPV6 \033[92mTCP\033[0m", "4. \033[93mIPV6 \033[92mUDP\033[0m", "5. \033[93mIPV4 \033[92mWs + TLS\033[0m", "6. \033[93mIPV6 \033[92mWs + TLS\033[0m", "7. \033[92mStop | Restart Service\033[0m", "8. \033[91mUninstall\033[0m", "q. Exit"},
+			Options: []string{"0. \033[91mSTATUS Menu\033[0m", "1. \033[92mStop | Restart Service\033[0m", "2. \033[96mIPV4 \033[92mTCP \033[0m", "3. \033[93mIPV4 \033[92mUDP\033[0m", "4. \033[96mIPV6 \033[92mTCP\033[0m", "5. \033[93mIPV6 \033[92mUDP\033[0m", "6. \033[96mNoise TLS \033[92mIPV4\033[0m", "7. \033[93mNoise TLS \033[92mIPV6\033[0m", "8. \033[96mIPV4 \033[92mWs + TLS\033[0m", "9. \033[93mIPV6 \033[92mWs + TLS\033[0m", "10. \033[91mUninstall\033[0m",  "q. Exit"},
 		
 		}
 		fmt.Println("\033[93m╰─────────────────────────────────────────────────────────────────────╯\033[0m")
@@ -181,21 +182,25 @@ func mainMenu() {
 		switch choice {
 		case "0. \033[91mSTATUS Menu\033[0m":
 			status()
-		case "1. \033[96mIPV4 \033[92mTCP \033[0m":
-			tcp4Menu()
-		case "2. \033[93mIPV4 \033[92mUDP\033[0m":
-			udp4Menu()
-		case "3. \033[96mIPV6 \033[92mTCP\033[0m":
-			tcp6Menu()
-		case "4. \033[93mIPV6 \033[92mUDP\033[0m":
-			udp6Menu()
-		case "5. \033[93mIPV4 \033[92mWs + TLS\033[0m":
-			ws4Menu()
-		case "6. \033[93mIPV6 \033[92mWs + TLS\033[0m":
-			ws6Menu()
-		case "7. \033[92mStop | Restart Service\033[0m":
+		case "1. \033[92mStop | Restart Service\033[0m":
 			startMain()
-		case "8. \033[91mUninstall\033[0m":
+		case "2. \033[96mIPV4 \033[92mTCP \033[0m":
+			tcp4Menu()
+		case "3. \033[93mIPV4 \033[92mUDP\033[0m":
+			udp4Menu()
+		case "4. \033[96mIPV6 \033[92mTCP\033[0m":
+			tcp6Menu()
+		case "5. \033[93mIPV6 \033[92mUDP\033[0m":
+			udp6Menu()
+		case "6. \033[96mNoise TLS \033[92mIPV4\033[0m":
+			noise4Menu()
+		case "7. \033[93mNoise TLS \033[92mIPV6\033[0m":
+			noise6Menu()
+		case "8. \033[96mIPV4 \033[92mWs + TLS\033[0m":
+			ws4Menu()
+		case "9. \033[93mIPV6 \033[92mWs + TLS\033[0m":
+			ws6Menu()
+		case "10. \033[91mUninstall\033[0m":
 			UniMenu()
 		case "q. Exit":
 			fmt.Println("Exiting...")
@@ -206,6 +211,1045 @@ func mainMenu() {
 
 		
 		readInput()
+	}
+}
+func noise4Menu() {
+	clearScreen()
+	fmt.Println("\033[92m ^ ^\033[0m")
+	fmt.Println("\033[92m(\033[91mO,O\033[92m)\033[0m")
+	fmt.Println("\033[92m(   ) \033[93m Reverse \033[92mNoise TLS \033[96mIPV4 \033[93mMenu\033[0m ")
+	fmt.Println("\033[92m \"-\" \033[93m════════════════════════════════════\033[0m")
+	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+
+	prompt := &survey.Select{
+		Message: "Enter your choice Please:",
+		Options: []string{"1. \033[92mIRAN\033[0m", "2. \033[93mKHAREJ\033[92m[1]\033[0m", "3. \033[93mKHAREJ\033[92m[2]\033[0m", "4. \033[93mKHAREJ\033[92m[3]\033[0m", "5. \033[93mKHAREJ\033[92m[4]\033[0m", "6. \033[93mKHAREJ\033[92m[5]\033[0m", "7. \033[93mKHAREJ\033[92m[6]\033[0m", "8. \033[93mKHAREJ\033[92m[7]\033[0m", "9. \033[93mKHAREJ\033[92m[8]\033[0m", "10. \033[93mKHAREJ\033[92m[9]\033[0m", "11. \033[93mKHAREJ\033[92m[10]\033[0m", "0. \033[94mBack to the main menu\033[0m"},
+	}
+    
+	var choice string
+	err := survey.AskOne(prompt, &choice)
+	if err != nil {
+		log.Fatalf("\033[91mCan't read user input, sry!:\033[0m %v", err)
+	}
+
+	switch choice {
+	case "1. \033[92mIRAN\033[0m":
+		iranno4()
+	case "2. \033[93mKHAREJ\033[92m[1]\033[0m":
+		kharejno4()
+	case "3. \033[93mKHAREJ\033[92m[2]\033[0m":
+		kharej2no4()
+    case "4. \033[93mKHAREJ\033[92m[3]\033[0m":
+		kharej2no4()
+	case "5. \033[93mKHAREJ\033[92m[4]\033[0m":
+		kharej2no4()
+	case "6. \033[93mKHAREJ\033[92m[5]\033[0m":
+		kharej2no4()
+	case "0. \033[94mBack to the main menu\033[0m":
+	    clearScreen()
+		mainMenu()
+	default:
+		fmt.Println("\033[91mInvalid choice\033[0m")
+	}
+
+	readInput()
+}
+
+
+func iranno4() {
+	clearScreen()
+	fmt.Println("\033[92m ^ ^\033[0m")
+	fmt.Println("\033[92m(\033[91mO,O\033[92m)\033[0m")
+	fmt.Println("\033[92m(   ) \033[93m Reverse \033[92mIPV4 \033[96mNoise TLS\033[0m ")
+	fmt.Println("\033[92m \"-\" \033[93m════════════════════════════════════\033[0m")
+	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+	displayNotification("Configuring IRAN")
+	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+	scanner := bufio.NewScanner(os.Stdin)
+
+	fmt.Print("\033[93mHow many \033[92mconfigs\033[93m do you have \033[96m[All Servers Combined]\033[93m? \033[0m")
+	scanner.Scan()
+	numConfigsStr := scanner.Text()
+
+	numConfigs, err := strconv.Atoi(numConfigsStr)
+	if err != nil {
+		fmt.Println("\033[91mPlease enter a valid number\033[0m")
+		return
+	}
+
+	fmt.Print("\033[93mEnter \033[92mTunnel port:\033[0m ")
+	scanner.Scan()
+	tunnelPort := scanner.Text()
+
+	kharejPorts := make([]string, numConfigs)
+	for i := 0; i < numConfigs; i++ {
+		fmt.Printf("\033[93mEnter \033[92mConfig %d\033[93m Port: \033[0m", i+1)
+		scanner.Scan()
+		kharejPorts[i] = scanner.Text()
+	}
+
+	cmd := exec.Command("/root/rathole/target/debug/rathole", "--genkey")
+	outputPipe, err := cmd.StdoutPipe()
+	if err != nil {
+		fmt.Println("\033[91merror creating genkey:\033[0m", err)
+		return
+	}
+
+	err = cmd.Start()
+	if err != nil {
+		fmt.Println("\033[91mCouldn't start the command:\033[0m", err)
+		return
+	}
+    fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+	scannerOutput := bufio.NewScanner(outputPipe)
+	go func() {
+		for scannerOutput.Scan() {
+			fmt.Println(scannerOutput.Text())
+		}
+	}()
+    
+	err = cmd.Wait()
+	if err != nil {
+		fmt.Println("\033[91mThere was sth wrong generating keys with rathole:\033[0m", err)
+		return
+	}
+    fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+	fmt.Print("\033[93mEnter the \033[92mPrivate Key: \033[0m")
+	scanner.Scan()
+	privateK := scanner.Text()
+	server := fmt.Sprintf(`[server]
+bind_addr = "0.0.0.0:%s"
+default_token = "azumiisinyourarea"
+
+[server.transport]
+type = "noise"
+[server.transport.noise]
+local_private_key = "%s"
+
+`, tunnelPort, privateK)
+
+	for i := 0; i < numConfigs; i++ {
+		config := fmt.Sprintf(`[server.services.kharej%d]
+bind_addr = "0.0.0.0:%s" 
+`, i+1, kharejPorts[i])
+		server += config
+	}
+
+	err = os.Remove("/root/rathole/server.toml")
+	if err != nil && !os.IsNotExist(err) {
+		fmt.Println("\033[91merror deleting toml:\033[0m", err)
+		return
+	}
+
+	file, err := os.Create("/root/rathole/server.toml")
+	if err != nil {
+		fmt.Println("\033[91merror creating toml:\033[0m", err)
+		return
+	}
+	defer file.Close()
+
+	_, err = file.WriteString(server)
+	if err != nil {
+		fmt.Println("\033[91merror putting configs into toml:\033[0m", err)
+		return
+	}
+
+	service := `[Unit]
+Description=Rathole Service
+After=network.target
+
+[Service]
+Type=simple
+Restart=on-failure
+RestartSec=5s
+LimitNOFILE=1048576
+ExecStart=/root/rathole/target/debug/rathole /root/rathole/server.toml
+
+[Install]
+WantedBy=multi-user.target`
+
+	err = os.Remove("/etc/systemd/system/iran-azumi.service")
+	if err != nil && !os.IsNotExist(err) {
+		fmt.Println("\033[91merror deleting iran-azumi:\033[0m", err)
+		return
+	}
+
+	file, err = os.Create("/etc/systemd/system/iran-azumi.service")
+	if err != nil {
+		fmt.Println("\033[91merror creating iran-azumi:\033[0m", err)
+		return
+	}
+	defer file.Close()
+
+	_, err = file.WriteString(service)
+	if err != nil {
+		fmt.Println("\033[91merror constructing iran-azumi:\033[0m", err)
+		return
+	}
+	cmd = exec.Command("systemctl", "daemon-reload")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror reloading:\033[0m", err)
+		return
+	}
+
+	cmd = exec.Command("sudo", "chmod", "u+x", "/etc/systemd/system/iran-azumi.service")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror enablin da service:\033[0m", err)
+		return
+	}
+
+	cmd = exec.Command("systemctl", "enable", "iran-azumi")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror enabling da service:\033[0m", err)
+		return
+	}
+
+	cmd = exec.Command("systemctl", "restart", "iran-azumi")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror restarting da service:\033[0m", err)
+		return
+	}
+
+	resIran()
+	displayCheckmark("\033[92mService created successfully!\033[0m")
+}
+
+
+
+
+
+func kharejno4() {
+	clearScreen()
+	fmt.Println("\033[92m ^ ^\033[0m")
+	fmt.Println("\033[92m(\033[91mO,O\033[92m)\033[0m")
+	fmt.Println("\033[92m(   ) \033[93m Reverse \033[92mIPV4 \033[96mNoise TLS\033[0m ")
+	fmt.Println("\033[92m \"-\" \033[93m════════════════════════════════════\033[0m")
+	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+	displayNotification("Configuring KHAREJ")
+	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+	scanner := bufio.NewScanner(os.Stdin)
+
+	fmt.Print("\033[93mEnter the \033[92mStarting number:\033[0m ")
+	scanner.Scan()
+	startingNumberStr := scanner.Text()
+
+	startingNumber, err := strconv.Atoi(startingNumberStr)
+	if err != nil {
+		fmt.Println("\033[91mPlz enter a valid number\033[0m")
+		return
+	}
+
+	fmt.Print("\033[93mEnter \033[92mIRAN IPV4:\033[0m ")
+	scanner.Scan()
+	iranIP := scanner.Text()
+
+	fmt.Print("\033[93mEnter \033[92mTunnel port:\033[0m ")
+	scanner.Scan()
+	tunnelPort := scanner.Text()
+
+	fmt.Print("\033[93mHow many \033[92mConfigs\033[93m do you have?\033[0m ")
+	scanner.Scan()
+	numConfigsStr := scanner.Text()
+
+	numConfigs, err := strconv.Atoi(numConfigsStr)
+	if err != nil {
+		fmt.Println("\033[91mPlz enter a valid number\033[0m")
+		return
+	}
+
+	kharejPorts := make([]string, numConfigs)
+	for i := 0; i < numConfigs; i++ {
+		fmt.Printf("\033[93mEnter \033[92mconfig %d\033[93m port:\033[0m ", i+1)
+		scanner.Scan()
+		kharejPorts[i] = scanner.Text()
+	}
+
+
+fmt.Print("\033[93mEnter \033[92mIRAN Public Key:\033[0m ")
+scanner.Scan()
+iranPublicKey := scanner.Text()
+
+client := fmt.Sprintf(`[client]
+remote_addr = "%s:%s"
+default_token = "azumiisinyourarea"
+
+[client.transport]
+type = "noise"
+[client.transport.noise]
+remote_public_key = "%s"
+`, iranIP, tunnelPort, iranPublicKey)
+
+	for i := 0; i < numConfigs; i++ {
+		config := fmt.Sprintf(`[client.services.kharej%d]
+local_addr = "127.0.0.1:%s"
+`, i+startingNumber, kharejPorts[i])
+		client += config
+	}
+
+	err = os.Remove("/root/rathole/client.toml")
+	if err != nil && !os.IsNotExist(err) {
+		fmt.Println("\033[91merror deleting toml:\033[0m", err)
+		return
+	}
+
+	file, err := os.Create("/root/rathole/client.toml")
+	if err != nil {
+		fmt.Println("\033[91merror creating toml:\033[0m", err)
+		return
+	}
+	defer file.Close()
+
+	_, err = file.WriteString(client)
+	if err != nil {
+		fmt.Println("\033[91merror putting configs into toml:\033[0m", err)
+		return
+	}
+
+	service := `[Unit]
+Description=Kharej-Azumi Service
+After=network.target
+
+[Service]
+Type=simple
+Restart=on-failure
+RestartSec=5s
+LimitNOFILE=1048576
+ExecStart=/root/rathole/target/debug/rathole /root/rathole/client.toml
+
+[Install]
+WantedBy=multi-user.target`
+
+	err = os.Remove("/etc/systemd/system/kharej-azumi.service")
+	if err != nil && !os.IsNotExist(err) {
+		fmt.Println("\033[91merror deleting iran-azumi:\033[0m", err)
+		return
+	}
+
+	file, err = os.Create("/etc/systemd/system/kharej-azumi.service")
+	if err != nil {
+		fmt.Println("\033[91merror creating iran-azumi:\033[0m", err)
+		return
+	}
+	defer file.Close()
+
+	_, err = file.WriteString(service)
+	if err != nil {
+		fmt.Println("\033[91merror constructing iran-azumi:\033[0m", err)
+		return
+	}
+
+	cmd := exec.Command("systemctl", "daemon-reload")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror reloading:\033[0m", err)
+		return
+	}
+
+	cmd = exec.Command("sudo", "chmod", "u+x", "/etc/systemd/system/kharej-azumi.service")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror enablin da service:\033[0m", err)
+		return
+	}
+	
+	cmd = exec.Command("systemctl", "enable", "kharej-azumi")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror enabling da service:\033[0m", err)
+		return
+	}
+
+	cmd = exec.Command("systemctl", "restart", "kharej-azumi")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror restarting da service:\033[0m", err)
+		return
+	}
+	resKharej()
+	displayCheckmark("\033[92mService created successfully!\033[0m")
+	fmt.Println("╭─────────────────────────────────────────────╮")
+	fmt.Printf("\033[92m Starting number for the next server : \033[96m%-9d\n\033[0m", numConfigs+1)
+	fmt.Println("╰─────────────────────────────────────────────╯")
+}
+func kharej2no4() {
+	clearScreen()
+	fmt.Println("\033[92m ^ ^\033[0m")
+	fmt.Println("\033[92m(\033[91mO,O\033[92m)\033[0m")
+	fmt.Println("\033[92m(   ) \033[93m Reverse \033[92mIPV4 \033[96mNoise TLS\033[0m ")
+	fmt.Println("\033[92m \"-\" \033[93m════════════════════════════════════\033[0m")
+	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+	displayNotification("Configuring KHAREJ")
+	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+	scanner := bufio.NewScanner(os.Stdin)
+
+	fmt.Print("\033[93mEnter the \033[92mStarting number:\033[0m ")
+	scanner.Scan()
+	startingNumberStr := scanner.Text()
+
+	startingNumber, err := strconv.Atoi(startingNumberStr)
+	if err != nil {
+		fmt.Println("\033[91mPlz enter a valid number\033[0m")
+		return
+	}
+
+	fmt.Print("\033[93mEnter \033[92mIRAN IPV4:\033[0m ")
+	scanner.Scan()
+	iranIP := scanner.Text()
+
+	fmt.Print("\033[93mEnter \033[92mTunnel port:\033[0m ")
+	scanner.Scan()
+	tunnelPort := scanner.Text()
+
+	fmt.Print("\033[93mHow many \033[92mConfigs\033[93m do you have?\033[0m ")
+	scanner.Scan()
+	numConfigsStr := scanner.Text()
+
+	numConfigs, err := strconv.Atoi(numConfigsStr)
+	if err != nil {
+		fmt.Println("\033[91mPlz enter a valid number\033[0m")
+		return
+	}
+
+	kharejPorts := make([]string, numConfigs)
+	for i := 0; i < numConfigs; i++ {
+		fmt.Printf("\033[93mEnter \033[92mconfig %d\033[93m port:\033[0m ", i+1)
+		scanner.Scan()
+		kharejPorts[i] = scanner.Text()
+	}
+
+fmt.Print("\033[93mEnter \033[92mIRAN Public Key:\033[0m ")
+scanner.Scan()
+iranPublicKey := scanner.Text()
+
+client := fmt.Sprintf(`[client]
+remote_addr = "%s:%s"
+default_token = "azumiisinyourarea"
+
+[client.transport]
+type = "noise"
+[client.transport.noise]
+remote_public_key = "%s"
+`, iranIP, tunnelPort, iranPublicKey)
+
+	for i := 0; i < numConfigs; i++ {
+		config := fmt.Sprintf(`[client.services.kharej%d]
+local_addr = "127.0.0.1:%s"
+`, i+startingNumber, kharejPorts[i])
+		client += config
+	}
+
+	err = os.Remove("/root/rathole/client.toml")
+	if err != nil && !os.IsNotExist(err) {
+		fmt.Println("\033[91merror deleting toml:\033[0m", err)
+		return
+	}
+
+	file, err := os.Create("/root/rathole/client.toml")
+	if err != nil {
+		fmt.Println("\033[91merror creating toml:\033[0m", err)
+		return
+	}
+	defer file.Close()
+
+	_, err = file.WriteString(client)
+	if err != nil {
+		fmt.Println("\033[91merror putting configs into toml:\033[0m", err)
+		return
+	}
+
+	service := `[Unit]
+Description=Kharej-Azumi Service
+After=network.target
+
+[Service]
+Type=simple
+Restart=on-failure
+RestartSec=5s
+LimitNOFILE=1048576
+ExecStart=/root/rathole/target/debug/rathole /root/rathole/client.toml
+
+[Install]
+WantedBy=multi-user.target`
+
+	err = os.Remove("/etc/systemd/system/kharej-azumi.service")
+	if err != nil && !os.IsNotExist(err) {
+		fmt.Println("\033[91merror deleting iran-azumi:\033[0m", err)
+		return
+	}
+
+	file, err = os.Create("/etc/systemd/system/kharej-azumi.service")
+	if err != nil {
+		fmt.Println("\033[91merror creating iran-azumi:\033[0m", err)
+		return
+	}
+	defer file.Close()
+
+	_, err = file.WriteString(service)
+	if err != nil {
+		fmt.Println("\033[91merror constructing iran-azumi:\033[0m", err)
+		return
+	}
+
+	cmd := exec.Command("systemctl", "daemon-reload")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror reloading:\033[0m", err)
+		return
+	}
+
+	
+	cmd = exec.Command("sudo", "chmod", "u+x", "/etc/systemd/system/kharej-azumi.service")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror enablin da service:\033[0m", err)
+		return
+	}
+	
+	cmd = exec.Command("systemctl", "enable", "kharej-azumi")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror enabling da service:\033[0m", err)
+		return
+	}
+
+	cmd = exec.Command("systemctl", "restart", "kharej-azumi")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror restarting da service:\033[0m", err)
+		return
+	}
+	resKharej()
+	displayCheckmark("\033[92mService created successfully!\033[0m")
+	if numConfigs == 1 {
+	    fmt.Println("╭─────────────────────────────────────────────╮")
+		fmt.Printf("\033[92m  Starting number for the next server:\033[96m %d\n\033[0m", startingNumber+1)
+		fmt.Println("╰─────────────────────────────────────────────╯")
+	} else {
+	    fmt.Println("╭─────────────────────────────────────────────╮")
+		fmt.Printf("\033[92m  Starting number for the next server:\033[96m %d\n\033[0m", numConfigs+startingNumber)
+		fmt.Println("╰─────────────────────────────────────────────╯")
+	}
+}
+func noise6Menu() {
+	clearScreen()
+	fmt.Println("\033[92m ^ ^\033[0m")
+	fmt.Println("\033[92m(\033[91mO,O\033[92m)\033[0m")
+	fmt.Println("\033[92m(   ) \033[93m Reverse \033[92mNoise TLS \033[96mIPV6 \033[93mMenu\033[0m ")
+	fmt.Println("\033[92m \"-\" \033[93m════════════════════════════════════\033[0m")
+	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+
+	prompt := &survey.Select{
+		Message: "Enter your choice Please:",
+		Options: []string{"1. \033[92mIRAN\033[0m", "2. \033[93mKHAREJ\033[92m[1]\033[0m", "3. \033[93mKHAREJ\033[92m[2]\033[0m", "4. \033[93mKHAREJ\033[92m[3]\033[0m", "5. \033[93mKHAREJ\033[92m[4]\033[0m", "6. \033[93mKHAREJ\033[92m[5]\033[0m", "7. \033[93mKHAREJ\033[92m[6]\033[0m", "8. \033[93mKHAREJ\033[92m[7]\033[0m", "9. \033[93mKHAREJ\033[92m[8]\033[0m", "10. \033[93mKHAREJ\033[92m[9]\033[0m", "11. \033[93mKHAREJ\033[92m[10]\033[0m", "0. \033[94mBack to the main menu\033[0m"},
+	}
+    
+	var choice string
+	err := survey.AskOne(prompt, &choice)
+	if err != nil {
+		log.Fatalf("\033[91mCan't read user input, sry!:\033[0m %v", err)
+	}
+
+	switch choice {
+	case "1. \033[92mIRAN\033[0m":
+		iranno6()
+	case "2. \033[93mKHAREJ\033[92m[1]\033[0m":
+		kharejno6()
+	case "3. \033[93mKHAREJ\033[92m[2]\033[0m":
+		kharej2no6()
+    case "4. \033[93mKHAREJ\033[92m[3]\033[0m":
+		kharej2no6()
+	case "5. \033[93mKHAREJ\033[92m[4]\033[0m":
+		kharej2no6()
+	case "6. \033[93mKHAREJ\033[92m[5]\033[0m":
+		kharej2no6()
+	case "0. \033[94mBack to the main menu\033[0m":
+	    clearScreen()
+		mainMenu()
+	default:
+		fmt.Println("\033[91mInvalid choice\033[0m")
+	}
+
+	readInput()
+}
+
+
+func iranno6() {
+	clearScreen()
+	fmt.Println("\033[92m ^ ^\033[0m")
+	fmt.Println("\033[92m(\033[91mO,O\033[92m)\033[0m")
+	fmt.Println("\033[92m(   ) \033[93m Reverse \033[92mIPV6 \033[96mNoise TLS\033[0m ")
+	fmt.Println("\033[92m \"-\" \033[93m════════════════════════════════════\033[0m")
+	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+	displayNotification("Configuring IRAN")
+	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+	scanner := bufio.NewScanner(os.Stdin)
+
+	fmt.Print("\033[93mHow many \033[92mconfigs\033[93m do you have \033[96m[All Servers Combined]\033[93m? \033[0m")
+	scanner.Scan()
+	numConfigsStr := scanner.Text()
+
+	numConfigs, err := strconv.Atoi(numConfigsStr)
+	if err != nil {
+		fmt.Println("\033[91mPlease enter a valid number\033[0m")
+		return
+	}
+
+	fmt.Print("\033[93mEnter \033[92mTunnel port:\033[0m ")
+	scanner.Scan()
+	tunnelPort := scanner.Text()
+
+	kharejPorts := make([]string, numConfigs)
+	for i := 0; i < numConfigs; i++ {
+		fmt.Printf("\033[93mEnter \033[92mConfig %d\033[93m Port: \033[0m", i+1)
+		scanner.Scan()
+		kharejPorts[i] = scanner.Text()
+	}
+
+	cmd := exec.Command("/root/rathole/target/debug/rathole", "--genkey")
+	outputPipe, err := cmd.StdoutPipe()
+	if err != nil {
+		fmt.Println("\033[91merror creating genkey:\033[0m", err)
+		return
+	}
+
+	err = cmd.Start()
+	if err != nil {
+		fmt.Println("\033[91mCouldn't start the command:\033[0m", err)
+		return
+	}
+    fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+	scannerOutput := bufio.NewScanner(outputPipe)
+	go func() {
+		for scannerOutput.Scan() {
+			fmt.Println(scannerOutput.Text())
+		}
+	}()
+	err = cmd.Wait()
+	if err != nil {
+		fmt.Println("\033[91mThere was sth wrong generating keys with rathole:\033[0m", err)
+		return
+	}
+    fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+	fmt.Print("\033[93mEnter the \033[92mPrivate Key: \033[0m")
+	scanner.Scan()
+	privateK := scanner.Text()
+	server := fmt.Sprintf(`[server]
+bind_addr = "[::]:%s"
+default_token = "azumiisinyourarea"
+
+[server.transport]
+type = "noise"
+[server.transport.noise]
+local_private_key = "%s"
+
+`, tunnelPort, privateK)
+
+	for i := 0; i < numConfigs; i++ {
+		config := fmt.Sprintf(`[server.services.kharej%d]
+bind_addr = "0.0.0.0:%s" 
+`, i+1, kharejPorts[i])
+		server += config
+	}
+
+	err = os.Remove("/root/rathole/server.toml")
+	if err != nil && !os.IsNotExist(err) {
+		fmt.Println("\033[91merror deleting toml:\033[0m", err)
+		return
+	}
+
+	file, err := os.Create("/root/rathole/server.toml")
+	if err != nil {
+		fmt.Println("\033[91merror creating toml:\033[0m", err)
+		return
+	}
+	defer file.Close()
+
+	_, err = file.WriteString(server)
+	if err != nil {
+		fmt.Println("\033[91merror putting configs into toml:\033[0m", err)
+		return
+	}
+
+	service := `[Unit]
+Description=Rathole Service
+After=network.target
+
+[Service]
+Type=simple
+Restart=on-failure
+RestartSec=5s
+LimitNOFILE=1048576
+ExecStart=/root/rathole/target/debug/rathole /root/rathole/server.toml
+
+[Install]
+WantedBy=multi-user.target`
+
+	err = os.Remove("/etc/systemd/system/iran-azumi.service")
+	if err != nil && !os.IsNotExist(err) {
+		fmt.Println("\033[91merror deleting iran-azumi:\033[0m", err)
+		return
+	}
+
+	file, err = os.Create("/etc/systemd/system/iran-azumi.service")
+	if err != nil {
+		fmt.Println("\033[91merror creating iran-azumi:\033[0m", err)
+		return
+	}
+	defer file.Close()
+
+	_, err = file.WriteString(service)
+	if err != nil {
+		fmt.Println("\033[91merror constructing iran-azumi:\033[0m", err)
+		return
+	}
+	cmd = exec.Command("systemctl", "daemon-reload")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror reloading:\033[0m", err)
+		return
+	}
+
+	cmd = exec.Command("sudo", "chmod", "u+x", "/etc/systemd/system/iran-azumi.service")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror enablin da service:\033[0m", err)
+		return
+	}
+
+	cmd = exec.Command("systemctl", "enable", "iran-azumi")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror enabling da service:\033[0m", err)
+		return
+	}
+
+	cmd = exec.Command("systemctl", "restart", "iran-azumi")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror restarting da service:\033[0m", err)
+		return
+	}
+
+	resIran()
+	displayCheckmark("\033[92mService created successfully!\033[0m")
+}
+
+
+
+func kharejno6() {
+	clearScreen()
+	fmt.Println("\033[92m ^ ^\033[0m")
+	fmt.Println("\033[92m(\033[91mO,O\033[92m)\033[0m")
+	fmt.Println("\033[92m(   ) \033[93m Reverse \033[92mIPV6 \033[96mNoise TLS\033[0m ")
+	fmt.Println("\033[92m \"-\" \033[93m════════════════════════════════════\033[0m")
+	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+	displayNotification("Configuring KHAREJ")
+	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+	scanner := bufio.NewScanner(os.Stdin)
+
+	fmt.Print("\033[93mEnter the \033[92mStarting number:\033[0m ")
+	scanner.Scan()
+	startingNumberStr := scanner.Text()
+
+	startingNumber, err := strconv.Atoi(startingNumberStr)
+	if err != nil {
+		fmt.Println("\033[91mPlz enter a valid number\033[0m")
+		return
+	}
+
+	fmt.Print("\033[93mEnter \033[92mIRAN IPV6:\033[0m ")
+	scanner.Scan()
+	iranIP := scanner.Text()
+
+	fmt.Print("\033[93mEnter \033[92mTunnel port:\033[0m ")
+	scanner.Scan()
+	tunnelPort := scanner.Text()
+
+	fmt.Print("\033[93mHow many \033[92mConfigs\033[93m do you have?\033[0m ")
+	scanner.Scan()
+	numConfigsStr := scanner.Text()
+
+	numConfigs, err := strconv.Atoi(numConfigsStr)
+	if err != nil {
+		fmt.Println("\033[91mPlz enter a valid number\033[0m")
+		return
+	}
+
+	kharejPorts := make([]string, numConfigs)
+	for i := 0; i < numConfigs; i++ {
+		fmt.Printf("\033[93mEnter \033[92mconfig %d\033[93m port:\033[0m ", i+1)
+		scanner.Scan()
+		kharejPorts[i] = scanner.Text()
+	}
+
+
+fmt.Print("\033[93mEnter \033[92mIRAN Public Key:\033[0m ")
+scanner.Scan()
+iranPublicKey := scanner.Text()
+
+client := fmt.Sprintf(`[client]
+remote_addr = "[%s]:%s"
+default_token = "azumiisinyourarea"
+
+[client.transport]
+type = "noise"
+[client.transport.noise]
+remote_public_key = "%s"
+`, iranIP, tunnelPort, iranPublicKey)
+
+	for i := 0; i < numConfigs; i++ {
+		config := fmt.Sprintf(`[client.services.kharej%d]
+local_addr = "127.0.0.1:%s"
+`, i+startingNumber, kharejPorts[i])
+		client += config
+	}
+
+	err = os.Remove("/root/rathole/client.toml")
+	if err != nil && !os.IsNotExist(err) {
+		fmt.Println("\033[91merror deleting toml:\033[0m", err)
+		return
+	}
+
+	file, err := os.Create("/root/rathole/client.toml")
+	if err != nil {
+		fmt.Println("\033[91merror creating toml:\033[0m", err)
+		return
+	}
+	defer file.Close()
+
+	_, err = file.WriteString(client)
+	if err != nil {
+		fmt.Println("\033[91merror putting configs into toml:\033[0m", err)
+		return
+	}
+
+	service := `[Unit]
+Description=Kharej-Azumi Service
+After=network.target
+
+[Service]
+Type=simple
+Restart=on-failure
+RestartSec=5s
+LimitNOFILE=1048576
+ExecStart=/root/rathole/target/debug/rathole /root/rathole/client.toml
+
+[Install]
+WantedBy=multi-user.target`
+
+	err = os.Remove("/etc/systemd/system/kharej-azumi.service")
+	if err != nil && !os.IsNotExist(err) {
+		fmt.Println("\033[91merror deleting iran-azumi:\033[0m", err)
+		return
+	}
+
+	file, err = os.Create("/etc/systemd/system/kharej-azumi.service")
+	if err != nil {
+		fmt.Println("\033[91merror creating iran-azumi:\033[0m", err)
+		return
+	}
+	defer file.Close()
+
+	_, err = file.WriteString(service)
+	if err != nil {
+		fmt.Println("\033[91merror constructing iran-azumi:\033[0m", err)
+		return
+	}
+
+	cmd := exec.Command("systemctl", "daemon-reload")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror reloading:\033[0m", err)
+		return
+	}
+
+	cmd = exec.Command("sudo", "chmod", "u+x", "/etc/systemd/system/kharej-azumi.service")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror enablin da service:\033[0m", err)
+		return
+	}
+	
+	cmd = exec.Command("systemctl", "enable", "kharej-azumi")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror enabling da service:\033[0m", err)
+		return
+	}
+
+	cmd = exec.Command("systemctl", "restart", "kharej-azumi")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror restarting da service:\033[0m", err)
+		return
+	}
+	resKharej()
+	displayCheckmark("\033[92mService created successfully!\033[0m")
+	fmt.Println("╭─────────────────────────────────────────────╮")
+	fmt.Printf("\033[92m Starting number for the next server : \033[96m%-9d\n\033[0m", numConfigs+1)
+	fmt.Println("╰─────────────────────────────────────────────╯")
+}
+func kharej2no6() {
+	clearScreen()
+	fmt.Println("\033[92m ^ ^\033[0m")
+	fmt.Println("\033[92m(\033[91mO,O\033[92m)\033[0m")
+	fmt.Println("\033[92m(   ) \033[93m Reverse \033[92mIPV6 \033[96mNoise TLS\033[0m ")
+	fmt.Println("\033[92m \"-\" \033[93m════════════════════════════════════\033[0m")
+	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+	displayNotification("Configuring KHAREJ")
+	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+	scanner := bufio.NewScanner(os.Stdin)
+
+	fmt.Print("\033[93mEnter the \033[92mStarting number:\033[0m ")
+	scanner.Scan()
+	startingNumberStr := scanner.Text()
+
+	startingNumber, err := strconv.Atoi(startingNumberStr)
+	if err != nil {
+		fmt.Println("\033[91mPlz enter a valid number\033[0m")
+		return
+	}
+
+	fmt.Print("\033[93mEnter \033[92mIRAN IPV6:\033[0m ")
+	scanner.Scan()
+	iranIP := scanner.Text()
+
+	fmt.Print("\033[93mEnter \033[92mTunnel port:\033[0m ")
+	scanner.Scan()
+	tunnelPort := scanner.Text()
+
+	fmt.Print("\033[93mHow many \033[92mConfigs\033[93m do you have?\033[0m ")
+	scanner.Scan()
+	numConfigsStr := scanner.Text()
+
+	numConfigs, err := strconv.Atoi(numConfigsStr)
+	if err != nil {
+		fmt.Println("\033[91mPlz enter a valid number\033[0m")
+		return
+	}
+
+	kharejPorts := make([]string, numConfigs)
+	for i := 0; i < numConfigs; i++ {
+		fmt.Printf("\033[93mEnter \033[92mconfig %d\033[93m port:\033[0m ", i+1)
+		scanner.Scan()
+		kharejPorts[i] = scanner.Text()
+	}
+
+fmt.Print("\033[93mEnter \033[92mIRAN Public Key:\033[0m ")
+scanner.Scan()
+iranPublicKey := scanner.Text()
+
+client := fmt.Sprintf(`[client]
+remote_addr = "[%s]:%s"
+default_token = "azumiisinyourarea"
+
+[client.transport]
+type = "noise"
+[client.transport.noise]
+remote_public_key = "%s"
+`, iranIP, tunnelPort, iranPublicKey)
+
+	for i := 0; i < numConfigs; i++ {
+		config := fmt.Sprintf(`[client.services.kharej%d]
+local_addr = "127.0.0.1:%s"
+`, i+startingNumber, kharejPorts[i])
+		client += config
+	}
+
+	err = os.Remove("/root/rathole/client.toml")
+	if err != nil && !os.IsNotExist(err) {
+		fmt.Println("\033[91merror deleting toml:\033[0m", err)
+		return
+	}
+
+	file, err := os.Create("/root/rathole/client.toml")
+	if err != nil {
+		fmt.Println("\033[91merror creating toml:\033[0m", err)
+		return
+	}
+	defer file.Close()
+
+	_, err = file.WriteString(client)
+	if err != nil {
+		fmt.Println("\033[91merror putting configs into toml:\033[0m", err)
+		return
+	}
+
+	service := `[Unit]
+Description=Kharej-Azumi Service
+After=network.target
+
+[Service]
+Type=simple
+Restart=on-failure
+RestartSec=5s
+LimitNOFILE=1048576
+ExecStart=/root/rathole/target/debug/rathole /root/rathole/client.toml
+
+[Install]
+WantedBy=multi-user.target`
+
+	err = os.Remove("/etc/systemd/system/kharej-azumi.service")
+	if err != nil && !os.IsNotExist(err) {
+		fmt.Println("\033[91merror deleting iran-azumi:\033[0m", err)
+		return
+	}
+
+	file, err = os.Create("/etc/systemd/system/kharej-azumi.service")
+	if err != nil {
+		fmt.Println("\033[91merror creating iran-azumi:\033[0m", err)
+		return
+	}
+	defer file.Close()
+
+	_, err = file.WriteString(service)
+	if err != nil {
+		fmt.Println("\033[91merror constructing iran-azumi:\033[0m", err)
+		return
+	}
+
+	cmd := exec.Command("systemctl", "daemon-reload")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror reloading:\033[0m", err)
+		return
+	}
+
+	
+	cmd = exec.Command("sudo", "chmod", "u+x", "/etc/systemd/system/kharej-azumi.service")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror enablin da service:\033[0m", err)
+		return
+	}
+	
+	cmd = exec.Command("systemctl", "enable", "kharej-azumi")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror enabling da service:\033[0m", err)
+		return
+	}
+
+	cmd = exec.Command("systemctl", "restart", "kharej-azumi")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror restarting da service:\033[0m", err)
+		return
+	}
+	resKharej()
+	displayCheckmark("\033[92mService created successfully!\033[0m")
+	if numConfigs == 1 {
+	    fmt.Println("╭─────────────────────────────────────────────╮")
+		fmt.Printf("\033[92m  Starting number for the next server:\033[96m %d\n\033[0m", startingNumber+1)
+		fmt.Println("╰─────────────────────────────────────────────╯")
+	} else {
+	    fmt.Println("╭─────────────────────────────────────────────╮")
+		fmt.Printf("\033[92m  Starting number for the next server:\033[96m %d\n\033[0m", numConfigs+startingNumber)
+		fmt.Println("╰─────────────────────────────────────────────╯")
 	}
 }
 func rmv() error {
@@ -221,7 +1265,7 @@ func rmv() error {
 }
 func deleteCron() {
 	entriesToDelete := []string{
-		"0 */1 * * * /etc/rat.sh",
+		"0 * * * * /etc/rat.sh",
 		"0 */2 * * * /etc/rat.sh",
 		"0 */3 * * * /etc/rat.sh",
 		"0 */4 * * * /etc/rat.sh",
@@ -286,12 +1330,11 @@ func resKharej() {
 	}
 	defer file.Close()
 
-    file.WriteString("#!/bin/bash\n")
-    file.WriteString("sudo systemctl daemon-reload\n")
-    file.WriteString("sudo systemctl restart kharej-azumi\n")
+	file.WriteString("#!/bin/bash\n")
+	file.WriteString("sudo systemctl daemon-reload\n")
+	file.WriteString("sudo systemctl restart kharej-azumi\n")
 	file.WriteString("sudo sync; echo 1 > /proc/sys/vm/drop_caches\n")
-    file.WriteString("sudo journalctl --vacuum-size=1M\n")
-	
+	file.WriteString("sudo journalctl --vacuum-size=1M\n")
 
 	cmd := exec.Command("chmod", "+x", "/etc/rat.sh")
 	if err := cmd.Run(); err != nil {
@@ -313,7 +1356,12 @@ func resKharej() {
 		log.Fatalf("\033[91mInvalid input for reset timer:\033[0m %v", err)
 	}
 
-	cronEntry := fmt.Sprintf("0 */%d * * * /etc/rat.sh", hours)
+	var cronEntry string
+	if hours == 1 {
+		cronEntry = "0 * * * * /etc/rat.sh"
+	} else if hours >= 2 {
+		cronEntry = fmt.Sprintf("0 */%d * * * /etc/rat.sh", hours)
+	}
 
 	crontabFile, err := os.OpenFile(crontabFilePath, os.O_RDWR|os.O_CREATE, 0644)
 	if err != nil {
@@ -326,7 +1374,7 @@ func resKharej() {
 	for scanner.Scan() {
 		line := scanner.Text()
 		if line == cronEntry {
-			fmt.Println("\033[92mOh .. Cron entry already exists!\033[0m")
+			fmt.Println("\033[92mOh... Cron entry already exists!\033[0m")
 			return
 		}
 		crontabContent.WriteString(line)
@@ -366,11 +1414,11 @@ func resIran() {
 	}
 	defer file.Close()
 
-    file.WriteString("#!/bin/bash\n")
-    file.WriteString("sudo systemctl daemon-reload\n")
-    file.WriteString("sudo systemctl restart iran-azumi\n")
-    file.WriteString("sudo sync; echo 1 > /proc/sys/vm/drop_caches\n")
-    file.WriteString("sudo journalctl --vacuum-size=1M\n")
+	file.WriteString("#!/bin/bash\n")
+	file.WriteString("sudo systemctl daemon-reload\n")
+	file.WriteString("sudo systemctl restart iran-azumi\n")
+	file.WriteString("sudo sync; echo 1 > /proc/sys/vm/drop_caches\n")
+	file.WriteString("sudo journalctl --vacuum-size=1M\n")
 
 	cmd := exec.Command("chmod", "+x", "/etc/rat.sh")
 	if err := cmd.Run(); err != nil {
@@ -392,7 +1440,12 @@ func resIran() {
 		log.Fatalf("\033[91mInvalid input for reset timer:\033[0m %v", err)
 	}
 
-	cronEntry := fmt.Sprintf("0 */%d * * * /etc/rat.sh", hours)
+	var cronEntry string
+	if hours == 1 {
+		cronEntry = "0 * * * * /etc/rat.sh"
+	} else if hours >= 2 {
+		cronEntry = fmt.Sprintf("0 */%d * * * /etc/rat.sh", hours)
+	}
 
 	crontabFile, err := os.OpenFile(crontabFilePath, os.O_RDWR|os.O_CREATE, 0644)
 	if err != nil {
@@ -405,7 +1458,7 @@ func resIran() {
 	for scanner.Scan() {
 		line := scanner.Text()
 		if line == cronEntry {
-			fmt.Println("\033[92mOh .. Cron entry already exists!\033[0m")
+			fmt.Println("\033[92mOh... Cron entry already exists!\033[0m")
 			return
 		}
 		crontabContent.WriteString(line)
@@ -476,7 +1529,7 @@ func start() {
 
 	prompt := &survey.Select{
 		Message: "Enter your choice Please:",
-		Options: []string{"1. \033[92mTCP + UDP\033[0m", "2. \033[93mWS +TLS \033[0m", "0. \033[94mBack to the previous menu\033[0m"},
+		Options: []string{"1. \033[92mTCP | UDP | Noise\033[0m", "2. \033[93mWS +TLS \033[0m", "0. \033[94mBack to the previous menu\033[0m"},
 	}
     
 	var choice string
@@ -486,7 +1539,7 @@ func start() {
 	}
 
 	switch choice {
-	case "1. \033[92mTCP + UDP\033[0m":
+	case "1. \033[92mTCP | UDP | Noise\033[0m":
 		restarttcp()
 	case "2. \033[93mWS +TLS \033[0m":
 		restarttcp()
@@ -543,7 +1596,7 @@ func stop() {
 
 	prompt := &survey.Select{
 		Message: "Enter your choice Please:",
-		Options: []string{"1. \033[92mTCP + UDP\033[0m", "2. \033[93mWS +TLS \033[0m", "0. \033[94mBack to the previous menu\033[0m"},
+		Options: []string{"1. \033[92mTCP | UDP | Noise\033[0m", "2. \033[93mWS +TLS \033[0m", "0. \033[94mBack to the previous menu\033[0m"},
 	}
     
 	var choice string
@@ -553,7 +1606,7 @@ func stop() {
 	}
 
 	switch choice {
-	case "1. \033[92mTCP + UDP\033[0m":
+	case "1. \033[92mTCP | UDP | Noise\033[0m":
 		stoptcp()
 	case "2. \033[93mWS +TLS \033[0m":
 		stoptcp()
@@ -610,7 +1663,7 @@ func status() {
 
 	prompt := &survey.Select{
 		Message: "Enter your choice Please:",
-		Options: []string{"1. \033[92mTCP + UDP\033[0m", "2. \033[93mWS + TLS \033[0m", "0. \033[94mBack to the main menu\033[0m"},
+		Options: []string{"1. \033[92mTCP | UDP | Noise\033[0m", "2. \033[93mWS + TLS \033[0m", "0. \033[94mBack to the main menu\033[0m"},
 	}
     
 	var choice string
@@ -620,7 +1673,7 @@ func status() {
 	}
 
 	switch choice {
-	case "1. \033[92mTCP + UDP\033[0m":
+	case "1. \033[92mTCP | UDP | Noise\033[0m":
 		tcpStatus()
 	case "2. \033[93mWS + TLS \033[0m":
 		tcpStatus()
@@ -673,7 +1726,7 @@ func UniMenu() {
 
 	prompt := &survey.Select{
 		Message: "Enter your choice Please:",
-		Options: []string{"1. \033[92mTCP + UDP\033[0m", "2. \033[93mWS + TLS \033[0m", "0. \033[94mBack to the main menu\033[0m"},
+		Options: []string{"1. \033[92mTCP | UDP | Noise\033[0m", "2. \033[93mWS + TLS \033[0m", "0. \033[94mBack to the main menu\033[0m"},
 	}
     
 	var choice string
@@ -683,7 +1736,7 @@ func UniMenu() {
 	}
 
 	switch choice {
-	case "1. \033[92mTCP + UDP\033[0m":
+	case "1. \033[92mTCP | UDP | Noise\033[0m":
 		removews()
 	case "2. \033[93mWS + TLS \033[0m":
 		removews()
@@ -983,7 +2036,7 @@ func kharejTcp4() {
 		return
 	}
 
-	fmt.Print("\033[93mEnter \033[92mIran IPV4:\033[0m ")
+	fmt.Print("\033[93mEnter \033[92mIRAN IPV4:\033[0m ")
 	scanner.Scan()
 	iranIP := scanner.Text()
 
@@ -1144,7 +2197,7 @@ func kharej2Tcp4() {
 		return
 	}
 
-	fmt.Print("\033[93mEnter \033[92mIran IPV4:\033[0m ")
+	fmt.Print("\033[93mEnter \033[92mIRAN IPV4:\033[0m ")
 	scanner.Scan()
 	iranIP := scanner.Text()
 
@@ -1505,7 +2558,7 @@ func kharejUdp4() {
 		return
 	}
 
-	fmt.Print("\033[93mEnter \033[92mIran IPV4:\033[0m ")
+	fmt.Print("\033[93mEnter \033[92mIRAN IPV4:\033[0m ")
 	scanner.Scan()
 	iranIP := scanner.Text()
 
@@ -1666,7 +2719,7 @@ func kharej2Udp4() {
 		return
 	}
 
-	fmt.Print("\033[93mEnter \033[92mIran IPV4:\033[0m ")
+	fmt.Print("\033[93mEnter \033[92mIRAN IPV4:\033[0m ")
 	scanner.Scan()
 	iranIP := scanner.Text()
 
@@ -2027,7 +3080,7 @@ func kharejTcp6() {
 		return
 	}
 
-	fmt.Print("\033[93mEnter \033[92mIran IPV6:\033[0m ")
+	fmt.Print("\033[93mEnter \033[92mIRAN IPV6:\033[0m ")
 	scanner.Scan()
 	iranIP := scanner.Text()
 
@@ -2188,7 +3241,7 @@ func kharej2Tcp6() {
 		return
 	}
 
-	fmt.Print("\033[93mEnter \033[92mIran IPV6:\033[0m ")
+	fmt.Print("\033[93mEnter \033[92mIRAN IPV6:\033[0m ")
 	scanner.Scan()
 	iranIP := scanner.Text()
 
@@ -2548,7 +3601,7 @@ func kharejUdp6() {
 		return
 	}
 
-	fmt.Print("\033[93mEnter \033[92mIran IPV6:\033[0m ")
+	fmt.Print("\033[93mEnter \033[92mIRAN IPV6:\033[0m ")
 	scanner.Scan()
 	iranIP := scanner.Text()
 
@@ -2709,7 +3762,7 @@ func kharej2Udp6() {
 		return
 	}
 
-	fmt.Print("\033[93mEnter \033[92mIran IPV6:\033[0m ")
+	fmt.Print("\033[93mEnter \033[92mIRAN IPV6:\033[0m ")
 	scanner.Scan()
 	iranIP := scanner.Text()
 
@@ -3492,7 +4545,7 @@ func kharejWs4() {
 		return
 	}
 
-	fmt.Print("\033[93mEnter \033[92mIran IPV4:\033[0m ")
+	fmt.Print("\033[93mEnter \033[92mIRAN IPV4:\033[0m ")
 	scanner.Scan()
 	iranIP := scanner.Text()
 
@@ -3646,7 +4699,7 @@ func kharej2Ws4() {
 		return
 	}
 
-	fmt.Print("\033[93mEnter \033[92mIran IPV4:\033[0m ")
+	fmt.Print("\033[93mEnter \033[92mIRAN IPV4:\033[0m ")
 	scanner.Scan()
 	iranIP := scanner.Text()
 
@@ -4166,7 +5219,7 @@ func kharejWs6() {
 		return
 	}
 
-	fmt.Print("\033[93mEnter \033[92mIran IPV6:\033[0m ")
+	fmt.Print("\033[93mEnter \033[92mIRAN IPV6:\033[0m ")
 	scanner.Scan()
 	iranIP := scanner.Text()
 
@@ -4320,7 +5373,7 @@ func kharej2Ws6() {
 		return
 	}
 
-	fmt.Print("\033[93mEnter \033[92mIran IPV6:\033[0m ")
+	fmt.Print("\033[93mEnter \033[92mIRAN IPV6:\033[0m ")
 	scanner.Scan()
 	iranIP := scanner.Text()
 

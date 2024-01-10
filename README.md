@@ -749,7 +749,8 @@ sudo apt install curl -y && bash <(curl -s https://raw.githubusercontent.com/Azu
 
 - اگر به صورت دستی پیش نیاز های گو را نصب کردید و میخواهید به صورت دستی هم اسکریپت را اجرا کنید میتوانید با دستور زیر انجام دهید
 ```
-sudo apt install wget -y && rm rat.go && wget https://raw.githubusercontent.com/Azumi67/Rathole_reverseTunnel/main/rat.go && go run rat.go
+rm rat.go
+sudo apt install wget -y && wget https://raw.githubusercontent.com/Azumi67/Rathole_reverseTunnel/main/rat.go && go run rat.go
 ```
 
   </details>
@@ -766,6 +767,7 @@ sudo apt install curl -y && bash <(curl -s https://raw.githubusercontent.com/Azu
 
 - اگر به صورت دستی پیش نیاز های گو را نصب کردید و میخواهید به صورت دستی هم اسکریپت را اجرا کنید میتوانید با دستور زیر انجام دهید
 ```
+rm rat2.go
 sudo apt install wget -y &&  wget -O /etc/logo.sh https://raw.githubusercontent.com/Azumi67/UDP2RAW_FEC/main/logo.sh && chmod +x /etc/logo.sh  && wget https://raw.githubusercontent.com/Azumi67/Rathole_reverseTunnel/main/rat2.go && go run rat2.go
 ```
 

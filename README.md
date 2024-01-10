@@ -49,7 +49,7 @@
 -----------
 <div align="right">
   <details>
-    <summary><strong>توضیحات</strong></summary>
+    <summary><strong>خطا</strong></summary>
   
 ------------------------------------ 
 

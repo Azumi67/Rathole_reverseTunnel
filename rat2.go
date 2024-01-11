@@ -4444,7 +4444,7 @@ func iranWs42() {
 	server := fmt.Sprintf(`[server]
 bind_addr = "0.0.0.0:%s"
 default_token = "azumiisinyourarea"
-heartbeat_timeout = 0
+heartbeat_interval = 0
 
 [server.transport]
 type = "tls"

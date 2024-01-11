@@ -739,7 +739,7 @@ Caused by:
 
 <div align="right">
   <details>
-    <summary><strong>اسکرپت تانل</strong></summary>
+    <summary><strong>اسکرپت تانل با heartbeat</strong></summary>
   
 
 - پس از انکه کامپایل پروژه تمام شد، با دستور زیر، پیش نیاز گو را نصب میکنید و سپس اقدام به اجرای اسکریپت میکنید.
@@ -757,7 +757,7 @@ sudo apt install wget -y && wget https://raw.githubusercontent.com/Azumi67/Ratho
 </div>
 <div align="right">
   <details>
-    <summary><strong>اگر مشکل خطای heartbeat دارید</strong></summary>
+    <summary><strong>اسکریپت تانل بدون heartbeat</strong></summary>
   
 
 - اگر مشکل heartbeat داشتید احتمالا به خاطر تایم اوت در سرور ایران شما میباشد.با این حال میتوانید این اسکریپت که بدون heartbeat هست را هم تست کنید.

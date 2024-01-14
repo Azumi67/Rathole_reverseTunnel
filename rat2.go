@@ -2013,6 +2013,7 @@ func removews() {
 	displayNotification("\033[93mRemoving Config ..\033[0m")
 	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
 	deleteCron()
+	deleteCron2()
 	rmv()
 
 	scanner := bufio.NewScanner(os.Stdin)

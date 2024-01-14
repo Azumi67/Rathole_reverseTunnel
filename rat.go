@@ -225,7 +225,7 @@ func cronMenu() {
 
 	prompt := &survey.Select{
 		Message: "Enter your choice Please:",
-		Options: []string{"1. \033[92mIRAN\033[0m", "2. \033[93mKHAREJ\033[0m", "0. \033[94mBack to the main menu\033[0m"},
+		Options: []string{"1. \033[92mHours\033[0m", "2. \033[93mMinutes\033[0m", "0. \033[94mBack to the main menu\033[0m"},
 	}
     
 	var choice string
@@ -235,10 +235,10 @@ func cronMenu() {
 	}
 
 	switch choice {
-	case "1. \033[92mIRAN\033[0m":
-		resIran()
-	case "2. \033[93mKHAREJ\033[0m":
-		resKharej()
+	case "1. \033[92mHours\033[0m":
+		resHourz()
+	case "2. \033[93mMinutes\033[0m":
+		resMins()
 	case "0. \033[94mBack to the main menu\033[0m":
 	    clearScreen()
 		mainMenu()
@@ -247,6 +247,132 @@ func cronMenu() {
 	}
 
 	readInput()
+}
+func resHourz() {
+	deleteCron()
+	deleteCron2()
+    
+	fmt.Println("╭──────────────────────────────────────╮")
+	reader := bufio.NewReader(os.Stdin)
+	fmt.Print("\033[93mEnter \033[92mReset timer\033[93m (hours):\033[0m ")
+	hoursStr, err := reader.ReadString('\n')
+	if err != nil {
+		log.Fatalf("Error reading input: %v", err)
+	}
+	hoursStr = strings.TrimSpace(hoursStr)
+	fmt.Println("╰──────────────────────────────────────╯")
+
+	hours, err := strconv.Atoi(hoursStr)
+	if err != nil {
+		log.Fatalf("\033[91mInvalid input for reset timer:\033[0m %v", err)
+	}
+
+	var cronEntry string
+	if hours == 1 {
+		cronEntry = "0 * * * * /etc/rat.sh"
+	} else if hours >= 2 {
+		cronEntry = fmt.Sprintf("0 */%d * * * /etc/rat.sh", hours)
+	}
+
+	crontabFile, err := os.OpenFile(crontabFilePath, os.O_RDWR|os.O_CREATE, 0644)
+	if err != nil {
+		log.Fatalf("\033[91mCouldn't open Cron:\033[0m %v", err)
+	}
+	defer crontabFile.Close()
+
+	var crontabContent strings.Builder
+	scanner := bufio.NewScanner(crontabFile)
+	for scanner.Scan() {
+		line := scanner.Text()
+		if line == cronEntry {
+			fmt.Println("\033[92mOh... Cron entry already exists!\033[0m")
+			return
+		}
+		crontabContent.WriteString(line)
+		crontabContent.WriteString("\n")
+	}
+
+	crontabContent.WriteString(cronEntry)
+	crontabContent.WriteString("\n")
+
+	if err := scanner.Err(); err != nil {
+		log.Fatalf("\033[91mcrontab Reading error:\033[0m %v", err)
+	}
+
+	if err := crontabFile.Truncate(0); err != nil {
+		log.Fatalf("\033[91mcouldn't truncate cron file:\033[0m %v", err)
+	}
+
+	if _, err := crontabFile.Seek(0, 0); err != nil {
+		log.Fatalf("\033[91mcouldn't find cron file: \033[0m%v", err)
+	}
+
+	if _, err := crontabFile.WriteString(crontabContent.String()); err != nil {
+		log.Fatalf("\033[91mCouldn't write cron file:\033[0m %v", err)
+	}
+
+	fmt.Println("\033[92mCron entry added successfully!\033[0m")
+}
+
+func resMins() {
+	deleteCron()
+	deleteCron2()
+
+	fmt.Println("╭──────────────────────────────────────╮")
+	reader := bufio.NewReader(os.Stdin)
+	fmt.Print("\033[93mEnter \033[92mReset timer\033[93m (minutes):\033[0m ")
+	minutesStr, err := reader.ReadString('\n')
+	if err != nil {
+		log.Fatalf("Error reading input: %v", err)
+	}
+	minutesStr = strings.TrimSpace(minutesStr)
+	fmt.Println("╰──────────────────────────────────────╯")
+
+	minutes, err := strconv.Atoi(minutesStr)
+	if err != nil {
+		log.Fatalf("\033[91mInvalid input for reset timer:\033[0m %v", err)
+	}
+
+	cronEntry := fmt.Sprintf("*/%d * * * * /etc/rat.sh", minutes)
+
+	crontabFile, err := os.OpenFile(crontabFilePath, os.O_RDWR|os.O_CREATE, 0644)
+	if err != nil {
+		log.Fatalf("\033[91mCouldn't open Cron:\033[0m %v", err)
+	}
+	defer crontabFile.Close()
+
+	var crontabContent strings.Builder
+	scanner := bufio.NewScanner(crontabFile)
+	for scanner.Scan() {
+		line := scanner.Text()
+		if line == cronEntry {
+			fmt.Println("\033[92mOh... Cron entry already exists!\033[0m")
+			return
+		}
+		crontabContent.WriteString(line)
+		crontabContent.WriteString("\n")
+	}
+
+	crontabContent.WriteString(cronEntry)
+	crontabContent.WriteString("\n")
+
+	if err := scanner.Err(); err != nil {
+		log.Fatalf("\033[91mcrontab Reading error:\033[0m %v", err)
+	}
+
+	if err := crontabFile.Truncate(0); err != nil {
+		log.Fatalf("\033[91mcouldn't truncate cron file:\033[0m %v", err)
+	}
+
+	if _, err := crontabFile.Seek(0, 0); err != nil {
+		log.Fatalf("\033[91mcouldn't find cron file: \033[0m%v", err)
+	}
+
+	if _, err := crontabFile.WriteString(crontabContent.String()); err != nil {
+		log.Fatalf("\033[91mCouldn't write cron file:\033[0m %v", err)
+	}
+
+	fmt.Println("\033[92mCron entry added successfully!\033[0m")
 }
 func noise4Menu() {
 	clearScreen()
@@ -1298,6 +1424,96 @@ func rmv() error {
 	}
 	return nil
 }
+func deleteCron2() {
+	entriesToDelete := []string{
+		"*/1 * * * * /etc/rat.sh",
+		"*/2 * * * * /etc/rat.sh",
+		"*/3 * * * * /etc/rat.sh",
+		"*/4 * * * * /etc/rat.sh",
+		"*/5 * * * * /etc/rat.sh",
+		"*/6 * * * * /etc/rat.sh",
+		"*/7 * * * * /etc/rat.sh",
+		"*/8 * * * * /etc/rat.sh",
+		"*/9 * * * * /etc/rat.sh",
+		"*/10 * * * * /etc/rat.sh",
+		"*/11 * * * * /etc/rat.sh",
+		"*/12 * * * * /etc/rat.sh",
+		"*/13 * * * * /etc/rat.sh",
+		"*/14 * * * * /etc/rat.sh",
+		"*/15 * * * * /etc/rat.sh",
+		"*/16 * * * * /etc/rat.sh",
+		"*/17 * * * * /etc/rat.sh",
+		"*/18 * * * * /etc/rat.sh",
+		"*/19 * * * * /etc/rat.sh",
+		"*/20 * * * * /etc/rat.sh",
+		"*/21 * * * * /etc/rat.sh",
+		"*/22 * * * * /etc/rat.sh",
+		"*/23 * * * * /etc/rat.sh",
+		"*/24 * * * * /etc/rat.sh",
+		"*/25 * * * * /etc/rat.sh",
+		"*/26 * * * * /etc/rat.sh",
+		"*/27 * * * * /etc/rat.sh",
+		"*/28 * * * * /etc/rat.sh",
+		"*/29 * * * * /etc/rat.sh",
+		"*/30 * * * * /etc/rat.sh",
+		"*/31 * * * * /etc/rat.sh",
+		"*/32 * * * * /etc/rat.sh",
+		"*/33 * * * * /etc/rat.sh",
+		"*/34 * * * * /etc/rat.sh",
+		"*/35 * * * * /etc/rat.sh",
+		"*/36 * * * * /etc/rat.sh",
+		"*/37 * * * * /etc/rat.sh",
+		"*/38 * * * * /etc/rat.sh",
+		"*/39 * * * * /etc/rat.sh",
+		"*/40 * * * * /etc/rat.sh",
+		"*/41 * * * * /etc/rat.sh",
+		"*/42 * * * * /etc/rat.sh",
+		"*/43 * * * * /etc/rat.sh",
+		"*/44 * * * * /etc/rat.sh",
+		"*/45 * * * * /etc/rat.sh",
+		"*/46 * * * * /etc/rat.sh",
+		"*/47 * * * * /etc/rat.sh",
+		"*/48 * * * * /etc/rat.sh",
+		"*/49 * * * * /etc/rat.sh",
+		"*/50 * * * * /etc/rat.sh",
+		"*/51 * * * * /etc/rat.sh",
+		"*/52 * * * * /etc/rat.sh",
+		"*/53 * * * * /etc/rat.sh",
+		"*/54 * * * * /etc/rat.sh",
+		"*/55 * * * * /etc/rat.sh",
+		"*/56 * * * * /etc/rat.sh",
+		"*/57 * * * * /etc/rat.sh",
+		"*/58 * * * * /etc/rat.sh",
+		"*/59 * * * * /etc/rat.sh",
+	}
+
+	existingCrontab, err := exec.Command("crontab", "-l").Output()
+	if err != nil {
+		fmt.Println("\033[91mNo existing cron found!\033[0m")
+		return
+	}
+
+	newCrontab := string(existingCrontab)
+	for _, entry := range entriesToDelete {
+		if strings.Contains(newCrontab, entry) {
+			newCrontab = strings.Replace(newCrontab, entry, "", -1)
+		}
+	}
+
+	if newCrontab != string(existingCrontab) {
+		cmd := exec.Command("crontab")
+		cmd.Stdin = strings.NewReader(newCrontab)
+
+		_, err = cmd.CombinedOutput()
+        if err != nil {
+            fmt.Printf("\033[91mfailed to delete some cron entries. don't worry about it \033[0m\n")
+		} else {
+			displayNotification("\033[92mDeleting Previous Crons..\033[0m")
+		}
+	} else {
+		fmt.Println("\033[91mCron doesn't exist, moving on..!\033[0m")
+	}
+}
 func deleteCron() {
 	entriesToDelete := []string{
 		"0 * * * * /etc/rat.sh",
@@ -1323,7 +1539,6 @@ func deleteCron() {
 		"0 */21 * * * /etc/rat.sh",
 		"0 */22 * * * /etc/rat.sh",
 		"0 */23 * * * /etc/rat.sh",
-		"0 */24 * * * /etc/rat.sh",
 	}
 
 	existingCrontab, err := exec.Command("crontab", "-l").Output()
@@ -1342,10 +1557,13 @@ func deleteCron() {
 	if newCrontab != string(existingCrontab) {
 		cmd := exec.Command("crontab")
 		cmd.Stdin = strings.NewReader(newCrontab)
-		if err := cmd.Run(); err != nil {
-			log.Fatal(err)
+
+		_, err = cmd.CombinedOutput()
+        if err != nil {
+            fmt.Printf("\033[91mfailed to delete some cron entries. don't worry about it \033[0m\n")
+		} else {
+			displayNotification("\033[92mDeleting Previous Crons..\033[0m")
 		}
-		displayNotification("\033[92mDeleting Previous Crons..\033[0m")
 	} else {
 		fmt.Println("\033[91mCron doesn't exist, moving on..!\033[0m")
 	}
@@ -1957,8 +2175,8 @@ type = "tcp"
 
 [server.transport.tcp]
 nodelay = %s
-keepalive_secs = 20
-keepalive_interval = 8
+keepalive_secs = 10
+keepalive_interval = 5
 
 `, tunnelPort, nodelay)
 	for i := 0; i < numConfigs; i++ {
@@ -2114,8 +2332,8 @@ type = "tcp"
 
 [client.transport.tcp]
 nodelay = %s
-keepalive_secs = 20
-keepalive_interval = 8
+keepalive_secs = 10
+keepalive_interval = 5
 `, iranIP, tunnelPort, nodelay)
 
 	for i := 0; i < numConfigs; i++ {
@@ -2275,8 +2493,8 @@ type = "tcp"
 
 [client.transport.tcp]
 nodelay = %s
-keepalive_secs = 20
-keepalive_interval = 8
+keepalive_secs = 10
+keepalive_interval = 5
 `, iranIP, tunnelPort, nodelay)
 
 	for i := 0; i < numConfigs; i++ {
@@ -2479,8 +2697,8 @@ type = "tcp"
 
 [server.transport.tcp]
 nodelay = %s
-keepalive_secs = 20
-keepalive_interval = 8
+keepalive_secs = 10
+keepalive_interval = 5
 
 `, tunnelPort, nodelay)
 	for i := 0; i < numConfigs; i++ {
@@ -2636,8 +2854,8 @@ type = "tcp"
 
 [client.transport.tcp]
 nodelay = %s
-keepalive_secs = 20
-keepalive_interval = 8
+keepalive_secs = 10
+keepalive_interval = 5
 `, iranIP, tunnelPort, nodelay)
 
 	for i := 0; i < numConfigs; i++ {
@@ -2797,8 +3015,8 @@ type = "tcp"
 
 [client.transport.tcp]
 nodelay = %s
-keepalive_secs = 20
-keepalive_interval = 8
+keepalive_secs = 10
+keepalive_interval = 5
 `, iranIP, tunnelPort, nodelay)
 
 	for i := 0; i < numConfigs; i++ {
@@ -3001,8 +3219,8 @@ type = "tcp"
 
 [server.transport.tcp]
 nodelay = %s
-keepalive_secs = 20
-keepalive_interval = 8
+keepalive_secs = 10
+keepalive_interval = 5
 
 `, tunnelPort, nodelay)
 	for i := 0; i < numConfigs; i++ {
@@ -3158,8 +3376,8 @@ type = "tcp"
 
 [client.transport.tcp]
 nodelay = %s
-keepalive_secs = 20
-keepalive_interval = 8
+keepalive_secs = 10
+keepalive_interval = 5
 `, iranIP, tunnelPort, nodelay)
 
 	for i := 0; i < numConfigs; i++ {
@@ -3319,8 +3537,8 @@ type = "tcp"
 
 [client.transport.tcp]
 nodelay = %s
-keepalive_secs = 20
-keepalive_interval = 8
+keepalive_secs = 10
+keepalive_interval = 5
 `, iranIP, tunnelPort, nodelay)
 
 	for i := 0; i < numConfigs; i++ {
@@ -3522,8 +3740,8 @@ type = "tcp"
 
 [server.transport.tcp]
 nodelay = %s
-keepalive_secs = 20
-keepalive_interval = 8
+keepalive_secs = 10
+keepalive_interval = 5
 
 `, tunnelPort, nodelay)
 	for i := 0; i < numConfigs; i++ {
@@ -3679,8 +3897,8 @@ type = "tcp"
 
 [client.transport.tcp]
 nodelay = %s
-keepalive_secs = 20
-keepalive_interval = 8
+keepalive_secs = 10
+keepalive_interval = 5
 `, iranIP, tunnelPort, nodelay)
 
 	for i := 0; i < numConfigs; i++ {
@@ -3840,8 +4058,8 @@ type = "tcp"
 
 [client.transport.tcp]
 nodelay = %s
-keepalive_secs = 20
-keepalive_interval = 8
+keepalive_secs = 10
+keepalive_interval = 5
 `, iranIP, tunnelPort, nodelay)
 
 	for i := 0; i < numConfigs; i++ {

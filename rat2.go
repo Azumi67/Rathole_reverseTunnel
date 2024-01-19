@@ -2690,28 +2690,14 @@ func iranUdp4() {
 		kharejPorts[i] = scanner.Text()
 	}
 
-	fmt.Print("\033[93mDo you want nodelay enabled? (\033[92my/\033[91mn\033[93m): \033[0m")
-	scanner.Scan()
-	nodelayOp := scanner.Text()
-	nodelay := "false"
-	if strings.ToLower(nodelayOp) == "y" {
-		nodelay = "true"
-	}
 
 	server := fmt.Sprintf(`[server]
 bind_addr = "0.0.0.0:%s"
 default_token = "azumiisinyourarea"
 heartbeat_interval = 0
 
-[server.transport]
-type = "tcp"
 
-[server.transport.tcp]
-nodelay = %s
-keepalive_secs = 10
-keepalive_interval = 5
-
-`, tunnelPort, nodelay)
+`, tunnelPort)
 	for i := 0; i < numConfigs; i++ {
 		config := fmt.Sprintf(`[server.services.kharej%d]
 type = "udp"
@@ -2847,13 +2833,6 @@ func kharejUdp4() {
 		kharejPorts[i] = scanner.Text()
 	}
 
-	fmt.Print("\033[93mDo you want nodelay enabled? (\033[92my/\033[91mn\033[93m): \033[0m")
-	scanner.Scan()
-	nodelayOp := scanner.Text()
-	nodelay := "false"
-	if strings.ToLower(nodelayOp) == "y" {
-		nodelay = "true"
-	}
 
 	client := fmt.Sprintf(`[client]
 remote_addr = "%s:%s"
@@ -2861,14 +2840,7 @@ default_token = "azumiisinyourarea"
 retry_interval = 1
 heartbeat_timeout = 0
 
-[client.transport]
-type = "tcp"
-
-[client.transport.tcp]
-nodelay = %s
-keepalive_secs = 10
-keepalive_interval = 5
-`, iranIP, tunnelPort, nodelay)
+`, iranIP, tunnelPort)
 
 	for i := 0; i < numConfigs; i++ {
 		config := fmt.Sprintf(`[client.services.kharej%d]
@@ -3009,13 +2981,6 @@ func kharej2Udp4() {
 		kharejPorts[i] = scanner.Text()
 	}
 
-	fmt.Print("\033[93mDo you want nodelay enabled? (\033[92my/\033[91mn\033[93m): \033[0m")
-	scanner.Scan()
-	nodelayOp := scanner.Text()
-	nodelay := "false"
-	if strings.ToLower(nodelayOp) == "y" {
-		nodelay = "true"
-	}
 
 	client := fmt.Sprintf(`[client]
 remote_addr = "%s:%s"
@@ -3023,14 +2988,7 @@ default_token = "azumiisinyourarea"
 retry_interval = 1
 heartbeat_timeout = 0
 
-[client.transport]
-type = "tcp"
-
-[client.transport.tcp]
-nodelay = %s
-keepalive_secs = 10
-keepalive_interval = 5
-`, iranIP, tunnelPort, nodelay)
+`, iranIP, tunnelPort)
 
 	for i := 0; i < numConfigs; i++ {
 		config := fmt.Sprintf(`[client.services.kharej%d]
@@ -3739,28 +3697,14 @@ func iranUdp6() {
 		kharejPorts[i] = scanner.Text()
 	}
 
-	fmt.Print("\033[93mDo you want nodelay enabled? (\033[92my/\033[91mn\033[93m): \033[0m")
-	scanner.Scan()
-	nodelayOp := scanner.Text()
-	nodelay := "false"
-	if strings.ToLower(nodelayOp) == "y" {
-		nodelay = "true"
-	}
 
 	server := fmt.Sprintf(`[server]
 bind_addr = "[::]:%s"
 default_token = "azumiisinyourarea"
 heartbeat_interval = 0
 
-[server.transport]
-type = "tcp"
 
-[server.transport.tcp]
-nodelay = %s
-keepalive_secs = 10
-keepalive_interval = 5
-
-`, tunnelPort, nodelay)
+`, tunnelPort)
 	for i := 0; i < numConfigs; i++ {
 		config := fmt.Sprintf(`[server.services.kharej%d]
 type = "udp"
@@ -3896,13 +3840,6 @@ func kharejUdp6() {
 		kharejPorts[i] = scanner.Text()
 	}
 
-	fmt.Print("\033[93mDo you want nodelay enabled? (\033[92my/\033[91mn\033[93m): \033[0m")
-	scanner.Scan()
-	nodelayOp := scanner.Text()
-	nodelay := "false"
-	if strings.ToLower(nodelayOp) == "y" {
-		nodelay = "true"
-	}
 
 	client := fmt.Sprintf(`[client]
 remote_addr = "[%s]:%s"
@@ -3910,14 +3847,7 @@ default_token = "azumiisinyourarea"
 retry_interval = 1
 heartbeat_timeout = 0
 
-[client.transport]
-type = "tcp"
-
-[client.transport.tcp]
-nodelay = %s
-keepalive_secs = 10
-keepalive_interval = 5
-`, iranIP, tunnelPort, nodelay)
+`, iranIP, tunnelPort)
 
 	for i := 0; i < numConfigs; i++ {
 		config := fmt.Sprintf(`[client.services.kharej%d]
@@ -4058,13 +3988,6 @@ func kharej2Udp6() {
 		kharejPorts[i] = scanner.Text()
 	}
 
-	fmt.Print("\033[93mDo you want nodelay enabled? (\033[92my/\033[91mn\033[93m): \033[0m")
-	scanner.Scan()
-	nodelayOp := scanner.Text()
-	nodelay := "false"
-	if strings.ToLower(nodelayOp) == "y" {
-		nodelay = "true"
-	}
 
 	client := fmt.Sprintf(`[client]
 remote_addr = "[%s]:%s"
@@ -4072,14 +3995,7 @@ default_token = "azumiisinyourarea"
 retry_interval = 1
 heartbeat_timeout = 0
 
-[client.transport]
-type = "tcp"
-
-[client.transport.tcp]
-nodelay = %s
-keepalive_secs = 10
-keepalive_interval = 5
-`, iranIP, tunnelPort, nodelay)
+`, iranIP, tunnelPort)
 
 	for i := 0; i < numConfigs; i++ {
 		config := fmt.Sprintf(`[client.services.kharej%d]

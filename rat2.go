@@ -269,9 +269,9 @@ func resHourz() {
 
 	var cronEntry string
 	if hours == 1 {
-		cronEntry = "0 * * * * /etc/rat.sh"
+		cronEntry = "0 * * * * /bin/bash /etc/rat.sh"
 	} else if hours >= 2 {
-		cronEntry = fmt.Sprintf("0 */%d * * * /etc/rat.sh", hours)
+		cronEntry = fmt.Sprintf("0 */%d * * * /bin/bash /etc/rat.sh", hours)
 	}
 
 	crontabFile, err := os.OpenFile(crontabFilePath, os.O_RDWR|os.O_CREATE, 0644)
@@ -333,7 +333,7 @@ func resMins() {
 		log.Fatalf("\033[91mInvalid input for reset timer:\033[0m %v", err)
 	}
 
-	cronEntry := fmt.Sprintf("*/%d * * * * /etc/rat.sh", minutes)
+	cronEntry := fmt.Sprintf("*/%d * * * * /bin/bash /etc/rat.sh", minutes)
 
 	crontabFile, err := os.OpenFile(crontabFilePath, os.O_RDWR|os.O_CREATE, 0644)
 	if err != nil {
@@ -1426,11 +1426,156 @@ func rmv() error {
 		if err != nil {
 			return fmt.Errorf("\033[91mbash file doesn't exists:\033[0m %v", err)
 		}
-		fmt.Println("\033[91mbash file removed successfully!\033[0m")
+		fmt.Println("\033[92mbash file removed successfully!\033[0m")
 	}
 	return nil
 }
 func deleteCron2() {
+	entriesToDelete := []string{
+		"*/1 * * * * /bin/bash /etc/rat.sh",
+		"*/2 * * * * /bin/bash /etc/rat.sh",
+		"*/3 * * * * /bin/bash /etc/rat.sh",
+		"*/4 * * * * /bin/bash /etc/rat.sh",
+		"*/5 * * * * /bin/bash /etc/rat.sh",
+		"*/6 * * * * /bin/bash /etc/rat.sh",
+		"*/7 * * * * /bin/bash /etc/rat.sh",
+		"*/8 * * * * /bin/bash /etc/rat.sh",
+		"*/9 * * * * /bin/bash /etc/rat.sh",
+		"*/10 * * * * /bin/bash /etc/rat.sh",
+		"*/11 * * * * /bin/bash /etc/rat.sh",
+		"*/12 * * * * /bin/bash /etc/rat.sh",
+		"*/13 * * * * /bin/bash /etc/rat.sh",
+		"*/14 * * * * /bin/bash /etc/rat.sh",
+		"*/15 * * * * /bin/bash /etc/rat.sh",
+		"*/16 * * * * /bin/bash /etc/rat.sh",
+		"*/17 * * * * /bin/bash /etc/rat.sh",
+		"*/18 * * * * /bin/bash /etc/rat.sh",
+		"*/19 * * * * /bin/bash /etc/rat.sh",
+		"*/20 * * * * /bin/bash /etc/rat.sh",
+		"*/21 * * * * /bin/bash /etc/rat.sh",
+		"*/22 * * * * /bin/bash /etc/rat.sh",
+		"*/23 * * * * /bin/bash /etc/rat.sh",
+		"*/24 * * * * /bin/bash /etc/rat.sh",
+		"*/25 * * * * /bin/bash /etc/rat.sh",
+		"*/26 * * * * /bin/bash /etc/rat.sh",
+		"*/27 * * * * /bin/bash /etc/rat.sh",
+		"*/28 * * * * /bin/bash /etc/rat.sh",
+		"*/29 * * * * /bin/bash /etc/rat.sh",
+		"*/30 * * * * /bin/bash /etc/rat.sh",
+		"*/31 * * * * /bin/bash /etc/rat.sh",
+		"*/32 * * * * /bin/bash /etc/rat.sh",
+		"*/33 * * * * /bin/bash /etc/rat.sh",
+		"*/34 * * * * /bin/bash /etc/rat.sh",
+		"*/35 * * * * /bin/bash /etc/rat.sh",
+		"*/36 * * * * /bin/bash /etc/rat.sh",
+		"*/37 * * * * /bin/bash /etc/rat.sh",
+		"*/38 * * * * /bin/bash /etc/rat.sh",
+		"*/39 * * * * /bin/bash /etc/rat.sh",
+		"*/40 * * * * /bin/bash /etc/rat.sh",
+		"*/41 * * * * /bin/bash /etc/rat.sh",
+		"*/42 * * * * /bin/bash /etc/rat.sh",
+		"*/43 * * * * /bin/bash /etc/rat.sh",
+		"*/44 * * * * /bin/bash /etc/rat.sh",
+		"*/45 * * * * /bin/bash /etc/rat.sh",
+		"*/46 * * * * /bin/bash /etc/rat.sh",
+		"*/47 * * * * /bin/bash /etc/rat.sh",
+		"*/48 * * * * /bin/bash /etc/rat.sh",
+		"*/49 * * * * /bin/bash /etc/rat.sh",
+		"*/50 * * * * /bin/bash /etc/rat.sh",
+		"*/51 * * * * /bin/bash /etc/rat.sh",
+		"*/52 * * * * /bin/bash /etc/rat.sh",
+		"*/53 * * * * /bin/bash /etc/rat.sh",
+		"*/54 * * * * /bin/bash /etc/rat.sh",
+		"*/55 * * * * /bin/bash /etc/rat.sh",
+		"*/56 * * * * /bin/bash /etc/rat.sh",
+		"*/57 * * * * /bin/bash /etc/rat.sh",
+		"*/58 * * * * /bin/bash /etc/rat.sh",
+		"*/59 * * * * /bin/bash /etc/rat.sh",
+	}
+
+	existingCrontab, err := exec.Command("crontab", "-l").Output()
+	if err != nil {
+		fmt.Println("\033[91mNo existing cron found!\033[0m")
+		return
+	}
+
+	newCrontab := string(existingCrontab)
+	for _, entry := range entriesToDelete {
+		if strings.Contains(newCrontab, entry) {
+			newCrontab = strings.Replace(newCrontab, entry, "", -1)
+		}
+	}
+
+	if newCrontab != string(existingCrontab) {
+		cmd := exec.Command("crontab")
+		cmd.Stdin = strings.NewReader(newCrontab)
+
+		_, err = cmd.CombinedOutput()
+        if err != nil {
+            fmt.Printf("\033[91mfailed to delete some cron entries. don't worry about it \033[0m\n")
+		} else {
+			displayNotification("\033[92mDeleting Previous Crons..\033[0m")
+		}
+	} else {
+		fmt.Println("\033[91mCron doesn't exist, moving on..!\033[0m")
+	}
+}
+func deleteCron() {
+	entriesToDelete := []string{
+		"0 * * * * /bin/bash /etc/rat.sh",
+		"0 */2 * * * /bin/bash /etc/rat.sh",
+		"0 */3 * * * /bin/bash /etc/rat.sh",
+		"0 */4 * * * /bin/bash /etc/rat.sh",
+		"0 */5 * * * /bin/bash /etc/rat.sh",
+		"0 */6 * * * /bin/bash /etc/rat.sh",
+		"0 */7 * * * /bin/bash /etc/rat.sh",
+		"0 */8 * * * /bin/bash /etc/rat.sh",
+		"0 */9 * * * /bin/bash /etc/rat.sh",
+		"0 */10 * * * /bin/bash /etc/rat.sh",
+		"0 */11 * * * /bin/bash /etc/rat.sh",
+		"0 */12 * * * /bin/bash /etc/rat.sh",
+		"0 */13 * * * /bin/bash /etc/rat.sh",
+		"0 */14 * * * /bin/bash /etc/rat.sh",
+		"0 */15 * * * /bin/bash /etc/rat.sh",
+		"0 */16 * * * /bin/bash /etc/rat.sh",
+		"0 */17 * * * /bin/bash /etc/rat.sh",
+		"0 */18 * * * /bin/bash /etc/rat.sh",
+		"0 */19 * * * /bin/bash /etc/rat.sh",
+		"0 */20 * * * /bin/bash /etc/rat.sh",
+		"0 */21 * * * /bin/bash /etc/rat.sh",
+		"0 */22 * * * /bin/bash /etc/rat.sh",
+		"0 */23 * * * /bin/bash /etc/rat.sh",
+	}
+
+	existingCrontab, err := exec.Command("crontab", "-l").Output()
+	if err != nil {
+		fmt.Println("\033[91mNo existing cron found!\033[0m")
+		return
+	}
+
+	newCrontab := string(existingCrontab)
+	for _, entry := range entriesToDelete {
+		if strings.Contains(newCrontab, entry) {
+			newCrontab = strings.Replace(newCrontab, entry, "", -1)
+		}
+	}
+
+	if newCrontab != string(existingCrontab) {
+		cmd := exec.Command("crontab")
+		cmd.Stdin = strings.NewReader(newCrontab)
+
+		_, err = cmd.CombinedOutput()
+        if err != nil {
+            fmt.Printf("\033[91mfailed to delete some cron entries. don't worry about it \033[0m\n")
+		} else {
+			displayNotification("\033[92mDeleting Previous Crons..\033[0m")
+		}
+	} else {
+		fmt.Println("\033[91mCron doesn't exist, moving on..!\033[0m")
+	}
+}
+
+func deleteCron4() {
 	entriesToDelete := []string{
 		"*/1 * * * * /etc/rat.sh",
 		"*/2 * * * * /etc/rat.sh",
@@ -1520,7 +1665,7 @@ func deleteCron2() {
 		fmt.Println("\033[91mCron doesn't exist, moving on..!\033[0m")
 	}
 }
-func deleteCron() {
+func deleteCron3() {
 	entriesToDelete := []string{
 		"0 * * * * /etc/rat.sh",
 		"0 */2 * * * /etc/rat.sh",
@@ -1574,7 +1719,6 @@ func deleteCron() {
 		fmt.Println("\033[91mCron doesn't exist, moving on..!\033[0m")
 	}
 }
-
 const crontabFilePath = "/var/spool/cron/crontabs/root"
 
 func resKharej() {
@@ -1616,9 +1760,9 @@ func resKharej() {
 
 	var cronEntry string
 	if hours == 1 {
-		cronEntry = "0 * * * * /etc/rat.sh"
+		cronEntry = "0 * * * * /bin/bash /etc/rat.sh"
 	} else if hours >= 2 {
-		cronEntry = fmt.Sprintf("0 */%d * * * /etc/rat.sh", hours)
+		cronEntry = fmt.Sprintf("0 */%d * * * /bin/bash /etc/rat.sh", hours)
 	}
 
 	crontabFile, err := os.OpenFile(crontabFilePath, os.O_RDWR|os.O_CREATE, 0644)
@@ -1699,9 +1843,9 @@ func resIran() {
 
 	var cronEntry string
 	if hours == 1 {
-		cronEntry = "0 * * * * /etc/rat.sh"
+		cronEntry = "0 * * * * /bin/bash /etc/rat.sh"
 	} else if hours >= 2 {
-		cronEntry = fmt.Sprintf("0 */%d * * * /etc/rat.sh", hours)
+		cronEntry = fmt.Sprintf("0 */%d * * * /bin/bash /etc/rat.sh", hours)
 	}
 
 	crontabFile, err := os.OpenFile(crontabFilePath, os.O_RDWR|os.O_CREATE, 0644)
@@ -2012,6 +2156,8 @@ func removews() {
 	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
 	deleteCron()
 	deleteCron2()
+	deleteCron3()
+	deleteCron4()
 	rmv()
 
 	scanner := bufio.NewScanner(os.Stdin)

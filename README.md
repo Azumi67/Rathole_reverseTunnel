@@ -1,6 +1,15 @@
 **این پروژه صرفا برای آموزش و بالا بردن دانش بوده است و هدف دیگری در ان نمیباشد**
 
-**امروز بعد از امتحان روی باینری و چند سرور ایران هم کار میکنم که این پروژه هم کامل شود**
+**اپدیت Binary انجام شد. دقت نمایید که os های ترجیحا به روزتر استفاده نمایید و از طریق ldd --version ورژن خود را بررسی کنید که 2.36 باشد و در غیر اینصورت به صورت کامپایل استفاده نمایید**
+
+```
+sudo apt install curl -y && bash <(curl -s https://raw.githubusercontent.com/Azumi67/Rathole_reverseTunnel/main/gobinary.sh)
+
+```
+
+**اگر OS شما به روز باشد از این بع بعد میتوانید تانل را به وسیله binary و بدون نیاز به compile انجام دهید**
+
+**به زودی بر روی چند سرور ایران و تک سرور خارج هم کار میکنم تا این پروژه بسته شود**
 
 ![R (2)](https://github.com/Azumi67/PrivateIP-Tunnel/assets/119934376/a064577c-9302-4f43-b3bf-3d4f84245a6f)
 نام پروژه : ریورس تانل Rathole [ با TCP - UDP - WS + TLS - Noise TLS ]
@@ -716,6 +725,18 @@ wget "https://raw.githubusercontent.com/hawshemi/Linux-Optimizer/main/linux-opti
 ![R (a2)](https://github.com/Azumi67/PrivateIP-Tunnel/assets/119934376/716fd45e-635c-4796-b8cf-856024e5b2b2)
 **اسکریپت من**
 ----------------
+<div align="right">
+  <details>
+    <summary><strong>تانل بوسیله binary و بدون نیاز به compile</strong></summary>
+  
+
+- دستور زیر را اجرا کنید
+```
+sudo apt install curl -y && bash <(curl -s https://raw.githubusercontent.com/Azumi67/Rathole_reverseTunnel/main/gobinary.sh)
+
+```
+  </details>
+</div>
 
 <div align="right">
   <details>

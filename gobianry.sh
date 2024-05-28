@@ -4,8 +4,6 @@ if [ "$EUID" -ne 0 ]; then
     exit 1
 fi
 sudo apt update -y
-wget -O /etc/logo.sh https://raw.githubusercontent.com/Azumi67/UDP2RAW_FEC/main/logo.sh
-chmod +x /etc/logo.sh
 
 architecture=$(uname -m)
 if [ "$architecture" = "x86_64" ]; then
@@ -27,18 +25,14 @@ echo 'export PATH=$PATH:/usr/local/go/bin' >> ~/.bash_profile
 
 source ~/.bash_profile
 go mod init mymodule
-go install github.com/AlecAivazis/survey/v2
 go mod tidy
-go get github.com/AlecAivazis/survey/v2
-go get github.com/fatih/color
-go get github.com/pkg/sftp
-go get -u golang.org/x/crypto/ssh
 
-if [ -f "rat.go" ]; then
-    rm rat.go
+if [ -f "install.go" ]; then
+    rm install.go
     echo "deleted previous version!"
 fi
-
+wget -O /etc/logo.sh https://raw.githubusercontent.com/Azumi67/UDP2RAW_FEC/main/logo.sh
+chmod +x /etc/logo.sh
 wget https://raw.githubusercontent.com/Azumi67/Rathole_reverseTunnel/main/ratbinary.go
 
 go run ratbinary.go

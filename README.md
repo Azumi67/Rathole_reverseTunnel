@@ -2,6 +2,9 @@
 
 **اپدیت Binary انجام شد. دقت نمایید که os های ترجیحا به روزتر استفاده نمایید و از طریق ldd --version ورژن خود را بررسی کنید که 2.36 باشد و در غیر اینصورت به صورت کامپایل استفاده نمایید**
 
+- نصب binary را داخل اسکریپت با گزینه install binary قبل از تانل کردن انجام دهید
+- اگر در اجرای binary مشکل داشتید ، به وسیله روش compile استفاده نمایید
+
 ```
 sudo apt install curl -y && bash <(curl -s https://raw.githubusercontent.com/Azumi67/Rathole_reverseTunnel/main/gobinary.sh)
 

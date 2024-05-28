@@ -4,6 +4,7 @@
 
 - نصب binary را داخل اسکریپت با گزینه install binary قبل از تانل کردن انجام دهید
 - اگر در اجرای binary مشکل داشتید ، به وسیله روش compile استفاده نمایید
+- دستور پایین برای نسخه با binary و بدون compile میباشد
 
 ```
 sudo apt install curl -y && bash <(curl -s https://raw.githubusercontent.com/Azumi67/Rathole_reverseTunnel/main/gobinary.sh)

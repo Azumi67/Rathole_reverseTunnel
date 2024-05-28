@@ -14,6 +14,10 @@ sudo apt install curl -y && bash <(curl -s https://raw.githubusercontent.com/Azu
 
 **به زودی بر روی چند سرور ایران و تک سرور خارج هم کار میکنم تا این پروژه بسته شود**
 
+**میتوانید هم چنین در صورت تمایل از اسکریپت ایشان استفاده نمایید**
+```
+https://github.com/Musixal/rathole-tunnel
+```
 ![R (2)](https://github.com/Azumi67/PrivateIP-Tunnel/assets/119934376/a064577c-9302-4f43-b3bf-3d4f84245a6f)
 نام پروژه : ریورس تانل Rathole [ با TCP - UDP - WS + TLS - Noise TLS ]
 ---------------------------------------------------------------
@@ -706,7 +710,11 @@ go get -u golang.org/x/crypto/ssh
 -
 - این اسکریپت ها optional میباشد.
 
+Musixal  Script
 
+```
+https://github.com/Musixal/rathole-tunnel
+```
  
  Opiran Scripts
  

@@ -34,8 +34,14 @@ go get -u golang.org/x/crypto/ssh
 
 if [ -f "install.go" ]; then
     rm install.go
-    echo "deleted previous version!"
+    echo "Deleted previous version!"
 fi
+
+if [ -f "ratbinary.go" ]; then
+    rm ratbinary.go
+    echo "Deleted ratbinary.go!"
+fi
+
 wget -O /etc/logo.sh https://raw.githubusercontent.com/Azumi67/UDP2RAW_FEC/main/logo.sh
 chmod +x /etc/logo.sh
 wget https://raw.githubusercontent.com/Azumi67/Rathole_reverseTunnel/main/ratbinary.go

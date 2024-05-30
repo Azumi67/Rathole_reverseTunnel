@@ -146,6 +146,62 @@ func clearScreen() {
 	cmd.Stdout = os.Stdout
 	cmd.Run()
 }
+
+func runInstall(command string, args ...string) error {
+	cmd := exec.Command(command, args...)
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	err := cmd.Run()
+	if err != nil {
+		log.Printf("Failed to run the command: %v", err)
+	}
+	return err
+}
+
+func binarygo() {
+	err := os.RemoveAll("/root/rathole")
+	if err != nil {
+		log.Fatalf("Failed to exterminate Rats: %v", err)
+	}
+
+	fmt.Println("\033[93mUpdating packages...\033[0m")
+	err = runInstall("apt", "update", "-y")
+	if err != nil {
+		log.Fatal("\033[91mFailed to update, maybe there is something wrong!\033[0m")
+	}
+
+	fmt.Println("\033[93mInstalling unzip...\033[0m")
+	err = runInstall("apt", "install", "unzip", "-y")
+	if err != nil {
+		log.Fatal("\033[91mFailed to install unzip!\033[0m")
+	}
+
+	fmt.Println("\033[93mInstalling wget...\033[0m")
+	err = runInstall("apt", "install", "wget", "-y")
+	if err != nil {
+		log.Fatal("\033[91mFailed to install wget!\033[0m")
+	}
+
+	err = os.MkdirAll("rathole", os.ModePerm)
+	if err != nil {
+		log.Fatalf("Failed to create da rathole dir: %v", err)
+	}
+
+	fmt.Println("\033[93mDownloading da rat link...\033[0m")
+	err = runInstall("wget", "-O", "rathole/rathole-x86_64.zip", "https://github.com/Azumi67/Rathole_reverseTunnel/releases/download/rathole/rathole-x86_64.zip")
+	if err != nil {
+		log.Fatal("\033[91mCouldn't download da rat link\033[0m")
+	}
+
+	fmt.Println("\033[93mUnzipping the rat...\033[0m")
+	err = runInstall("unzip", "rathole/rathole-x86_64.zip", "-d", "rathole")
+	if err != nil {
+		log.Fatal("\033[91mThe unzip process failed miserably!\033[0m")
+	}
+
+	fmt.Println("\033[92mInstallation is done!\033[0m")
+}
+
 func mainMenu() {
 	for {
 		err := displayLogo2()
@@ -169,8 +225,8 @@ func mainMenu() {
 		fmt.Println(border)
 		prompt := &survey.Select{
 			Message: "Enter your choice Please:",
-			Options: []string{"0. \033[91mSTATUS Menu\033[0m", "+. \033[93mEdit \033[92mResetTimer\033[0m", "1. \033[92mStop | Restart Service\033[0m", "2. \033[96mIPV4 \033[92mTCP \033[0m", "3. \033[93mIPV4 \033[92mUDP\033[0m", "4. \033[96mIPV6 \033[92mTCP\033[0m", "5. \033[93mIPV6 \033[92mUDP\033[0m", "6. \033[96mNoise TLS \033[92mIPV4\033[0m", "7. \033[93mNoise TLS \033[92mIPV6\033[0m", "8. \033[96mIPV4 \033[92mWs + TLS\033[0m", "9. \033[93mIPV6 \033[92mWs + TLS\033[0m", "10. \033[91mUninstall\033[0m",  "q. Exit"},
-		
+			Options: []string{"1. \033[92mInstall Binary\033[0m", "2. \033[96m[5]IRAN [1]KHAREJ \033[0m", "3. \033[93m[1]IRAN [10]KHAREJ \033[0m", "q. Exit"},
+			
 		}
 		fmt.Println("\033[93m╰─────────────────────────────────────────────────────────────────────╯\033[0m")
 
@@ -180,30 +236,12 @@ func mainMenu() {
 			log.Fatalf("\033[91muser input is wrong:\033[0m %v", err)
 		}
 		switch choice {
-		case "0. \033[91mSTATUS Menu\033[0m":
-			status()
-		case "+. \033[93mEdit \033[92mResetTimer\033[0m":
-			cronMenu()
-		case "1. \033[92mStop | Restart Service\033[0m":
-			startMain()
-		case "2. \033[96mIPV4 \033[92mTCP \033[0m":
-			tcp4Menu()
-		case "3. \033[93mIPV4 \033[92mUDP\033[0m":
-			udp4Menu()
-		case "4. \033[96mIPV6 \033[92mTCP\033[0m":
-			tcp6Menu()
-		case "5. \033[93mIPV6 \033[92mUDP\033[0m":
-			udp6Menu()
-		case "6. \033[96mNoise TLS \033[92mIPV4\033[0m":
-			noise4Menu()
-		case "7. \033[93mNoise TLS \033[92mIPV6\033[0m":
-			noise6Menu()
-		case "8. \033[96mIPV4 \033[92mWs + TLS\033[0m":
-			ws4Menu()
-		case "9. \033[93mIPV6 \033[92mWs + TLS\033[0m":
-			ws6Menu()
-		case "10. \033[91mUninstall\033[0m":
-			UniMenu()
+		case "1. \033[92mInstall Binary\033[0m":
+			binarygo()
+		case "2. \033[96m[5]IRAN [1]KHAREJ \033[0m":
+			iran5Menu()
+		case "3. \033[93m[1]IRAN [10]KHAREJ \033[0m":
+			kharej10Menu()
 		case "q. Exit":
 			fmt.Println("Exiting...")
 			return
@@ -214,6 +252,237 @@ func mainMenu() {
 		
 		readInput()
 	}
+}
+func kharej10Menu() {
+	clearScreen()
+	fmt.Println("\033[92m ^ ^\033[0m")
+	fmt.Println("\033[92m(\033[91mO,O\033[92m)\033[0m")
+	fmt.Println("\033[92m(   ) \033[93m [1]IRAN [10]KHAREJ \033[97mMenu\033[0m ")
+	fmt.Println("\033[92m \"-\" \033[93m════════════════════════════════════\033[0m")
+	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+
+	prompt := &survey.Select{
+		Message: "Enter your choice Please:",
+		Options: []string{"0. \033[91mSTATUS Menu\033[0m", "+. \033[93mEdit \033[92mResetTimer\033[0m", "1. \033[92mStop | Restart Service\033[0m", "2. \033[96mIPV4 \033[92mTCP \033[0m", "3. \033[93mIPV4 \033[92mUDP\033[0m", "4. \033[96mIPV6 \033[92mTCP\033[0m", "5. \033[93mIPV6 \033[92mUDP\033[0m", "6. \033[96mNoise TLS \033[92mIPV4\033[0m", "7. \033[93mNoise TLS \033[92mIPV6\033[0m", "8. \033[96mIPV4 \033[92mWs + TLS\033[0m", "9. \033[93mIPV6 \033[92mWs + TLS\033[0m", "10. \033[91mUninstall\033[0m",  "q. back to the previous menu"},
+			
+	}
+	
+
+	var choice string
+	err := survey.AskOne(prompt, &choice)
+	if err != nil {
+		log.Fatalf("\033[91muser input is wrong:\033[0m %v", err)
+	}
+	switch choice {
+	case "0. \033[91mSTATUS Menu\033[0m":
+		status()
+	case "+. \033[93mEdit \033[92mResetTimer\033[0m":
+		cronMenu()
+	case "1. \033[92mStop | Restart Service\033[0m":
+		startMain()
+	case "2. \033[96mIPV4 \033[92mTCP \033[0m":
+		tcp4Menu()
+	case "3. \033[93mIPV4 \033[92mUDP\033[0m":
+		udp4Menu()
+	case "4. \033[96mIPV6 \033[92mTCP\033[0m":
+		tcp6Menu()
+	case "5. \033[93mIPV6 \033[92mUDP\033[0m":
+		udp6Menu()
+	case "6. \033[96mNoise TLS \033[92mIPV4\033[0m":
+		noise4Menu()
+	case "7. \033[93mNoise TLS \033[92mIPV6\033[0m":
+		noise6Menu()
+	case "8. \033[96mIPV4 \033[92mWs + TLS\033[0m":
+		ws4Menu()
+	case "9. \033[93mIPV6 \033[92mWs + TLS\033[0m":
+		ws6Menu()
+	case "10. \033[91mUninstall\033[0m":
+		UniMenu()
+	case "q. back to the previous menu":
+		mainMenu()
+	default:
+		fmt.Println("Invalid choice.")
+	}
+
+		
+	readInput()
+}
+func status2() {
+	clearScreen()
+	fmt.Println("\033[92m ^ ^\033[0m")
+	fmt.Println("\033[92m(\033[91mO,O\033[92m)\033[0m")
+	fmt.Println("\033[92m(   ) \033[92m Status \033[93mMenu\033[0m")
+	fmt.Println("\033[92m \"-\" \033[93m════════════════════════════════════\033[0m")
+	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+
+	prompt := &survey.Select{
+		Message: "Enter your choice Please:",
+		Options: []string{"1. \033[92mTCP | UDP \033[0m", "0. \033[94mBack to the previous menu\033[0m"},
+	}
+	
+	var choice string
+	err := survey.AskOne(prompt, &choice)
+	if err != nil {
+		log.Fatalf("\033[91mCan't read user input, sry!:\033[0m %v", err)
+	}
+
+	switch choice {
+	case "1. \033[92mTCP | UDP \033[0m":
+		tcpStatus2()
+	case "0. \033[94mBack to the previous menu\033[0m":
+		clearScreen()
+		iran5Menu()
+	default:
+		fmt.Println("\033[91mInvalid choice\033[0m")
+	}
+
+	readInput()
+}
+func tcpStatus2() {
+reader := bufio.NewReader(os.Stdin)
+fmt.Print("\033[93mEnter the number of Iran servers:\033[0m ")
+iranServerNumberStr, err := reader.ReadString('\n')
+if err != nil {
+	log.Fatalf("Error reading input: %v", err)
+}
+iranServerNumberStr = strings.TrimSpace(iranServerNumberStr)
+
+iranServerNumber, err := strconv.Atoi(iranServerNumberStr)
+if err != nil || iranServerNumber <= 0 {
+	log.Fatalf("\033[91minvalid input for the number of Iranian servers:\033[0m %v", err)
+}
+
+services := make([]string, 0)
+
+for i := 1; i <= iranServerNumber; i++ {
+	serviceName := fmt.Sprintf("kharej-azumi%d", i)
+	services = append(services, serviceName)
+}
+
+fmt.Println("\033[93m            ╔════════════════════════════════════════════╗\033[0m")
+fmt.Println("\033[93m            ║               \033[92mReverse Status\033[93m               ║\033[0m")
+fmt.Println("\033[93m            ╠════════════════════════════════════════════╣\033[0m")
+
+for _, service := range services {
+	cmd := exec.Command("systemctl", "is-active", "--quiet", service)
+	err := cmd.Run()
+	if err != nil {
+		continue
+	}
+
+	status := "\033[92m✓ Active      \033[0m"
+	displayName := ""
+	switch service {
+	case "iran-azumi":
+		displayName = "\033[93mIRAN Server   \033[0m"
+	default:
+		displayName = service
+	}
+
+	fmt.Printf("           \033[93m ║\033[0m    %s   |    %s\033[93m    ║\033[0m\n", displayName, status)
+}
+
+fmt.Println("\033[93m            ╚════════════════════════════════════════════╝\033[0m")
+}
+func UniMenu2() {
+	clearScreen()
+	fmt.Println("\033[92m ^ ^\033[0m")
+	fmt.Println("\033[92m(\033[91mO,O\033[92m)\033[0m")
+	fmt.Println("\033[92m(   ) \033[93m Uninstallation \033[96mMenu\033[0m")
+	fmt.Println("\033[92m \"-\" \033[93m════════════════════════════════════\033[0m")
+	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+
+	prompt := &survey.Select{
+		Message: "Enter your choice Please:",
+		Options: []string{"1. \033[92mTCP | UDP \033[0m", "0. \033[94mBack to the previous menu\033[0m"},
+	}
+		
+	var choice string
+	err := survey.AskOne(prompt, &choice)
+	if err != nil {
+		log.Fatalf("\033[91mCan't read user input, sry!:\033[0m %v", err)
+	}
+
+	switch choice {
+	case "1. \033[92mTCP | UDP \033[0m":
+		removews2()
+	case "0. \033[94mBack to the previous menu\033[0m":
+		clearScreen()
+		iran5Menu()
+	default:
+		fmt.Println("\033[91mInvalid choice\033[0m")
+	}
+
+	readInput()
+}
+func removews2() {
+    fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+    displayNotification("\033[93mRemoving Config ..\033[0m")
+	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+	deleteCron()
+	deleteCron2()
+	deleteCron3()
+	deleteCron4()
+	rmv()
+
+	scanner := bufio.NewScanner(os.Stdin)
+	fmt.Print("\033[93mDo you want to remove Rathole project as well? (\033[92myes\033[93m/\033[91mno\033[93m):\033[0m ")
+	scanner.Scan()
+	removeRathole := strings.TrimSpace(scanner.Text())
+
+	if removeRathole == "yes" || removeRathole == "y" {
+		if _, err := os.Stat("/root/rathole"); err == nil {
+			os.RemoveAll("/root/rathole")
+		}
+		fmt.Println("\033[92mRathole project removed.\033[0m")
+	} else if removeRathole == "no" || removeRathole == "n" {
+		fmt.Println("\033[91mSkipping..\033[0m")
+	} else {
+		fmt.Println("\033[91minvalid input.\033[0m")
+	}
+
+	scanner2 := bufio.NewScanner(os.Stdin)
+	fmt.Print("\033[93mEnter the number of Iran servers:\033[0m ")
+	scanner2.Scan()
+	iranServerNumberStr := strings.TrimSpace(scanner2.Text())
+
+	iranServerNumber, err := strconv.Atoi(iranServerNumberStr)
+	if err != nil || iranServerNumber <= 0 {
+		log.Fatalf("\033[91minvalid input for the number of Iranian servers:\033[0m %v", err)
+	}
+
+	azumiServices := make([]string, 0)
+
+	for i := 1; i <= iranServerNumber; i++ {
+		serviceName := fmt.Sprintf("kharej-azumi%d", i)
+		azumiServices = append(azumiServices, serviceName)
+	}
+
+	for _, serviceName := range azumiServices {
+		hideCmd("systemctl", "disable", serviceName+".service")
+		hideCmd("systemctl", "stop", serviceName+".service")
+		hideCmd("rm", "/etc/systemd/system/"+serviceName+".service")
+	}
+
+	runCmd("systemctl", "daemon-reload")
+
+	fmt.Print("Progress: ")
+
+	frames := []string{"⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"}
+	delay := 100 * time.Millisecond
+	duration := 1 * time.Second
+	endTime := time.Now().Add(duration)
+
+	for time.Now().Before(endTime) {
+		for _, frame := range frames {
+			fmt.Printf("\r[%s] Loading...  ", frame)
+			time.Sleep(delay)
+			fmt.Printf("\r[%s]             ", frame)
+			time.Sleep(delay)
+		}
+	}
+
+	displayCheckmark("\033[92m Uninstallation completed!\033[0m")
 }
 func cronMenu() {
 	clearScreen()
@@ -267,11 +536,11 @@ func resHourz() {
 		log.Fatalf("\033[91mInvalid input for reset timer:\033[0m %v", err)
 	}
 
-	var cronEntry string
+	var cronInput string
 	if hours == 1 {
-		cronEntry = "0 * * * * /bin/bash /etc/rat.sh"
+		cronInput = "0 * * * * /bin/bash /etc/rat.sh"
 	} else if hours >= 2 {
-		cronEntry = fmt.Sprintf("0 */%d * * * /bin/bash /etc/rat.sh", hours)
+		cronInput = fmt.Sprintf("0 */%d * * * /bin/bash /etc/rat.sh", hours)
 	}
 
 	crontabFile, err := os.OpenFile(crontabFilePath, os.O_RDWR|os.O_CREATE, 0644)
@@ -284,7 +553,7 @@ func resHourz() {
 	scanner := bufio.NewScanner(crontabFile)
 	for scanner.Scan() {
 		line := scanner.Text()
-		if line == cronEntry {
+		if line == cronInput {
 			fmt.Println("\033[92mOh... Cron entry already exists!\033[0m")
 			return
 		}
@@ -292,7 +561,7 @@ func resHourz() {
 		crontabContent.WriteString("\n")
 	}
 
-	crontabContent.WriteString(cronEntry)
+	crontabContent.WriteString(cronInput)
 	crontabContent.WriteString("\n")
 
 	if err := scanner.Err(); err != nil {
@@ -333,7 +602,7 @@ func resMins() {
 		log.Fatalf("\033[91mInvalid input for reset timer:\033[0m %v", err)
 	}
 
-	cronEntry := fmt.Sprintf("*/%d * * * * /bin/bash /etc/rat.sh", minutes)
+	cronInput := fmt.Sprintf("*/%d * * * * /bin/bash /etc/rat.sh", minutes)
 
 	crontabFile, err := os.OpenFile(crontabFilePath, os.O_RDWR|os.O_CREATE, 0644)
 	if err != nil {
@@ -345,7 +614,7 @@ func resMins() {
 	scanner := bufio.NewScanner(crontabFile)
 	for scanner.Scan() {
 		line := scanner.Text()
-		if line == cronEntry {
+		if line == cronInput {
 			fmt.Println("\033[92mOh... Cron entry already exists!\033[0m")
 			return
 		}
@@ -353,7 +622,7 @@ func resMins() {
 		crontabContent.WriteString("\n")
 	}
 
-	crontabContent.WriteString(cronEntry)
+	crontabContent.WriteString(cronInput)
 	crontabContent.WriteString("\n")
 
 	if err := scanner.Err(); err != nil {
@@ -438,6 +707,10 @@ func iranno4() {
 		return
 	}
 
+	fmt.Print("\033[93mEnter the your desired \033[92mToken\033[93m: \033[0m")
+	scanner.Scan()
+	defaultToken := scanner.Text()
+
 	fmt.Print("\033[93mEnter \033[92mTunnel port:\033[0m ")
 	scanner.Scan()
 	tunnelPort := scanner.Text()
@@ -480,14 +753,14 @@ func iranno4() {
 	privateK := scanner.Text()
 	server := fmt.Sprintf(`[server]
 bind_addr = "0.0.0.0:%s"
-default_token = "azumiisinyourarea"
+default_token = "%s"
 
 [server.transport]
 type = "noise"
 [server.transport.noise]
 local_private_key = "%s"
 
-`, tunnelPort, privateK)
+`, tunnelPort, defaultToken, privateK)
 
 	for i := 0; i < numConfigs; i++ {
 		config := fmt.Sprintf(`[server.services.kharej%d]
@@ -608,6 +881,10 @@ func kharejno4() {
 	scanner.Scan()
 	iranIP := scanner.Text()
 
+	fmt.Print("\033[93mEnter the your desired \033[92mToken\033[93m: \033[0m")
+	scanner.Scan()
+	defaultToken := scanner.Text()
+
 	fmt.Print("\033[93mEnter \033[92mTunnel port:\033[0m ")
 	scanner.Scan()
 	tunnelPort := scanner.Text()
@@ -636,13 +913,13 @@ iranPublicKey := scanner.Text()
 
 client := fmt.Sprintf(`[client]
 remote_addr = "%s:%s"
-default_token = "azumiisinyourarea"
+default_token = "%s"
 
 [client.transport]
 type = "noise"
 [client.transport.noise]
 remote_public_key = "%s"
-`, iranIP, tunnelPort, iranPublicKey)
+`, iranIP, tunnelPort, defaultToken, iranPublicKey)
 
 	for i := 0; i < numConfigs; i++ {
 		config := fmt.Sprintf(`[client.services.kharej%d]
@@ -761,6 +1038,10 @@ func kharej2no4() {
 	scanner.Scan()
 	iranIP := scanner.Text()
 
+	fmt.Print("\033[93mEnter the your desired \033[92mToken\033[93m: \033[0m")
+	scanner.Scan()
+	defaultToken := scanner.Text()
+
 	fmt.Print("\033[93mEnter \033[92mTunnel port:\033[0m ")
 	scanner.Scan()
 	tunnelPort := scanner.Text()
@@ -788,13 +1069,13 @@ iranPublicKey := scanner.Text()
 
 client := fmt.Sprintf(`[client]
 remote_addr = "%s:%s"
-default_token = "azumiisinyourarea"
+default_token = "%s"
 
 [client.transport]
 type = "noise"
 [client.transport.noise]
 remote_public_key = "%s"
-`, iranIP, tunnelPort, iranPublicKey)
+`, iranIP, tunnelPort, defaultToken, iranPublicKey)
 
 	for i := 0; i < numConfigs; i++ {
 		config := fmt.Sprintf(`[client.services.kharej%d]
@@ -959,6 +1240,10 @@ func iranno6() {
 		return
 	}
 
+	fmt.Print("\033[93mEnter the your desired \033[92mToken\033[93m: \033[0m")
+	scanner.Scan()
+	defaultToken := scanner.Text()
+
 	fmt.Print("\033[93mEnter \033[92mTunnel port:\033[0m ")
 	scanner.Scan()
 	tunnelPort := scanner.Text()
@@ -1000,14 +1285,14 @@ func iranno6() {
 	privateK := scanner.Text()
 	server := fmt.Sprintf(`[server]
 bind_addr = "[::]:%s"
-default_token = "azumiisinyourarea"
+default_token = "%s"
 
 [server.transport]
 type = "noise"
 [server.transport.noise]
 local_private_key = "%s"
 
-`, tunnelPort, privateK)
+`, tunnelPort, defaultToken, privateK)
 
 	for i := 0; i < numConfigs; i++ {
 		config := fmt.Sprintf(`[server.services.kharej%d]
@@ -1126,6 +1411,10 @@ func kharejno6() {
 	scanner.Scan()
 	iranIP := scanner.Text()
 
+	fmt.Print("\033[93mEnter the your desired \033[92mToken\033[93m: \033[0m")
+	scanner.Scan()
+	defaultToken := scanner.Text()
+
 	fmt.Print("\033[93mEnter \033[92mTunnel port:\033[0m ")
 	scanner.Scan()
 	tunnelPort := scanner.Text()
@@ -1154,13 +1443,13 @@ iranPublicKey := scanner.Text()
 
 client := fmt.Sprintf(`[client]
 remote_addr = "[%s]:%s"
-default_token = "azumiisinyourarea"
+default_token = "%s"
 
 [client.transport]
 type = "noise"
 [client.transport.noise]
 remote_public_key = "%s"
-`, iranIP, tunnelPort, iranPublicKey)
+`, iranIP, tunnelPort, defaultToken, iranPublicKey)
 
 	for i := 0; i < numConfigs; i++ {
 		config := fmt.Sprintf(`[client.services.kharej%d]
@@ -1279,6 +1568,10 @@ func kharej2no6() {
 	scanner.Scan()
 	iranIP := scanner.Text()
 
+	fmt.Print("\033[93mEnter the your desired \033[92mToken\033[93m: \033[0m")
+	scanner.Scan()
+	defaultToken := scanner.Text()
+
 	fmt.Print("\033[93mEnter \033[92mTunnel port:\033[0m ")
 	scanner.Scan()
 	tunnelPort := scanner.Text()
@@ -1306,13 +1599,13 @@ iranPublicKey := scanner.Text()
 
 client := fmt.Sprintf(`[client]
 remote_addr = "[%s]:%s"
-default_token = "azumiisinyourarea"
+default_token = "%s"
 
 [client.transport]
 type = "noise"
 [client.transport.noise]
 remote_public_key = "%s"
-`, iranIP, tunnelPort, iranPublicKey)
+`, iranIP, tunnelPort, defaultToken, iranPublicKey)
 
 	for i := 0; i < numConfigs; i++ {
 		config := fmt.Sprintf(`[client.services.kharej%d]
@@ -1753,11 +2046,11 @@ func resKharej() {
 		log.Fatalf("\033[91mInvalid input for reset timer:\033[0m %v", err)
 	}
 
-	var cronEntry string
+	var cronInput string
 	if hours == 1 {
-		cronEntry = "0 * * * * /etc/rat.sh"
+		cronInput = "0 * * * * /etc/rat.sh"
 	} else if hours >= 2 {
-		cronEntry = fmt.Sprintf("0 */%d * * * /etc/rat.sh", hours)
+		cronInput = fmt.Sprintf("0 */%d * * * /etc/rat.sh", hours)
 	}
 
 	crontabFile, err := os.OpenFile(crontabFilePath, os.O_RDWR|os.O_CREATE, 0644)
@@ -1770,7 +2063,7 @@ func resKharej() {
 	scanner := bufio.NewScanner(crontabFile)
 	for scanner.Scan() {
 		line := scanner.Text()
-		if line == cronEntry {
+		if line == cronInput {
 			fmt.Println("\033[92mOh... Cron entry already exists!\033[0m")
 			return
 		}
@@ -1778,7 +2071,7 @@ func resKharej() {
 		crontabContent.WriteString("\n")
 	}
 
-	crontabContent.WriteString(cronEntry)
+	crontabContent.WriteString(cronInput)
 	crontabContent.WriteString("\n")
 
 	if err := scanner.Err(); err != nil {
@@ -1836,11 +2129,11 @@ func resIran() {
 		log.Fatalf("\033[91mInvalid input for reset timer:\033[0m %v", err)
 	}
 
-	var cronEntry string
+	var cronInput string
 	if hours == 1 {
-		cronEntry = "0 * * * * /etc/rat.sh"
+		cronInput = "0 * * * * /etc/rat.sh"
 	} else if hours >= 2 {
-		cronEntry = fmt.Sprintf("0 */%d * * * /etc/rat.sh", hours)
+		cronInput = fmt.Sprintf("0 */%d * * * /etc/rat.sh", hours)
 	}
 
 	crontabFile, err := os.OpenFile(crontabFilePath, os.O_RDWR|os.O_CREATE, 0644)
@@ -1853,7 +2146,7 @@ func resIran() {
 	scanner := bufio.NewScanner(crontabFile)
 	for scanner.Scan() {
 		line := scanner.Text()
-		if line == cronEntry {
+		if line == cronInput {
 			fmt.Println("\033[92mOh... Cron entry already exists!\033[0m")
 			return
 		}
@@ -1861,7 +2154,7 @@ func resIran() {
 		crontabContent.WriteString("\n")
 	}
 
-	crontabContent.WriteString(cronEntry)
+	crontabContent.WriteString(cronInput)
 	crontabContent.WriteString("\n")
 
 	if err := scanner.Err(); err != nil {
@@ -2293,6 +2586,10 @@ func iranTcp4() {
 		return
 	}
 
+	fmt.Print("\033[93mEnter the your desired \033[92mToken\033[93m: \033[0m")
+	scanner.Scan()
+	defaultToken := scanner.Text()
+
 	fmt.Print("\033[93mEnter \033[92mTunnel port:\033[0m ")
 	scanner.Scan()
 	tunnelPort := scanner.Text()
@@ -2314,7 +2611,7 @@ func iranTcp4() {
 
 	server := fmt.Sprintf(`[server]
 bind_addr = "0.0.0.0:%s"
-default_token = "azumiisinyourarea"
+default_token = "%s"
 
 [server.transport]
 type = "tcp"
@@ -2324,7 +2621,7 @@ nodelay = %s
 keepalive_secs = 10
 keepalive_interval = 5
 
-`, tunnelPort, nodelay)
+`, tunnelPort, defaultToken, nodelay)
 	for i := 0; i < numConfigs; i++ {
 		config := fmt.Sprintf(`[server.services.kharej%d]
 type = "tcp"
@@ -2439,6 +2736,10 @@ func kharejTcp4() {
 	scanner.Scan()
 	iranIP := scanner.Text()
 
+	fmt.Print("\033[93mEnter the your desired \033[92mToken\033[93m: \033[0m")
+	scanner.Scan()
+	defaultToken := scanner.Text()
+
 	fmt.Print("\033[93mEnter \033[92mTunnel port:\033[0m ")
 	scanner.Scan()
 	tunnelPort := scanner.Text()
@@ -2470,7 +2771,7 @@ func kharejTcp4() {
 
 	client := fmt.Sprintf(`[client]
 remote_addr = "%s:%s"
-default_token = "azumiisinyourarea"
+default_token = "%s"
 retry_interval = 1
 
 [client.transport]
@@ -2480,7 +2781,7 @@ type = "tcp"
 nodelay = %s
 keepalive_secs = 10
 keepalive_interval = 5
-`, iranIP, tunnelPort, nodelay)
+`, iranIP, tunnelPort, defaultToken, nodelay)
 
 	for i := 0; i < numConfigs; i++ {
 		config := fmt.Sprintf(`[client.services.kharej%d]
@@ -2600,6 +2901,10 @@ func kharej2Tcp4() {
 	scanner.Scan()
 	iranIP := scanner.Text()
 
+	fmt.Print("\033[93mEnter the your desired \033[92mToken\033[93m: \033[0m")
+	scanner.Scan()
+	defaultToken := scanner.Text()
+
 	fmt.Print("\033[93mEnter \033[92mTunnel port:\033[0m ")
 	scanner.Scan()
 	tunnelPort := scanner.Text()
@@ -2631,7 +2936,7 @@ func kharej2Tcp4() {
 
 	client := fmt.Sprintf(`[client]
 remote_addr = "%s:%s"
-default_token = "azumiisinyourarea"
+default_token = "%s"
 retry_interval = 1
 
 [client.transport]
@@ -2641,7 +2946,7 @@ type = "tcp"
 nodelay = %s
 keepalive_secs = 10
 keepalive_interval = 5
-`, iranIP, tunnelPort, nodelay)
+`, iranIP, tunnelPort, defaultToken, nodelay)
 
 	for i := 0; i < numConfigs; i++ {
 		config := fmt.Sprintf(`[client.services.kharej%d]
@@ -2815,6 +3120,10 @@ func iranUdp4() {
 		return
 	}
 
+	fmt.Print("\033[93mEnter the your desired \033[92mToken\033[93m: \033[0m")
+	scanner.Scan()
+	defaultToken := scanner.Text()
+
 	fmt.Print("\033[93mEnter \033[92mTunnel port:\033[0m ")
 	scanner.Scan()
 	tunnelPort := scanner.Text()
@@ -2829,10 +3138,10 @@ func iranUdp4() {
 
 	server := fmt.Sprintf(`[server]
 bind_addr = "0.0.0.0:%s"
-default_token = "azumiisinyourarea"
+default_token = "%s"
 
 
-`, tunnelPort)
+`, tunnelPort, defaultToken)
 	for i := 0; i < numConfigs; i++ {
 		config := fmt.Sprintf(`[server.services.kharej%d]
 type = "udp"
@@ -2947,6 +3256,10 @@ func kharejUdp4() {
 	scanner.Scan()
 	iranIP := scanner.Text()
 
+	fmt.Print("\033[93mEnter the your desired \033[92mToken\033[93m: \033[0m")
+	scanner.Scan()
+	defaultToken := scanner.Text()
+
 	fmt.Print("\033[93mEnter \033[92mTunnel port:\033[0m ")
 	scanner.Scan()
 	tunnelPort := scanner.Text()
@@ -2971,11 +3284,11 @@ func kharejUdp4() {
 
 	client := fmt.Sprintf(`[client]
 remote_addr = "%s:%s"
-default_token = "azumiisinyourarea"
+default_token = "%s"
 retry_interval = 1
 
 
-`, iranIP, tunnelPort)
+`, iranIP, tunnelPort, defaultToken)
 
 	for i := 0; i < numConfigs; i++ {
 		config := fmt.Sprintf(`[client.services.kharej%d]
@@ -3095,6 +3408,10 @@ func kharej2Udp4() {
 	scanner.Scan()
 	iranIP := scanner.Text()
 
+	fmt.Print("\033[93mEnter the your desired \033[92mToken\033[93m: \033[0m")
+	scanner.Scan()
+	defaultToken := scanner.Text()
+
 	fmt.Print("\033[93mEnter \033[92mTunnel port:\033[0m ")
 	scanner.Scan()
 	tunnelPort := scanner.Text()
@@ -3119,11 +3436,11 @@ func kharej2Udp4() {
 
 	client := fmt.Sprintf(`[client]
 remote_addr = "%s:%s"
-default_token = "azumiisinyourarea"
+default_token = "%s"
 retry_interval = 1
 
 
-`, iranIP, tunnelPort)
+`, iranIP, tunnelPort, defaultToken)
 
 	for i := 0; i < numConfigs; i++ {
 		config := fmt.Sprintf(`[client.services.kharej%d]
@@ -3297,6 +3614,10 @@ func iranTcp6() {
 		return
 	}
 
+	fmt.Print("\033[93mEnter the your desired \033[92mToken\033[93m: \033[0m")
+	scanner.Scan()
+	defaultToken := scanner.Text()
+
 	fmt.Print("\033[93mEnter \033[92mTunnel port:\033[0m ")
 	scanner.Scan()
 	tunnelPort := scanner.Text()
@@ -3318,7 +3639,7 @@ func iranTcp6() {
 
 	server := fmt.Sprintf(`[server]
 bind_addr = "[::]:%s"
-default_token = "azumiisinyourarea"
+default_token = "%s"
 
 [server.transport]
 type = "tcp"
@@ -3328,7 +3649,7 @@ nodelay = %s
 keepalive_secs = 10
 keepalive_interval = 5
 
-`, tunnelPort, nodelay)
+`, tunnelPort, defaultToken, nodelay)
 	for i := 0; i < numConfigs; i++ {
 		config := fmt.Sprintf(`[server.services.kharej%d]
 type = "tcp"
@@ -3443,6 +3764,10 @@ func kharejTcp6() {
 	scanner.Scan()
 	iranIP := scanner.Text()
 
+	fmt.Print("\033[93mEnter the your desired \033[92mToken\033[93m: \033[0m")
+	scanner.Scan()
+	defaultToken := scanner.Text()
+
 	fmt.Print("\033[93mEnter \033[92mTunnel port:\033[0m ")
 	scanner.Scan()
 	tunnelPort := scanner.Text()
@@ -3474,7 +3799,7 @@ func kharejTcp6() {
 
 	client := fmt.Sprintf(`[client]
 remote_addr = "[%s]:%s"
-default_token = "azumiisinyourarea"
+default_token = "%s"
 retry_interval = 1
 
 [client.transport]
@@ -3484,7 +3809,7 @@ type = "tcp"
 nodelay = %s
 keepalive_secs = 10
 keepalive_interval = 5
-`, iranIP, tunnelPort, nodelay)
+`, iranIP, tunnelPort, defaultToken, nodelay)
 
 	for i := 0; i < numConfigs; i++ {
 		config := fmt.Sprintf(`[client.services.kharej%d]
@@ -3604,6 +3929,10 @@ func kharej2Tcp6() {
 	scanner.Scan()
 	iranIP := scanner.Text()
 
+	fmt.Print("\033[93mEnter the your desired \033[92mToken\033[93m: \033[0m")
+	scanner.Scan()
+	defaultToken := scanner.Text()
+
 	fmt.Print("\033[93mEnter \033[92mTunnel port:\033[0m ")
 	scanner.Scan()
 	tunnelPort := scanner.Text()
@@ -3635,7 +3964,7 @@ func kharej2Tcp6() {
 
 	client := fmt.Sprintf(`[client]
 remote_addr = "[%s]:%s"
-default_token = "azumiisinyourarea"
+default_token = "%s"
 retry_interval = 1
 
 [client.transport]
@@ -3645,7 +3974,7 @@ type = "tcp"
 nodelay = %s
 keepalive_secs = 10
 keepalive_interval = 5
-`, iranIP, tunnelPort, nodelay)
+`, iranIP, tunnelPort, defaultToken, nodelay)
 
 	for i := 0; i < numConfigs; i++ {
 		config := fmt.Sprintf(`[client.services.kharej%d]
@@ -3818,6 +4147,10 @@ func iranUdp6() {
 		return
 	}
 
+	fmt.Print("\033[93mEnter the your desired \033[92mToken\033[93m: \033[0m")
+	scanner.Scan()
+	defaultToken := scanner.Text()
+
 	fmt.Print("\033[93mEnter \033[92mTunnel port:\033[0m ")
 	scanner.Scan()
 	tunnelPort := scanner.Text()
@@ -3831,10 +4164,10 @@ func iranUdp6() {
 
 	server := fmt.Sprintf(`[server]
 bind_addr = "[::]:%s"
-default_token = "azumiisinyourarea"
+default_token = "%s"
 
 
-`, tunnelPort)
+`, tunnelPort, defaultToken)
 	for i := 0; i < numConfigs; i++ {
 		config := fmt.Sprintf(`[server.services.kharej%d]
 type = "udp"
@@ -3949,6 +4282,10 @@ func kharejUdp6() {
 	scanner.Scan()
 	iranIP := scanner.Text()
 
+	fmt.Print("\033[93mEnter the your desired \033[92mToken\033[93m: \033[0m")
+	scanner.Scan()
+	defaultToken := scanner.Text()
+
 	fmt.Print("\033[93mEnter \033[92mTunnel port:\033[0m ")
 	scanner.Scan()
 	tunnelPort := scanner.Text()
@@ -3972,10 +4309,10 @@ func kharejUdp6() {
 
 	client := fmt.Sprintf(`[client]
 remote_addr = "[%s]:%s"
-default_token = "azumiisinyourarea"
+default_token = "%s"
 retry_interval = 1
 
-`, iranIP, tunnelPort)
+`, iranIP, tunnelPort, defaultToken)
 
 	for i := 0; i < numConfigs; i++ {
 		config := fmt.Sprintf(`[client.services.kharej%d]
@@ -4095,6 +4432,10 @@ func kharej2Udp6() {
 	scanner.Scan()
 	iranIP := scanner.Text()
 
+	fmt.Print("\033[93mEnter the your desired \033[92mToken\033[93m: \033[0m")
+	scanner.Scan()
+	defaultToken := scanner.Text()
+
 	fmt.Print("\033[93mEnter \033[92mTunnel port:\033[0m ")
 	scanner.Scan()
 	tunnelPort := scanner.Text()
@@ -4118,10 +4459,10 @@ func kharej2Udp6() {
 
 	client := fmt.Sprintf(`[client]
 remote_addr = "[%s]:%s"
-default_token = "azumiisinyourarea"
+default_token = "%s"
 retry_interval = 1
 
-`, iranIP, tunnelPort)
+`, iranIP, tunnelPort, defaultToken)
 
 	for i := 0; i < numConfigs; i++ {
 		config := fmt.Sprintf(`[client.services.kharej%d]
@@ -4582,6 +4923,10 @@ func iranWs4() {
 		return
 	}
 
+	fmt.Print("\033[93mEnter the your desired \033[92mToken\033[93m: \033[0m")
+	scanner.Scan()
+	defaultToken := scanner.Text()
+
 	fmt.Print("\033[93mEnter \033[92mTunnel port:\033[0m ")
 	scanner.Scan()
 	tunnelPort := scanner.Text()
@@ -4595,7 +4940,7 @@ func iranWs4() {
 
 	server := fmt.Sprintf(`[server]
 bind_addr = "0.0.0.0:%s"
-default_token = "azumiisinyourarea"
+default_token = "%s"
 
 [server.transport]
 type = "tls"
@@ -4607,7 +4952,7 @@ pkcs12_password = "azumi1234"
 [server.transport.websocket] 
 tls = true 
 
-`, tunnelPort)
+`, tunnelPort, defaultToken)
 	for i := 0; i < numConfigs; i++ {
 		config := fmt.Sprintf(`[server.services.kharej%d]
 bind_addr = "0.0.0.0:%s" 
@@ -4725,6 +5070,10 @@ func iranWs42() {
 		return
 	}
 
+	fmt.Print("\033[93mEnter the your desired \033[92mToken\033[93m: \033[0m")
+	scanner.Scan()
+	defaultToken := scanner.Text()
+
 	fmt.Print("\033[93mEnter \033[92mTunnel port:\033[0m ")
 	scanner.Scan()
 	tunnelPort := scanner.Text()
@@ -4738,7 +5087,7 @@ func iranWs42() {
 
 	server := fmt.Sprintf(`[server]
 bind_addr = "0.0.0.0:%s"
-default_token = "azumiisinyourarea"
+default_token = "%s"
 
 [server.transport]
 type = "tls"
@@ -4750,7 +5099,7 @@ pkcs12_password = "azumi1234"
 [server.transport.websocket] 
 tls = true 
 
-`, tunnelPort)
+`, tunnelPort, defaultToken)
 	for i := 0; i < numConfigs; i++ {
 		config := fmt.Sprintf(`[server.services.kharej%d]
 bind_addr = "0.0.0.0:%s" 
@@ -4863,6 +5212,10 @@ func kharejWs4() {
 	scanner.Scan()
 	iranIP := scanner.Text()
 
+	fmt.Print("\033[93mEnter the your desired \033[92mToken\033[93m: \033[0m")
+	scanner.Scan()
+	defaultToken := scanner.Text()
+
 	fmt.Print("\033[93mEnter \033[92mTunnel port:\033[0m ")
 	scanner.Scan()
 	tunnelPort := scanner.Text()
@@ -4886,7 +5239,7 @@ func kharejWs4() {
 
 	client := fmt.Sprintf(`[client]
 remote_addr = "%s:%s"
-default_token = "azumiisinyourarea"
+default_token = "%s"
 
 [client.transport]
 type = "tls"
@@ -4898,7 +5251,7 @@ hostname = "localhost"
 [client.transport.websocket] 
 tls = true 
 
-`, iranIP, tunnelPort)
+`, iranIP, tunnelPort, defaultToken)
 
 	for i := 0; i < numConfigs; i++ {
 		config := fmt.Sprintf(`[client.services.kharej%d]
@@ -5017,6 +5370,10 @@ func kharej2Ws4() {
 	scanner.Scan()
 	iranIP := scanner.Text()
 
+	fmt.Print("\033[93mEnter the your desired \033[92mToken\033[93m: \033[0m")
+	scanner.Scan()
+	defaultToken := scanner.Text()
+
 	fmt.Print("\033[93mEnter \033[92mTunnel port:\033[0m ")
 	scanner.Scan()
 	tunnelPort := scanner.Text()
@@ -5040,7 +5397,7 @@ func kharej2Ws4() {
 
 	client := fmt.Sprintf(`[client]
 remote_addr = "%s:%s"
-default_token = "azumiisinyourarea"
+default_token = "%s"
 
 [client.transport]
 type = "tls"
@@ -5052,7 +5409,7 @@ hostname = "localhost"
 [client.transport.websocket] 
 tls = true 
 
-`, iranIP, tunnelPort)
+`, iranIP, tunnelPort, defaultToken)
 
 	for i := 0; i < numConfigs; i++ {
 		config := fmt.Sprintf(`[client.services.kharej%d]
@@ -5256,6 +5613,10 @@ func iranWs6() {
 		return
 	}
 
+	fmt.Print("\033[93mEnter the your desired \033[92mToken\033[93m: \033[0m")
+	scanner.Scan()
+	defaultToken := scanner.Text()
+
 	fmt.Print("\033[93mEnter \033[92mTunnel port:\033[0m ")
 	scanner.Scan()
 	tunnelPort := scanner.Text()
@@ -5269,7 +5630,7 @@ func iranWs6() {
 
 	server := fmt.Sprintf(`[server]
 bind_addr = "[::]:%s"
-default_token = "azumiisinyourarea"
+default_token = "%s"
 
 [server.transport]
 type = "tls"
@@ -5281,7 +5642,7 @@ pkcs12_password = "azumi1234"
 [server.transport.websocket] 
 tls = true 
 
-`, tunnelPort)
+`, tunnelPort, defaultToken)
 	for i := 0; i < numConfigs; i++ {
 		config := fmt.Sprintf(`[server.services.kharej%d]
 bind_addr = "0.0.0.0:%s" 
@@ -5398,6 +5759,10 @@ func iranWs62() {
 		return
 	}
 
+	fmt.Print("\033[93mEnter the your desired \033[92mToken\033[93m: \033[0m")
+	scanner.Scan()
+	defaultToken := scanner.Text()
+
 	fmt.Print("\033[93mEnter \033[92mTunnel port:\033[0m ")
 	scanner.Scan()
 	tunnelPort := scanner.Text()
@@ -5411,7 +5776,7 @@ func iranWs62() {
 
 	server := fmt.Sprintf(`[server]
 bind_addr = "[::]:%s"
-default_token = "azumiisinyourarea"
+default_token = "%s"
 
 [server.transport]
 type = "tls"
@@ -5423,7 +5788,7 @@ pkcs12_password = "azumi1234"
 [server.transport.websocket] 
 tls = true 
 
-`, tunnelPort)
+`, tunnelPort, defaultToken)
 	for i := 0; i < numConfigs; i++ {
 		config := fmt.Sprintf(`[server.services.kharej%d]
 bind_addr = "0.0.0.0:%s" 
@@ -5537,6 +5902,10 @@ func kharejWs6() {
 	scanner.Scan()
 	iranIP := scanner.Text()
 
+	fmt.Print("\033[93mEnter the your desired \033[92mToken\033[93m: \033[0m")
+	scanner.Scan()
+	defaultToken := scanner.Text()
+
 	fmt.Print("\033[93mEnter \033[92mTunnel port:\033[0m ")
 	scanner.Scan()
 	tunnelPort := scanner.Text()
@@ -5560,7 +5929,7 @@ func kharejWs6() {
 
 	client := fmt.Sprintf(`[client]
 remote_addr = "[%s]:%s"
-default_token = "azumiisinyourarea"
+default_token = "%s"
 
 [client.transport]
 type = "tls"
@@ -5572,7 +5941,7 @@ hostname = "localhost"
 [client.transport.websocket] 
 tls = true 
 
-`, iranIP, tunnelPort)
+`, iranIP, tunnelPort, defaultToken)
 
 	for i := 0; i < numConfigs; i++ {
 		config := fmt.Sprintf(`[client.services.kharej%d]
@@ -5691,6 +6060,10 @@ func kharej2Ws6() {
 	scanner.Scan()
 	iranIP := scanner.Text()
 
+	fmt.Print("\033[93mEnter the your desired \033[92mToken\033[93m: \033[0m")
+	scanner.Scan()
+	defaultToken := scanner.Text()
+
 	fmt.Print("\033[93mEnter \033[92mTunnel port:\033[0m ")
 	scanner.Scan()
 	tunnelPort := scanner.Text()
@@ -5714,7 +6087,7 @@ func kharej2Ws6() {
 
 	client := fmt.Sprintf(`[client]
 remote_addr = "[%s]:%s"
-default_token = "azumiisinyourarea"
+default_token = "%s"
 
 [client.transport]
 type = "tls"
@@ -5726,7 +6099,7 @@ hostname = "localhost"
 [client.transport.websocket] 
 tls = true 
 
-`, iranIP, tunnelPort)
+`, iranIP, tunnelPort, defaultToken)
 
 	for i := 0; i < numConfigs; i++ {
 		config := fmt.Sprintf(`[client.services.kharej%d]
@@ -5826,6 +6199,1761 @@ WantedBy=multi-user.target`
 	    fmt.Println("╰─────────────────────────────────────────────╯")
 	}
 }
+//iran
+func iran5Menu() {
+	clearScreen()
+	fmt.Println("\033[92m ^ ^\033[0m")
+	fmt.Println("\033[92m(\033[91mO,O\033[92m)\033[0m")
+	fmt.Println("\033[92m(   ) \033[93m [5]IRAN [1]KHAREJ \033[97mMenu\033[0m ")
+	fmt.Println("\033[92m \"-\" \033[93m════════════════════════════════════\033[0m")
+	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
 
-    
+	prompt := &survey.Select{
+		Message: "Enter your choice Please:",
+		Options: []string{"0. \033[91mSTATUS Menu\033[0m", "+. \033[93mEdit \033[92mResetTimer\033[0m", "1. \033[92mStop | Restart Service\033[0m", "2. \033[96mIPV4 \033[92mTCP \033[0m", "3. \033[93mIPV4 \033[92mUDP\033[0m", "4. \033[96mIPV6 \033[92mTCP\033[0m", "5. \033[93mIPV6 \033[92mUDP\033[0m", "6. \033[91mUninstall\033[0m",  "q. back to the previous menu"},
+			
+	}
+		
+
+	var choice string
+	var err error 
+	err = survey.AskOne(prompt, &choice)
+	if err != nil {
+		log.Fatalf("\033[91muser input is wrong:\033[0m %v", err)
+	}
+	switch choice {
+	case "0. \033[91mSTATUS Menu\033[0m":
+		status2()
+	case "+. \033[93mEdit \033[92mResetTimer\033[0m":
+		cronMenu()
+	case "1. \033[92mStop | Restart Service\033[0m":
+		startMain2()
+	case "2. \033[96mIPV4 \033[92mTCP \033[0m":
+		tcp4Menu2()
+	case "3. \033[93mIPV4 \033[92mUDP\033[0m":
+		udp4Menu2()
+	case "4. \033[96mIPV6 \033[92mTCP\033[0m":
+		tcp6Menu2()
+	case "5. \033[93mIPV6 \033[92mUDP\033[0m":
+		udp6Menu2()
+	case "6. \033[91mUninstall\033[0m":
+		UniMenu2()
+	case "q. back to the previous menu":
+		mainMenu()
+	default:
+		fmt.Println("Invalid choice.")
+	}
+
+	readInput()
+}
+
+func tcp4Menu2() {
+	clearScreen()
+	fmt.Println("\033[92m ^ ^\033[0m")
+	fmt.Println("\033[92m(\033[91mO,O\033[92m)\033[0m")
+	fmt.Println("\033[92m(   ) \033[93m Reverse [5]IRAN [1]KHAREJ \033[92mTCP \033[96mIPV4 \033[93mMenu\033[0m ")
+	fmt.Println("\033[92m \"-\" \033[93m═══════════════════════════════════════════════════════\033[0m")
+	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+
+	prompt := &survey.Select{
+		Message: "Enter your choice Please:",
+		Options: []string{"1. \033[92mKHAREJ\033[0m", "2. \033[93mIRAN\033[92m[1]\033[0m", "3. \033[93mIRAN\033[92m[2]\033[0m", "4. \033[93mIRAN\033[92m[3]\033[0m", "5. \033[93mIRAN\033[92m[4]\033[0m", "6. \033[93mIRAN\033[92m[5]\033[0m", "q. \033[94mBack to the previous menu\033[0m"},
+	}
+		
+	var choice string
+	err := survey.AskOne(prompt, &choice)
+	if err != nil {
+		log.Fatalf("\033[91mCan't read user input, sry!:\033[0m %v", err)
+	}
+
+	switch choice {
+	case "1. \033[92mKHAREJ\033[0m":
+		kharejTcp42()
+	case "2. \033[93mIRAN\033[92m[1]\033[0m":
+		iranTcp42()
+	case "3. \033[93mIRAN\033[92m[2]\033[0m":
+		iranTcp42()
+	case "4. \033[93mIRAN\033[92m[3]\033[0m":
+		iranTcp42()
+	case "5. \033[93mIRAN\033[92m[4]\033[0m":
+		iranTcp42()
+	case "6. \033[93mIRAN\033[92m[5]\033[0m":
+		iranTcp42()
+	case "q. \033[94mBack to the previous menu\033[0m":
+		clearScreen()
+		iran5Menu()
+	default:
+		fmt.Println("\033[91mInvalid choice\033[0m")
+	}
+
+	readInput()
+}
+
+func iranTcp42() {
+	clearScreen()
+	fmt.Println("\033[92m ^ ^\033[0m")
+	fmt.Println("\033[92m(\033[91mO,O\033[92m)\033[0m")
+	fmt.Println("\033[92m(   ) \033[93m Reverse \033[92mIPV4 \033[96mTCP\033[0m ")
+	fmt.Println("\033[92m \"-\" \033[93m════════════════════════════════════\033[0m")
+	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+	displayNotification("Configuring IRAN")
+	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+	scanner := bufio.NewScanner(os.Stdin)
+
+	fmt.Print("\033[93mHow many \033[92mconfigs\033[93m do you have ? \033[0m")
+	scanner.Scan()
+	numConfigsStr := scanner.Text()
+
+	numConfigs, err := strconv.Atoi(numConfigsStr)
+	if err != nil {
+		fmt.Println("\033[91mPlease enter a valid number\033[0m")
+		return
+	}
+	fmt.Print("\033[93mEnter the your desired \033[92mToken\033[93m: \033[0m")
+	scanner.Scan()
+	defaultToken := scanner.Text()
+
+	fmt.Print("\033[93mEnter \033[92mTunnel port:\033[0m ")
+	scanner.Scan()
+	tunnelPort := scanner.Text()
+
+	kharejPorts := make([]string, numConfigs)
+	for i := 0; i < numConfigs; i++ {
+		fmt.Printf("\033[93mEnter \033[92mConfig %d\033[93m Port: \033[0m", i+1)
+		scanner.Scan()
+		kharejPorts[i] = scanner.Text()
+	}
+
+	fmt.Print("\033[93mDo you want nodelay enabled? (\033[92my/\033[91mn\033[93m): \033[0m")
+	scanner.Scan()
+	nodelayOp := scanner.Text()
+	nodelay := "false"
+	if strings.ToLower(nodelayOp) == "y" {
+		nodelay = "true"
+	}
+
+	server := fmt.Sprintf(`[server]
+bind_addr = "0.0.0.0:%s"
+default_token = "%s"
 	
+[server.transport]
+type = "tcp"
+	
+[server.transport.tcp]
+nodelay = %s
+keepalive_secs = 10
+keepalive_interval = 5
+	
+`, tunnelPort, defaultToken, nodelay)
+	
+	for i := 0; i < numConfigs; i++ {
+		config := fmt.Sprintf(`[server.services.kharej%d]
+type = "tcp"
+bind_addr = "0.0.0.0:%s" 
+`, i+1, kharejPorts[i])
+		server += config
+	}
+
+	err = os.Remove("/root/rathole/server.toml")
+	if err != nil && !os.IsNotExist(err) {
+		fmt.Println("\033[91merror deleting toml:\033[0m", err)
+		return
+	}
+
+	file, err := os.Create("/root/rathole/server.toml")
+	if err != nil {
+		fmt.Println("\033[91merror creating toml:\033[0m", err)
+		return
+	}
+	defer file.Close()
+
+	_, err = file.WriteString(server)
+	if err != nil {
+		fmt.Println("\033[91merror putting configs into toml:\033[0m", err)
+		return
+	}
+	service := `[Unit]
+Description=Iran-Azumi Service
+After=network.target
+
+[Service]
+Type=simple
+Restart=on-failure
+RestartSec=5s
+LimitNOFILE=1048576
+ExecStart=/root/rathole/target/debug/rathole /root/rathole/server.toml
+
+[Install]
+WantedBy=multi-user.target`
+
+	err = os.Remove("/etc/systemd/system/iran-azumi.service")
+	if err != nil && !os.IsNotExist(err) {
+		fmt.Println("\033[91merror deleting iran-azumi:\033[0m", err)
+		return
+	}
+
+	file, err = os.Create("/etc/systemd/system/iran-azumi.service")
+	if err != nil {
+		fmt.Println("\033[91merror creating iran-azumi:\033[0m", err)
+		return
+	}
+	defer file.Close()
+
+	_, err = file.WriteString(service)
+	if err != nil {
+		fmt.Println("\033[91merror constructing iran-azumi:\033[0m", err)
+		return
+	}
+
+	cmd := exec.Command("systemctl", "daemon-reload")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror reloading:\033[0m", err)
+		return
+	}
+
+	cmd = exec.Command("sudo", "chmod", "u+x", "/etc/systemd/system/iran-azumi.service")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror enablin da service:\033[0m", err)
+		return
+	}
+
+	cmd = exec.Command("systemctl", "enable", "iran-azumi")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror enabling da service:\033[0m", err)
+		return
+	}
+
+	cmd = exec.Command("systemctl", "restart", "iran-azumi")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror restarting da service:\033[0m", err)
+		return
+	}
+	resIran()
+	displayCheckmark("\033[92mService created successfully!\033[0m")
+}
+
+func kharejTcp42() {
+	clearScreen()
+	fmt.Println("\033[92m ^ ^\033[0m")
+	fmt.Println("\033[92m(\033[91mO,O\033[92m)\033[0m")
+	fmt.Println("\033[92m(   ) \033[93m Reverse \033[92mIPV4 \033[96mTCP\033[0m ")
+	fmt.Println("\033[92m \"-\" \033[93m════════════════════════════════════\033[0m")
+	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+	displayNotification("Configuring KHAREJ")
+	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+	scanner := bufio.NewScanner(os.Stdin)
+	
+	fmt.Print("\033[93mHow many \033[92mIRAN Servers\033[93m do you have?\033[0m ")
+	scanner.Scan()
+	numServersStr := scanner.Text()
+	
+	numServers, err := strconv.Atoi(numServersStr)
+	if err != nil || numServers < 1 {
+		fmt.Println("\033[91mPlz enter a valid number (minimum 1).\033[0m")
+		return
+	}
+	
+	serverConfigs := make([]string, numServers)
+	for i := 0; i < numServers; i++ {
+		fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+		displayNotification(fmt.Sprintf("IRAN %d", i+1))
+		fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+		serverConfigs[i] = fmt.Sprintf("iran%d", i+1)
+		fmt.Printf("\033[93mEnter \033[92mIRAN IPV4\033[93m for server %d:\033[0m ", i+1)
+		scanner.Scan()
+		iranIP := scanner.Text()
+
+		fmt.Printf("\033[93mEnter the desired \033[92mToken\033[93m for server %d: \033[0m", i+1)
+		scanner.Scan()
+		defaultToken := scanner.Text()
+
+		fmt.Printf("\033[93mEnter \033[92mTunnel port\033[93m for server %d:\033[0m ", i+1)
+		scanner.Scan()
+		tunnelPort := scanner.Text()
+	
+
+	
+		fmt.Printf("\033[93mHow many \033[92mConfigs\033[93m do you have for server %d?\033[0m ", i+1)
+		scanner.Scan()
+		numConfigsStr := scanner.Text()
+	
+		numConfigs, err := strconv.Atoi(numConfigsStr)
+		if err != nil {
+			fmt.Println("\033[91mPlz enter a valid number\033[0m")
+			return
+		}
+	
+		kharejPorts := make([]string, numConfigs+1)
+		for j := 1; j <= numConfigs; j++ {
+			fmt.Printf("\033[93mEnter \033[92mconfig %d\033[93m port for server %d:\033[0m ", j, i+1)
+			scanner.Scan()
+			kharejPorts[j-1] = scanner.Text()
+		}
+	
+		fmt.Printf("\033[93mDo you want nodelay enabled for server %d? (\033[92my/\033[91mn\033[93m): \033[0m", i+1)
+		scanner.Scan()
+		nodelayOp := scanner.Text()
+		nodelay := "false"
+		if strings.ToLower(nodelayOp) == "y" {
+			nodelay = "true"
+		}
+	
+		config := ""
+		for j := 1; j <= numConfigs; j++ {
+			config += fmt.Sprintf(`[client.services.kharej%d]
+type = "tcp"
+local_addr = "127.0.0.1:%s"
+
+`, j, kharejPorts[j-1])
+		}
+
+		config += fmt.Sprintf(`[client]
+remote_addr = "%s:%s"
+default_token = "%s"
+retry_interval = 1
+
+[client.transport]
+type = "tcp"
+
+[client.transport.tcp]
+nodelay = %s
+keepalive_secs = 10
+keepalive_interval = 5
+`, iranIP, tunnelPort, defaultToken, nodelay)
+
+		serverConfigs[i] = config
+	}
+
+	for i := 0; i < len(serverConfigs); i++ {
+		config := serverConfigs[i]
+		clientFilename := fmt.Sprintf("client%d.toml", i+1)
+		clientFilePath := fmt.Sprintf("/root/rathole/%s", clientFilename)
+
+		err = os.Remove(clientFilePath)
+		if err != nil && !os.IsNotExist(err) {
+			fmt.Println("\033[91mError deleting toml:\033[0m", err)
+			return
+		}
+		var file *os.File
+		file, err = os.Create(clientFilePath)
+		if err != nil {
+			fmt.Println("\033[91mError creating the client.toml file:\033[0m", err)
+			return
+		}
+		defer file.Close()
+
+		_, err = file.WriteString(config)
+		if err != nil {
+			fmt.Println("\033[91mError writing to the client.toml file:\033[0m", err)
+			return
+		}
+		service := fmt.Sprintf(`[Unit]
+Description=Kharej-Azumi Service for Server %d
+After=network.target
+			
+[Service]
+Type=simple
+Restart=on-failure
+RestartSec=5s
+LimitNOFILE=1048576
+ExecStart=/root/rathole/target/debug/rathole /root/rathole/%s
+			
+[Install]
+WantedBy=multi-user.target
+		`, i+1, clientFilename)
+			 
+	serviceFilename := fmt.Sprintf("kharej-azumi%d.service", i+1)
+	serviceFilePath := fmt.Sprintf("/etc/systemd/system/%s", serviceFilename)
+
+	err = os.Remove(serviceFilePath)
+	if err != nil && !os.IsNotExist(err) {
+		fmt.Println("\033[91mError deleting kharej-azumi:\033[0m", err)
+		return
+	}
+
+	serviceFile, err := os.Create(serviceFilePath)
+	if err != nil {
+		fmt.Println("\033[91mError creating kharej-azumi:\033[0m", err)
+		return
+	}
+	defer serviceFile.Close()
+
+	_, err = serviceFile.WriteString(service)
+	if err != nil {
+		fmt.Println("\033[91mError constructing kharej-azumi:\033[0m", err)
+		return
+	}
+
+	cmd := exec.Command("systemctl", "daemon-reload")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror reloading:\033[0m", err)
+		return
+	}
+
+	cmd = exec.Command("sudo", "chmod", "u+x", serviceFilePath)
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror enabling da service:\033[0m", err)
+		return
+	}
+
+	cmd = exec.Command("systemctl", "enable", serviceFilename)
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror enabling da service:\033[0m", err)
+		return
+	}
+
+	cmd = exec.Command("systemctl", "restart", serviceFilename)
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror restarting da service:\033[0m", err)
+		return
+	}
+						
+	displayCheckmark("\033[92mService created successfully!\033[0m")
+	}
+		
+	resKharejz()
+}
+func resKharejz() {
+	deleteCron()
+	ratName := "/etc/rat.sh"
+	
+	file, err := os.Create(ratName)
+	if err != nil {
+		log.Fatalf("\033[91mbash creation error:\033[0m %v", err)
+	}
+	defer file.Close()
+	
+	file.WriteString("#!/bin/bash\n")
+	
+	fmt.Println("╭──────────────────────────────────────╮")
+	reader := bufio.NewReader(os.Stdin)
+	fmt.Print("\033[93mEnter the number of Iran servers:\033[0m ")
+	serverNumberStr, err := reader.ReadString('\n')
+	if err != nil {
+		log.Fatalf("Error reading input: %v", err)
+	}
+	serverNumberStr = strings.TrimSpace(serverNumberStr)
+	fmt.Println("╰──────────────────────────────────────╯")
+	
+	serverNumber, err := strconv.Atoi(serverNumberStr)
+	if err != nil || serverNumber <= 0 {
+		log.Fatalf("\033[91mInvalid input for da number of Iranian servers:\033[0m %v", err)
+	}
+	
+	for i := 1; i <= serverNumber; i++ {
+		file.WriteString(fmt.Sprintf("sudo systemctl restart kharej-azumi%d\n", i))
+	}
+	
+	file.WriteString("sudo journalctl --vacuum-size=1M\n")
+	
+	cmd := exec.Command("chmod", "+x", ratName)
+	if err := cmd.Run(); err != nil {
+		log.Fatalf("\033[91mchmod cmd error:\033[0m %v", err)
+	}
+	
+	fmt.Println("╭──────────────────────────────────────╮")
+	fmt.Print("\033[93mEnter Reset timer (hours):\033[0m ")
+	hoursStr, err := reader.ReadString('\n')
+	if err != nil {
+		log.Fatalf("Error reading input: %v", err)
+	}
+	hoursStr = strings.TrimSpace(hoursStr)
+	fmt.Println("╰──────────────────────────────────────╯")
+	
+	hours, err := strconv.Atoi(hoursStr)
+	if err != nil {
+		log.Fatalf("\033[91mInvalid input for reset timer:\033[0m %v", err)
+	}
+	
+	var cronInput string
+	if hours == 1 {
+		cronInput = fmt.Sprintf("0 * * * * %s", ratName)
+	} else if hours >= 2 {
+		cronInput = fmt.Sprintf("0 */%d * * * %s", hours, ratName)
+	}
+	
+	crontabFile, err := os.OpenFile(crontabFilePath, os.O_RDWR|os.O_CREATE, 0644)
+	if err != nil {
+		log.Fatalf("\033[91mCouldn't open Cron:\033[0m %v", err)
+	}
+	defer crontabFile.Close()
+	
+	var crontabContent strings.Builder
+	scanner := bufio.NewScanner(crontabFile)
+	entryExists := false
+	for scanner.Scan() {
+		line := scanner.Text()
+		if line == cronInput {
+			fmt.Println("\033[92mOh... Cron entry already exists!\033[0m")
+			entryExists = true
+		}
+		crontabContent.WriteString(line)
+		crontabContent.WriteString("\n")
+	}
+	
+	if !entryExists {
+		crontabContent.WriteString(cronInput)
+		crontabContent.WriteString("\n")
+	}
+	
+	if err := scanner.Err(); err != nil {
+		log.Fatalf("\033[91mcrontab Reading error:\033[0m %v", err)
+	}
+	
+	if err := crontabFile.Truncate(0); err != nil {
+		log.Fatalf("\033[91mcouldn't truncate cron file:\033[0m %v", err)
+	}
+	
+	if _, err := crontabFile.Seek(0, 0); err != nil {
+		log.Fatalf("\033[91mcouldn't find cron file: \033[0m%v", err)
+	}
+	
+	if _, err := crontabFile.WriteString(crontabContent.String()); err != nil {
+		log.Fatalf("\033[91mCouldn't write cron file:\033[0m %v", err)
+	}
+	
+	fmt.Println("\033[92mCron entry added successfully!\033[0m")
+}
+func tcp6Menu2() {
+	clearScreen()
+	fmt.Println("\033[92m ^ ^\033[0m")
+	fmt.Println("\033[92m(\033[91mO,O\033[92m)\033[0m")
+	fmt.Println("\033[92m(   ) \033[93m Reverse [5]IRAN [1]KHAREJ \033[92mTCP \033[96mIPV6 \033[93mMenu\033[0m ")
+	fmt.Println("\033[92m \"-\" \033[93m═══════════════════════════════════════════════════════\033[0m")
+	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+
+	prompt := &survey.Select{
+		Message: "Enter your choice Please:",
+		Options: []string{"1. \033[92mKHAREJ\033[0m", "2. \033[93mIRAN\033[92m[1]\033[0m", "3. \033[93mIRAN\033[92m[2]\033[0m", "4. \033[93mIRAN\033[92m[3]\033[0m", "5. \033[93mIRAN\033[92m[4]\033[0m", "6. \033[93mIRAN\033[92m[5]\033[0m", "q. \033[94mBack to the previous menu\033[0m"},
+	}
+		
+	var choice string
+	err := survey.AskOne(prompt, &choice)
+	if err != nil {
+		log.Fatalf("\033[91mCan't read user input, sry!:\033[0m %v", err)
+	}
+
+	switch choice {
+	case "1. \033[92mKHAREJ\033[0m":
+		kharejTcp62()
+	case "2. \033[93mIRAN\033[92m[1]\033[0m":
+		iranTcp62()
+	case "3. \033[93mIRAN\033[92m[2]\033[0m":
+		iranTcp62()
+	case "4. \033[93mIRAN\033[92m[3]\033[0m":
+		iranTcp62()
+	case "5. \033[93mIRAN\033[92m[4]\033[0m":
+		iranTcp62()
+	case "6. \033[93mIRAN\033[92m[5]\033[0m":
+		iranTcp62()
+	case "q. \033[94mBack to the previous menu\033[0m":
+		clearScreen()
+		iran5Menu()
+	default:
+		fmt.Println("\033[91mInvalid choice\033[0m")
+	}
+
+	readInput()
+}
+func iranTcp62() {
+	clearScreen()
+	fmt.Println("\033[92m ^ ^\033[0m")
+	fmt.Println("\033[92m(\033[91mO,O\033[92m)\033[0m")
+	fmt.Println("\033[92m(   ) \033[93m Reverse \033[92mIPV6 \033[96mTCP\033[0m ")
+	fmt.Println("\033[92m \"-\" \033[93m════════════════════════════════════\033[0m")
+	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+	displayNotification("Configuring IRAN")
+	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+	scanner := bufio.NewScanner(os.Stdin)
+
+	fmt.Print("\033[93mHow many \033[92mconfigs\033[93m do you have ? \033[0m")
+	scanner.Scan()
+	numConfigsStr := scanner.Text()
+
+	numConfigs, err := strconv.Atoi(numConfigsStr)
+	if err != nil {
+		fmt.Println("\033[91mPlz enter a valid number\033[0m")
+		return
+	}
+	fmt.Print("\033[93mEnter your desired \033[92mToken\033[93m: \033[0m")
+	scanner.Scan()
+	defaultToken := scanner.Text()
+
+	fmt.Print("\033[93mEnter \033[92mTunnel port:\033[0m ")
+	scanner.Scan()
+	tunnelPort := scanner.Text()
+
+	kharejPorts := make([]string, numConfigs)
+	for i := 0; i < numConfigs; i++ {
+		fmt.Printf("\033[93mEnter \033[92mConfig %d\033[93m Port: \033[0m", i+1)
+		scanner.Scan()
+		kharejPorts[i] = scanner.Text()
+	}
+
+	fmt.Print("\033[93mDo you want nodelay enabled? (\033[92my/\033[91mn\033[93m): \033[0m")
+	scanner.Scan()
+	nodelayOp := scanner.Text()
+	nodelay := "false"
+	if strings.ToLower(nodelayOp) == "y" {
+		nodelay = "true"
+	}
+
+	server := fmt.Sprintf(`[server]
+bind_addr = "[::]:%s"
+default_token = "%s"
+	
+[server.transport]
+type = "tcp"
+	
+[server.transport.tcp]
+nodelay = %s
+keepalive_secs = 10
+keepalive_interval = 5
+	
+`, tunnelPort, defaultToken, nodelay)
+	
+	for i := 0; i < numConfigs; i++ {
+		config := fmt.Sprintf(`[server.services.kharej%d]
+type = "tcp"
+bind_addr = "0.0.0.0:%s" 
+`, i+1, kharejPorts[i])
+		server += config
+	}
+
+	err = os.Remove("/root/rathole/server.toml")
+	if err != nil && !os.IsNotExist(err) {
+		fmt.Println("\033[91merror deleting toml:\033[0m", err)
+		return
+	}
+
+	file, err := os.Create("/root/rathole/server.toml")
+	if err != nil {
+		fmt.Println("\033[91merror creating toml:\033[0m", err)
+		return
+	}
+	defer file.Close()
+
+	_, err = file.WriteString(server)
+	if err != nil {
+		fmt.Println("\033[91merror putting configs into toml:\033[0m", err)
+		return
+	}
+	service := `[Unit]
+Description=Iran-Azumi Service
+After=network.target
+
+[Service]
+Type=simple
+Restart=on-failure
+RestartSec=5s
+LimitNOFILE=1048576
+ExecStart=/root/rathole/target/debug/rathole /root/rathole/server.toml
+
+[Install]
+WantedBy=multi-user.target`
+
+	err = os.Remove("/etc/systemd/system/iran-azumi.service")
+	if err != nil && !os.IsNotExist(err) {
+		fmt.Println("\033[91merror deleting iran-azumi:\033[0m", err)
+		return
+	}
+
+	file, err = os.Create("/etc/systemd/system/iran-azumi.service")
+	if err != nil {
+		fmt.Println("\033[91merror creating iran-azumi:\033[0m", err)
+		return
+	}
+	defer file.Close()
+
+	_, err = file.WriteString(service)
+	if err != nil {
+		fmt.Println("\033[91merror constructing iran-azumi:\033[0m", err)
+		return
+	}
+
+	cmd := exec.Command("systemctl", "daemon-reload")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror reloading:\033[0m", err)
+		return
+	}
+
+	cmd = exec.Command("sudo", "chmod", "u+x", "/etc/systemd/system/iran-azumi.service")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror enablin da service:\033[0m", err)
+		return
+	}
+
+	cmd = exec.Command("systemctl", "enable", "iran-azumi")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror enabling da service:\033[0m", err)
+		return
+	}
+
+	cmd = exec.Command("systemctl", "restart", "iran-azumi")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror restarting da service:\033[0m", err)
+		return
+	}
+	resIran()
+	displayCheckmark("\033[92mService created successfully!\033[0m")
+}
+func kharejTcp62() {
+	clearScreen()
+	fmt.Println("\033[92m ^ ^\033[0m")
+	fmt.Println("\033[92m(\033[91mO,O\033[92m)\033[0m")
+	fmt.Println("\033[92m(   ) \033[93m Reverse \033[92mIPV4 \033[96mTCP\033[0m ")
+	fmt.Println("\033[92m \"-\" \033[93m════════════════════════════════════\033[0m")
+	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+	displayNotification("Configuring KHAREJ")
+	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+	scanner := bufio.NewScanner(os.Stdin)
+
+	fmt.Print("\033[93mHow many \033[92mIRAN Servers\033[93m do you have?\033[0m ")
+	scanner.Scan()
+	numServersStr := scanner.Text()
+
+	numServers, err := strconv.Atoi(numServersStr)
+	if err != nil || numServers < 1 {
+		fmt.Println("\033[91mPlz enter a valid number (minimum 1).\033[0m")
+		return
+	}
+
+	serverConfigs := make([]string, numServers)
+	for i := 0; i < numServers; i++ {
+		fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+		displayNotification(fmt.Sprintf("IRAN %d", i+1))
+		fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+		serverConfigs[i] = fmt.Sprintf("iran%d", i+1)
+		fmt.Printf("\033[93mEnter \033[92mIRAN IPV6\033[93m for server %d:\033[0m ", i+1)
+		scanner.Scan()
+		iranIP := scanner.Text()
+
+		fmt.Printf("\033[93mEnter \033[92mTunnel port\033[93m for server %d:\033[0m ", i+1)
+		scanner.Scan()
+		tunnelPort := scanner.Text()
+
+		fmt.Printf("\033[93mEnter the desired \033[92mToken\033[93m for server %d: \033[0m", i+1)
+		scanner.Scan()
+		defaultToken := scanner.Text()
+
+		fmt.Printf("\033[93mHow many \033[92mConfigs\033[93m do you have for server %d?\033[0m ", i+1)
+		scanner.Scan()
+		numConfigsStr := scanner.Text()
+
+		numConfigs, err := strconv.Atoi(numConfigsStr)
+		if err != nil {
+			fmt.Println("\033[91mPlz enter a valid number\033[0m")
+			return
+		}
+
+		kharejPorts := make([]string, numConfigs+1)
+		for j := 1; j <= numConfigs; j++ {
+			fmt.Printf("\033[93mEnter \033[92mconfig %d\033[93m port for server %d:\033[0m ", j, i+1)
+			scanner.Scan()
+			kharejPorts[j-1] = scanner.Text()
+		}
+
+		fmt.Printf("\033[93mDo you want nodelay enabled for server %d? (\033[92my/\033[91mn\033[93m): \033[0m", i+1)
+		scanner.Scan()
+		nodelayOp := scanner.Text()
+		nodelay := "false"
+		if strings.ToLower(nodelayOp) == "y" {
+			nodelay = "true"
+		}
+
+		config := ""
+		for j := 1; j <= numConfigs; j++ {
+			config += fmt.Sprintf(`[client.services.kharej%d]
+type = "tcp"
+local_addr = "127.0.0.1:%s"
+
+`, j, kharejPorts[j-1])
+		}
+
+		config += fmt.Sprintf(`[client]
+remote_addr = "[%s]:%s"
+default_token = "%s"
+retry_interval = 1
+
+[client.transport]
+type = "tcp"
+
+[client.transport.tcp]
+nodelay = %s
+keepalive_secs = 10
+keepalive_interval = 5
+`, iranIP, tunnelPort, defaultToken, nodelay)
+
+		serverConfigs[i] = config
+	}
+
+	for i := 0; i < len(serverConfigs); i++ {
+		config := serverConfigs[i]
+		clientFilename := fmt.Sprintf("client%d.toml", i+1)
+		clientFilePath := fmt.Sprintf("/root/rathole/%s", clientFilename)
+
+		err = os.Remove(clientFilePath)
+		if err != nil && !os.IsNotExist(err) {
+			fmt.Println("\033[91mError deleting toml:\033[0m", err)
+			return
+		}
+		var file *os.File
+		file, err = os.Create(clientFilePath)
+		if err != nil {
+			fmt.Println("\033[91mError creating the client.toml file:\033[0m", err)
+			return
+		}
+		defer file.Close()
+
+		_, err = file.WriteString(config)
+		if err != nil {
+			fmt.Println("\033[91mError writing to the client.toml file:\033[0m", err)
+			return
+		}
+		service := fmt.Sprintf(`[Unit]
+Description=Kharej-Azumi Service for Server %d
+After=network.target
+			
+[Service]
+Type=simple
+Restart=on-failure
+RestartSec=5s
+LimitNOFILE=1048576
+ExecStart=/root/rathole/target/debug/rathole/root/rathole/%s
+			
+[Install]
+WantedBy=multi-user.target
+		`, i+1, clientFilename)
+			
+	serviceFilename := fmt.Sprintf("kharej-azumi%d.service", i+1)
+	serviceFilePath := fmt.Sprintf("/etc/systemd/system/%s", serviceFilename)
+	
+	err = os.Remove(serviceFilePath)
+	if err != nil && !os.IsNotExist(err) {
+		fmt.Println("\033[91mError deleting kharej-azumi:\033[0m", err)
+		return
+	}
+	
+	serviceFile, err := os.Create(serviceFilePath)
+	if err != nil {
+		fmt.Println("\033[91mError creating kharej-azumi:\033[0m", err)
+		return
+	}
+	defer serviceFile.Close()
+	
+	_, err = serviceFile.WriteString(service)
+	if err != nil {
+		fmt.Println("\033[91mError constructing kharej-azumi:\033[0m", err)
+		return
+	}
+	
+	cmd := exec.Command("systemctl", "daemon-reload")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror reloading:\033[0m", err)
+		return
+	}
+	
+	cmd = exec.Command("sudo", "chmod", "u+x", serviceFilePath)
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror enabling da service:\033[0m", err)
+		return
+	}
+	
+	cmd = exec.Command("systemctl", "enable", serviceFilename)
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror enabling da service:\033[0m", err)
+		return
+	}
+	
+	cmd = exec.Command("systemctl", "restart", serviceFilename)
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror restarting da service:\033[0m", err)
+		return
+	}
+							
+	displayCheckmark("\033[92mService created successfully!\033[0m")
+	}
+			
+	resKharejz()
+}
+func udp4Menu2() {
+	clearScreen()
+	fmt.Println("\033[92m ^ ^\033[0m")
+	fmt.Println("\033[92m(\033[91mO,O\033[92m)\033[0m")
+	fmt.Println("\033[92m(   ) \033[93m Reverse [5]IRAN [1]KHAREJ \033[92mUDP \033[96mIPV4 \033[93mMenu\033[0m ")
+	fmt.Println("\033[92m \"-\" \033[93m═══════════════════════════════════════════════════════\033[0m")
+	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+
+	prompt := &survey.Select{
+		Message: "Enter your choice Please:",
+		Options: []string{"1. \033[92mKHAREJ\033[0m", "2. \033[93mIRAN\033[92m[1]\033[0m", "3. \033[93mIRAN\033[92m[2]\033[0m", "4. \033[93mIRAN\033[92m[3]\033[0m", "5. \033[93mIRAN\033[92m[4]\033[0m", "6. \033[93mIRAN\033[92m[5]\033[0m", "q. \033[94mBack to the previous menu\033[0m"},
+	}
+		
+	var choice string
+	err := survey.AskOne(prompt, &choice)
+	if err != nil {
+		log.Fatalf("\033[91mCan't read user input, sry!:\033[0m %v", err)
+	}
+
+	switch choice {
+	case "1. \033[92mKHAREJ\033[0m":
+		kharejUdp42()
+	case "2. \033[93mIRAN\033[92m[1]\033[0m":
+		iranUdp42()
+	case "3. \033[93mIRAN\033[92m[2]\033[0m":
+		iranUdp42()
+	case "4. \033[93mIRAN\033[92m[3]\033[0m":
+		iranUdp42()
+	case "5. \033[93mIRAN\033[92m[4]\033[0m":
+		iranUdp42()
+	case "6. \033[93mIRAN\033[92m[5]\033[0m":
+		iranUdp42()
+	case "q. \033[94mBack to the previous menu\033[0m":
+		clearScreen()
+		iran5Menu()
+	default:
+		fmt.Println("\033[91mInvalid choice\033[0m")
+	}
+
+	readInput()
+}
+func iranUdp42() {
+	clearScreen()
+	fmt.Println("\033[92m ^ ^\033[0m")
+	fmt.Println("\033[92m(\033[91mO,O\033[92m)\033[0m")
+	fmt.Println("\033[92m(   ) \033[93m Reverse \033[92mIPV4 \033[96mUDP\033[0m ")
+	fmt.Println("\033[92m \"-\" \033[93m════════════════════════════════════\033[0m")
+	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+	displayNotification("Configuring IRAN")
+	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+	scanner := bufio.NewScanner(os.Stdin)
+
+	fmt.Print("\033[93mHow many \033[92mconfigs\033[93m do you have ? \033[0m")
+	scanner.Scan()
+	numConfigsStr := scanner.Text()
+
+	numConfigs, err := strconv.Atoi(numConfigsStr)
+	if err != nil {
+		fmt.Println("\033[91mPlease enter a valid number\033[0m")
+		return
+	}
+	fmt.Print("\033[93mEnter the your desired \033[92mToken\033[93m: \033[0m")
+	scanner.Scan()
+	defaultToken := scanner.Text()
+
+	fmt.Print("\033[93mEnter \033[92mTunnel port:\033[0m ")
+	scanner.Scan()
+	tunnelPort := scanner.Text()
+
+	kharejPorts := make([]string, numConfigs)
+	for i := 0; i < numConfigs; i++ {
+		fmt.Printf("\033[93mEnter \033[92mConfig %d\033[93m Port: \033[0m", i+1)
+		scanner.Scan()
+		kharejPorts[i] = scanner.Text()
+	}
+
+
+	server := fmt.Sprintf(`[server]
+bind_addr = "0.0.0.0:%s"
+default_token = "%s"
+	
+	
+`, tunnelPort, defaultToken)
+	
+	for i := 0; i < numConfigs; i++ {
+		config := fmt.Sprintf(`[server.services.kharej%d]
+type = "udp"
+bind_addr = "0.0.0.0:%s" 
+`, i+1, kharejPorts[i])
+		server += config
+	}
+
+	err = os.Remove("/root/rathole/server.toml")
+	if err != nil && !os.IsNotExist(err) {
+		fmt.Println("\033[91merror deleting toml:\033[0m", err)
+		return
+	}
+
+	file, err := os.Create("/root/rathole/server.toml")
+	if err != nil {
+		fmt.Println("\033[91merror creating toml:\033[0m", err)
+		return
+	}
+	defer file.Close()
+
+	_, err = file.WriteString(server)
+	if err != nil {
+		fmt.Println("\033[91merror putting configs into toml:\033[0m", err)
+		return
+	}
+	service := `[Unit]
+Description=Iran-Azumi Service
+After=network.target
+
+[Service]
+Type=simple
+Restart=on-failure
+RestartSec=5s
+LimitNOFILE=1048576
+ExecStart=/root/rathole/target/debug/rathole /root/rathole/server.toml
+
+[Install]
+WantedBy=multi-user.target`
+
+	err = os.Remove("/etc/systemd/system/iran-azumi.service")
+	if err != nil && !os.IsNotExist(err) {
+		fmt.Println("\033[91merror deleting iran-azumi:\033[0m", err)
+		return
+	}
+
+	file, err = os.Create("/etc/systemd/system/iran-azumi.service")
+	if err != nil {
+		fmt.Println("\033[91merror creating iran-azumi:\033[0m", err)
+		return
+	}
+	defer file.Close()
+
+	_, err = file.WriteString(service)
+	if err != nil {
+		fmt.Println("\033[91merror constructing iran-azumi:\033[0m", err)
+		return
+	}
+
+	cmd := exec.Command("systemctl", "daemon-reload")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror reloading:\033[0m", err)
+		return
+	}
+
+	cmd = exec.Command("sudo", "chmod", "u+x", "/etc/systemd/system/iran-azumi.service")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror enablin da service:\033[0m", err)
+		return
+	}
+
+	cmd = exec.Command("systemctl", "enable", "iran-azumi")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror enabling da service:\033[0m", err)
+		return
+	}
+
+	cmd = exec.Command("systemctl", "restart", "iran-azumi")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror restarting da service:\033[0m", err)
+		return
+	}
+	resIran()
+	displayCheckmark("\033[92mService created successfully!\033[0m")
+}
+func kharejUdp42() {
+	clearScreen()
+	fmt.Println("\033[92m ^ ^\033[0m")
+	fmt.Println("\033[92m(\033[91mO,O\033[92m)\033[0m")
+	fmt.Println("\033[92m(   ) \033[93m Reverse \033[92mIPV4 \033[96mTCP\033[0m ")
+	fmt.Println("\033[92m \"-\" \033[93m════════════════════════════════════\033[0m")
+	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+	displayNotification("Configuring KHAREJ")
+	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+	scanner := bufio.NewScanner(os.Stdin)
+
+	fmt.Print("\033[93mHow many \033[92mIRAN Servers\033[93m do you have?\033[0m ")
+	scanner.Scan()
+	numServersStr := scanner.Text()
+
+	numServers, err := strconv.Atoi(numServersStr)
+	if err != nil || numServers < 1 {
+		fmt.Println("\033[91mPlz enter a valid number (minimum 1).\033[0m")
+		return
+	}
+
+	serverConfigs := make([]string, numServers)
+	for i := 0; i < numServers; i++ {
+		fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+		displayNotification(fmt.Sprintf("IRAN %d", i+1))
+		fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+		serverConfigs[i] = fmt.Sprintf("iran%d", i+1)
+		fmt.Printf("\033[93mEnter \033[92mIRAN IPV4\033[93m for server %d:\033[0m ", i+1)
+		scanner.Scan()
+		iranIP := scanner.Text()
+
+		fmt.Printf("\033[93mEnter \033[92mTunnel port\033[93m for server %d:\033[0m ", i+1)
+		scanner.Scan()
+		tunnelPort := scanner.Text()
+
+		fmt.Printf("\033[93mEnter the desired \033[92mtoken\033[93m for server %d: \033[0m", i+1)
+		scanner.Scan()
+		defaultToken := scanner.Text()
+
+		fmt.Printf("\033[93mHow many \033[92mConfigs\033[93m do you have for server %d?\033[0m ", i+1)
+		scanner.Scan()
+		numConfigsStr := scanner.Text()
+
+		numConfigs, err := strconv.Atoi(numConfigsStr)
+		if err != nil {
+			fmt.Println("\033[91mPlz enter a valid number\033[0m")
+			return
+		}
+
+		kharejPorts := make([]string, numConfigs+1)
+		for j := 1; j <= numConfigs; j++ {
+			fmt.Printf("\033[93mEnter \033[92mconfig %d\033[93m port for server %d:\033[0m ", j, i+1)
+			scanner.Scan()
+			kharejPorts[j-1] = scanner.Text()
+		}
+
+
+		configs := ""
+
+		for j := 0; j < numConfigs; j++ {
+			configs += fmt.Sprintf("[client.services.kharej%d]\n", j+1)
+			configs += fmt.Sprintf("type = \"udp\"\n")
+			configs += fmt.Sprintf("local_addr = \"127.0.0.1:%s\"\n", kharejPorts[j])
+		}
+
+		serverConfig := fmt.Sprintf(`%s[client]
+remote_addr = "%s:%s"
+default_token = "%s"
+retry_interval = 1
+`, configs, iranIP, tunnelPort, defaultToken)
+
+		serverConfigs[i] = serverConfig
+	}
+	for i := 0; i < len(serverConfigs); i++ {
+		config := serverConfigs[i]
+		clientFilename := fmt.Sprintf("client%d.toml", i+1)
+		clientFilePath := fmt.Sprintf("/root/rathole/%s", clientFilename)
+
+		err = os.Remove(clientFilePath)
+		if err != nil && !os.IsNotExist(err) {
+			fmt.Println("\033[91mError deleting toml:\033[0m", err)
+			return
+		}
+		var file *os.File
+		file, err = os.Create(clientFilePath)
+		if err != nil {
+			fmt.Println("\033[91mError creating the client.toml file:\033[0m", err)
+			return
+		}
+		defer file.Close()
+
+		_, err = file.WriteString(config)
+		if err != nil {
+			fmt.Println("\033[91mError writing to the client.toml file:\033[0m", err)
+			return
+		}
+		service := fmt.Sprintf(`[Unit]
+Description=Kharej-Azumi Service for Server %d
+After=network.target
+			
+[Service]
+Type=simple
+Restart=on-failure
+RestartSec=5s
+LimitNOFILE=1048576
+ExecStart=/root/rathole/target/debug/rathole /root/rathole/%s
+			
+[Install]
+WantedBy=multi-user.target
+		`, i+1, clientFilename)
+			
+	serviceFilename := fmt.Sprintf("kharej-azumi%d.service", i+1)
+	serviceFilePath := fmt.Sprintf("/etc/systemd/system/%s", serviceFilename)
+		
+	err = os.Remove(serviceFilePath)
+	if err != nil && !os.IsNotExist(err) {
+		fmt.Println("\033[91mError deleting kharej-azumi:\033[0m", err)
+		return
+	}
+		
+	serviceFile, err := os.Create(serviceFilePath)
+	if err != nil {
+		fmt.Println("\033[91mError creating kharej-azumi:\033[0m", err)
+		return
+	}
+	defer serviceFile.Close()
+		
+	_, err = serviceFile.WriteString(service)
+	if err != nil {
+		fmt.Println("\033[91mError constructing kharej-azumi:\033[0m", err)
+		return
+	}
+		
+	cmd := exec.Command("systemctl", "daemon-reload")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror reloading:\033[0m", err)
+		return
+	}
+		
+	cmd = exec.Command("sudo", "chmod", "u+x", serviceFilePath)
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror enabling da service:\033[0m", err)
+		return
+	}
+		
+	cmd = exec.Command("systemctl", "enable", serviceFilename)
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror enabling da service:\033[0m", err)
+		return
+	}
+		
+	cmd = exec.Command("systemctl", "restart", serviceFilename)
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror restarting da service:\033[0m", err)
+		return
+	}
+								
+	displayCheckmark("\033[92mService created successfully!\033[0m")
+	}
+				
+	resKharejz()
+}
+func udp6Menu2() {
+	clearScreen()
+	fmt.Println("\033[92m ^ ^\033[0m")
+	fmt.Println("\033[92m(\033[91mO,O\033[92m)\033[0m")
+	fmt.Println("\033[92m(   ) \033[93m Reverse [5]IRAN [1]KHAREJ \033[92mUDP \033[96mIPV6 \033[93mMenu\033[0m ")
+	fmt.Println("\033[92m \"-\" \033[93m═══════════════════════════════════════════════════════\033[0m")
+	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+
+	prompt := &survey.Select{
+		Message: "Enter your choice Please:",
+		Options: []string{"1. \033[92mKHAREJ\033[0m", "2. \033[93mIRAN\033[92m[1]\033[0m", "3. \033[93mIRAN\033[92m[2]\033[0m", "4. \033[93mIRAN\033[92m[3]\033[0m", "5. \033[93mIRAN\033[92m[4]\033[0m", "6. \033[93mIRAN\033[92m[5]\033[0m", "q. \033[94mBack to the previous menu\033[0m"},
+	}
+		
+	var choice string
+	err := survey.AskOne(prompt, &choice)
+	if err != nil {
+		log.Fatalf("\033[91mCan't read user input, sry!:\033[0m %v", err)
+	}
+
+	switch choice {
+	case "1. \033[92mKHAREJ\033[0m":
+		kharejUdp62()
+	case "2. \033[93mIRAN\033[92m[1]\033[0m":
+		iranUdp62()
+	case "3. \033[93mIRAN\033[92m[2]\033[0m":
+		iranUdp62()
+	case "4. \033[93mIRAN\033[92m[3]\033[0m":
+		iranUdp62()
+	case "5. \033[93mIRAN\033[92m[4]\033[0m":
+		iranUdp62()
+	case "6. \033[93mIRAN\033[92m[5]\033[0m":
+		iranUdp62()
+	case "q. \033[94mBack to the previous menu\033[0m":
+		clearScreen()
+		iran5Menu()
+	default:
+		fmt.Println("\033[91mInvalid choice\033[0m")
+	}
+
+	readInput()
+}
+func iranUdp62() {
+	clearScreen()
+	fmt.Println("\033[92m ^ ^\033[0m")
+	fmt.Println("\033[92m(\033[91mO,O\033[92m)\033[0m")
+	fmt.Println("\033[92m(   ) \033[93m Reverse \033[92mIPV4 \033[96mUDP\033[0m ")
+	fmt.Println("\033[92m \"-\" \033[93m════════════════════════════════════\033[0m")
+	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+	displayNotification("Configuring IRAN")
+	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+	scanner := bufio.NewScanner(os.Stdin)
+
+	fmt.Print("\033[93mHow many \033[92mconfigs\033[93m do you have ? \033[0m")
+	scanner.Scan()
+	numConfigsStr := scanner.Text()
+
+	numConfigs, err := strconv.Atoi(numConfigsStr)
+	if err != nil {
+		fmt.Println("\033[91mPlease enter a valid number\033[0m")
+		return
+	}
+	fmt.Print("\033[93mEnter the your desired \033[92mToken\033[93m: \033[0m")
+	scanner.Scan()
+	defaultToken := scanner.Text()
+
+	fmt.Print("\033[93mEnter \033[92mTunnel port:\033[0m ")
+	scanner.Scan()
+	tunnelPort := scanner.Text()
+
+	kharejPorts := make([]string, numConfigs)
+	for i := 0; i < numConfigs; i++ {
+		fmt.Printf("\033[93mEnter \033[92mConfig %d\033[93m Port: \033[0m", i+1)
+		scanner.Scan()
+		kharejPorts[i] = scanner.Text()
+	}
+
+	server := fmt.Sprintf(`[server]
+bind_addr = "[::]:%s"
+default_token = "%s"
+	
+	
+`, tunnelPort, defaultToken)
+	
+	for i := 0; i < numConfigs; i++ {
+		config := fmt.Sprintf(`[server.services.kharej%d]
+type = "udp"
+bind_addr = "0.0.0.0:%s" 
+`, i+1, kharejPorts[i])
+		server += config
+	}
+
+	err = os.Remove("/root/rathole/server.toml")
+	if err != nil && !os.IsNotExist(err) {
+		fmt.Println("\033[91mError deleting toml:\033[0m", err)
+		return
+	}
+
+	file, err := os.Create("/root/rathole/server.toml")
+	if err != nil {
+		fmt.Println("\033[91mError creating toml:\033[0m", err)
+		return
+	}
+	defer file.Close()
+
+	_, err = file.WriteString(server)
+	if err != nil {
+		fmt.Println("\033[91mError putting configs into toml:\033[0m", err)
+		return
+	}
+	service := `[Unit]
+Description=Iran-Azumi Service
+After=network.target
+
+[Service]
+Type=simple
+Restart=on-failure
+RestartSec=5s
+LimitNOFILE=1048576
+ExecStart=/root/rathole/target/debug/rathole /root/rathole/server.toml
+
+[Install]
+WantedBy=multi-user.target`
+
+	err = os.Remove("/etc/systemd/system/iran-azumi.service")
+	if err != nil && !os.IsNotExist(err) {
+		fmt.Println("\033[91merror deleting iran-azumi:\033[0m", err)
+		return
+	}
+
+	file, err = os.Create("/etc/systemd/system/iran-azumi.service")
+	if err != nil {
+		fmt.Println("\033[91merror creating iran-azumi:\033[0m", err)
+		return
+	}
+	defer file.Close()
+
+	_, err = file.WriteString(service)
+	if err != nil {
+		fmt.Println("\033[91merror constructing iran-azumi:\033[0m", err)
+		return
+	}
+
+	cmd := exec.Command("systemctl", "daemon-reload")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror reloading:\033[0m", err)
+		return
+	}
+
+	cmd = exec.Command("sudo", "chmod", "u+x", "/etc/systemd/system/iran-azumi.service")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror enablin da service:\033[0m", err)
+		return
+	}
+
+	cmd = exec.Command("systemctl", "enable", "iran-azumi")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror enabling da service:\033[0m", err)
+		return
+	}
+
+	cmd = exec.Command("systemctl", "restart", "iran-azumi")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror restarting da service:\033[0m", err)
+		return
+	}
+	resIran()
+	displayCheckmark("\033[92mService created successfully!\033[0m")
+}
+func kharejUdp62() {
+	clearScreen()
+	fmt.Println("\033[92m ^ ^\033[0m")
+	fmt.Println("\033[92m(\033[91mO,O\033[92m)\033[0m")
+	fmt.Println("\033[92m(   ) \033[93m Reverse \033[92mIPV6 \033[96mTCP\033[0m ")
+	fmt.Println("\033[92m \"-\" \033[93m════════════════════════════════════\033[0m")
+	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+	displayNotification("Configuring KHAREJ")
+	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+	scanner := bufio.NewScanner(os.Stdin)
+
+	fmt.Print("\033[93mHow many \033[92mIRAN Servers\033[93m do you have?\033[0m ")
+	scanner.Scan()
+	numServersStr := scanner.Text()
+
+	numServers, err := strconv.Atoi(numServersStr)
+	if err != nil || numServers < 1 {
+		fmt.Println("\033[91mPlz enter a valid number (minimum 1).\033[0m")
+		return
+	}
+
+	serverConfigs := make([]string, numServers)
+	for i := 0; i < numServers; i++ {
+		fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+		displayNotification(fmt.Sprintf("IRAN %d", i+1))
+		fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+		serverConfigs[i] = fmt.Sprintf("iran%d", i+1)
+		fmt.Printf("\033[93mEnter \033[92mIRAN IPV6\033[93m for server %d:\033[0m ", i+1)
+		scanner.Scan()
+		iranIP := scanner.Text()
+
+		fmt.Printf("\033[93mEnter \033[92mTunnel port\033[93m for server %d:\033[0m ", i+1)
+		scanner.Scan()
+		tunnelPort := scanner.Text()
+
+		fmt.Printf("\033[93mEnter the desired \033[92mtoken\033[93m for server %d: \033[0m", i+1)
+		scanner.Scan()
+		defaultToken := scanner.Text()
+
+		fmt.Printf("\033[93mHow many \033[92mConfigs\033[93m do you have for server %d?\033[0m ", i+1)
+		scanner.Scan()
+		numConfigsStr := scanner.Text()
+
+		numConfigs, err := strconv.Atoi(numConfigsStr)
+		if err != nil {
+			fmt.Println("\033[91mPlz enter a valid number\033[0m")
+			return
+		}
+
+		kharejPorts := make([]string, numConfigs+1)
+		for j := 1; j <= numConfigs; j++ {
+			fmt.Printf("\033[93mEnter \033[92mconfig %d\033[93m port for server %d:\033[0m ", j, i+1)
+			scanner.Scan()
+			kharejPorts[j-1] = scanner.Text()
+		}
+
+		configs := ""
+
+		for j := 0; j < numConfigs; j++ {
+			configs += fmt.Sprintf("[client.services.kharej%d]\n", j+1)
+			configs += fmt.Sprintf("type = \"udp\"\n")
+			configs += fmt.Sprintf("local_addr = \"127.0.0.1:%s\"\n", kharejPorts[j])
+		}
+
+		serverConfig := fmt.Sprintf(`%s[client]
+remote_addr = "[%s]:%s"
+default_token = "%s"
+retry_interval = 1
+`, configs, iranIP, tunnelPort, defaultToken)
+
+		serverConfigs[i] = serverConfig
+	}
+
+	for i := 0; i < len(serverConfigs); i++ {
+		config := serverConfigs[i]
+		clientFilename := fmt.Sprintf("client%d.toml", i+1)
+		clientFilePath := fmt.Sprintf("/root/rathole/%s", clientFilename)
+
+		err = os.Remove(clientFilePath)
+		if err != nil && !os.IsNotExist(err) {
+			fmt.Println("\033[91mError deleting toml:\033[0m", err)
+			return
+		}
+		var file *os.File
+		file, err = os.Create(clientFilePath)
+		if err != nil {
+			fmt.Println("\033[91mError creating the client.toml file:\033[0m", err)
+			return
+		}
+		defer file.Close()
+
+		_, err = file.WriteString(config)
+		if err != nil {
+			fmt.Println("\033[91mError writing to the client.toml file:\033[0m", err)
+			return
+		}
+		service := fmt.Sprintf(`[Unit]
+Description=Kharej-Azumi Service for Server %d
+After=network.target
+			
+[Service]
+Type=simple
+Restart=on-failure
+RestartSec=5s
+LimitNOFILE=1048576
+ExecStart=/root/rathole/target/debug/rathole /root/rathole/%s
+			
+[Install]
+WantedBy=multi-user.target
+		`, i+1, clientFilename)
+
+	serviceFilename := fmt.Sprintf("kharej-azumi%d.service", i+1)
+	serviceFilePath := fmt.Sprintf("/etc/systemd/system/%s", serviceFilename)
+	
+	err = os.Remove(serviceFilePath)
+	if err != nil && !os.IsNotExist(err) {
+		fmt.Println("\033[91mError deleting kharej-azumi:\033[0m", err)
+		return
+	}
+	
+	serviceFile, err := os.Create(serviceFilePath)
+	if err != nil {
+		fmt.Println("\033[91mError creating kharej-azumi:\033[0m", err)
+		return
+    }
+	defer serviceFile.Close()
+	
+	_, err = serviceFile.WriteString(service)
+	if err != nil {
+		fmt.Println("\033[91mError constructing kharej-azumi:\033[0m", err)
+		return
+	}
+	
+	cmd := exec.Command("systemctl", "daemon-reload")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror reloading:\033[0m", err)
+		return
+	}
+	
+	cmd = exec.Command("sudo", "chmod", "u+x", serviceFilePath)
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror enabling da service:\033[0m", err)
+		return
+	}
+	
+	cmd = exec.Command("systemctl", "enable", serviceFilename)
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror enabling da service:\033[0m", err)
+		return
+	}
+	
+	cmd = exec.Command("systemctl", "restart", serviceFilename)
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("\033[91merror restarting da service:\033[0m", err)
+		return
+	}
+									
+	displayCheckmark("\033[92mService created successfully!\033[0m")
+    }  
+	resKharejz()
+}
+func startMain2() {
+	clearScreen()
+	fmt.Println("\033[92m ^ ^\033[0m")
+	fmt.Println("\033[92m(\033[91mO,O\033[92m)\033[0m")
+	fmt.Println("\033[92m(   ) \033[92m Service \033[93mMenu\033[0m")
+	fmt.Println("\033[92m \"-\" \033[93m════════════════════════════════════\033[0m")
+	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+
+	prompt := &survey.Select{
+		Message: "Enter your choice Please:",
+		Options: []string{"1. \033[92mRestart\033[0m", "2. \033[93mStop \033[0m", "0. \033[94mBack to the previous menu\033[0m"},
+	}
+		
+	var choice string
+	err := survey.AskOne(prompt, &choice)
+	if err != nil {
+		log.Fatalf("\033[91mCan't read user input, sry!:\033[0m %v", err)
+	}
+
+	switch choice {
+	case "1. \033[92mRestart\033[0m":
+		start2()
+	case "2. \033[93mStop \033[0m":
+		stop2()
+	case "0. \033[94mBack to the main menu\033[0m":
+		clearScreen()
+		iran5Menu()
+	default:
+		fmt.Println("\033[91mInvalid choice\033[0m")
+	}
+
+	readInput()
+}
+func start2() {
+	clearScreen()
+	fmt.Println("\033[92m ^ ^\033[0m")
+	fmt.Println("\033[92m(\033[91mO,O\033[92m)\033[0m")
+	fmt.Println("\033[92m(   ) \033[92m Restart \033[93mMenu\033[0m")
+	fmt.Println("\033[92m \"-\" \033[93m════════════════════════════════════\033[0m")
+	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+
+	prompt := &survey.Select{
+		Message: "Enter your choice Please:",
+		Options: []string{"1. \033[92mTCP | UDP \033[0m", "0. \033[94mBack to the previous menu\033[0m"},
+	}
+		
+	var choice string
+	err := survey.AskOne(prompt, &choice)
+	if err != nil {
+		log.Fatalf("\033[91mCan't read user input, sry!:\033[0m %v", err)
+	}
+
+	switch choice {
+	case "1. \033[92mTCP | UDP \033[0m":
+		restarttcp2()
+	case "0. \033[94mBack to the previous menu\033[0m":
+		clearScreen()
+		startMain2()
+	default:
+		fmt.Println("\033[91mInvalid choice\033[0m")
+	}
+
+	readInput()
+}
+func restarttcp2() {
+	cmd := exec.Command("clear")
+	cmd.Stdout = os.Stdout
+	cmd.Run()
+
+	displayNotification("\033[93mRestarting Reverse Tunnel \033[93m..\033[0m")
+	fmt.Println("\033[93m╭─────────────────────────────────────────────╮\033[0m")
+
+	scanner := bufio.NewScanner(os.Stdin)
+	fmt.Print("\033[93mEnter the number of Iran servers:\033[0m ")
+	scanner.Scan()
+	iranServerNumberStr := strings.TrimSpace(scanner.Text())
+
+	iranServerNumber, err := strconv.Atoi(iranServerNumberStr)
+	if err != nil || iranServerNumber <= 0 {
+		log.Fatalf("\033[91mInvalid input for the number of Iranian servers:\033[0m %v", err)
+	}
+
+	for i := 1; i <= iranServerNumber; i++ {
+		serviceName := fmt.Sprintf("kharej-azumi%d", i)
+		cmd = exec.Command("systemctl", "restart", serviceName)
+		cmd.Run()
+		time.Sleep(1 * time.Second)
+	}
+
+	cmd = exec.Command("systemctl", "restart", "iran-azumi")
+	cmd.Run()
+	time.Sleep(1 * time.Second)
+
+	fmt.Print("Progress: ")
+
+	frames := []string{"⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"}
+	delay := 0.1
+	duration := 1.0
+	endTime := time.Now().Add(time.Duration(duration) * time.Second)
+
+	for time.Now().Before(endTime) {
+		for _, frame := range frames {
+			fmt.Printf("\r[%s] Loading...  ", frame)
+			time.Sleep(time.Duration(delay * float64(time.Second)))
+			fmt.Printf("\r[%s]             ", frame)
+			time.Sleep(time.Duration(delay * float64(time.Second)))
+		}
+	}
+
+	displayCheckmark("\033[92mRestart completed!\033[0m")
+}
+func stop2() {
+	clearScreen()
+	fmt.Println("\033[92m ^ ^\033[0m")
+	fmt.Println("\033[92m(\033[91mO,O\033[92m)\033[0m")
+	fmt.Println("\033[92m(   ) \033[92m Stop \033[93mMenu\033[0m")
+	fmt.Println("\033[92m \"-\" \033[93m════════════════════════════════════\033[0m")
+	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+
+	prompt := &survey.Select{
+		Message: "Enter your choice Please:",
+		Options: []string{"1. \033[92mTCP | UDP \033[0m", "0. \033[94mBack to the previous menu\033[0m"},
+	}
+		
+	var choice string
+	err := survey.AskOne(prompt, &choice)
+	if err != nil {
+		log.Fatalf("\033[91mCan't read user input, sry!:\033[0m %v", err)
+	}
+
+	switch choice {
+	case "1. \033[92mTCP | UDP \033[0m":
+		stoptcp2()
+	case "0. \033[94mBack to the previous menu\033[0m":
+		clearScreen()
+		startMain2()
+	default:
+		fmt.Println("\033[91mInvalid choice\033[0m")
+	}
+
+	readInput()
+}
+func stoptcp2() {
+	cmd := exec.Command("clear")
+	cmd.Stdout = os.Stdout
+	cmd.Run()
+
+	displayNotification("\033[93mStopping Reverse Tunnel \033[93m..\033[0m")
+	fmt.Println("\033[93m╭─────────────────────────────────────────────╮\033[0m")
+
+	scanner := bufio.NewScanner(os.Stdin)
+	fmt.Print("\033[93mEnter the number of Iran servers:\033[0m ")
+	scanner.Scan()
+	iranServerNumberStr := strings.TrimSpace(scanner.Text())
+
+	iranServerNumber, err := strconv.Atoi(iranServerNumberStr)
+	if err != nil || iranServerNumber <= 0 {
+		log.Fatalf("\033[91mInvalid input for the number of Iranian servers:\033[0m %v", err)
+	}
+
+	for i := 1; i <= iranServerNumber; i++ {
+		serviceName := fmt.Sprintf("kharej-azumi%d", i)
+		cmd = exec.Command("systemctl", "stop", serviceName)
+		cmd.Run()
+		time.Sleep(1 * time.Second)
+	}
+
+	cmd = exec.Command("systemctl", "stop", "iran-azumi")
+	cmd.Run()
+	time.Sleep(1 * time.Second)
+
+	fmt.Print("Progress: ")
+
+	frames := []string{"⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"}
+	delay := 0.1
+	duration := 1.0
+	endTime := time.Now().Add(time.Duration(duration) * time.Second)
+
+	for time.Now().Before(endTime) {
+		for _, frame := range frames {
+			fmt.Printf("\r[%s] Loading...  ", frame)
+			time.Sleep(time.Duration(delay * float64(time.Second)))
+			fmt.Printf("\r[%s]             ", frame)
+			time.Sleep(time.Duration(delay * float64(time.Second)))
+		}
+	}
+
+	displayCheckmark("\033[92mService Stopped!\033[0m")
+}

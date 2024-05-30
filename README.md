@@ -215,7 +215,7 @@ go get -u golang.org/x/crypto/ssh
 
  <div align="right">
   <details>
-    <summary><strong><img src="https://github.com/Azumi67/Rathole_reverseTunnel/assets/119934376/fcbbdc62-2de5-48aa-bbdd-e323e96a62b5" alt="Image"> </strong>IPV4 TCP 2 سرور ایران به یک سرور خارج</summary>
+    <summary><strong><img src="https://github.com/Azumi67/Rathole_reverseTunnel/assets/119934376/fcbbdc62-2de5-48aa-bbdd-e323e96a62b5" alt="Image"> </strong>دو سرور ایران و یک سرور خارج IPV4 TCP</summary>
   
 ------------------------------------ 
 

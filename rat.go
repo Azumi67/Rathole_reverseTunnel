@@ -339,50 +339,52 @@ func status2() {
 	readInput()
 }
 func tcpStatus2() {
-reader := bufio.NewReader(os.Stdin)
-fmt.Print("\033[93mEnter the number of Iran servers:\033[0m ")
-iranServerNumberStr, err := reader.ReadString('\n')
-if err != nil {
-	log.Fatalf("Error reading input: %v", err)
-}
-iranServerNumberStr = strings.TrimSpace(iranServerNumberStr)
-
-iranServerNumber, err := strconv.Atoi(iranServerNumberStr)
-if err != nil || iranServerNumber <= 0 {
-	log.Fatalf("\033[91minvalid input for the number of Iranian servers:\033[0m %v", err)
-}
-
-services := make([]string, 0)
-
-for i := 1; i <= iranServerNumber; i++ {
-	serviceName := fmt.Sprintf("kharej-azumi%d", i)
-	services = append(services, serviceName)
-}
-
-fmt.Println("\033[93m            ╔════════════════════════════════════════════╗\033[0m")
-fmt.Println("\033[93m            ║               \033[92mReverse Status\033[93m               ║\033[0m")
-fmt.Println("\033[93m            ╠════════════════════════════════════════════╣\033[0m")
-
-for _, service := range services {
-	cmd := exec.Command("systemctl", "is-active", "--quiet", service)
-	err := cmd.Run()
+	reader := bufio.NewReader(os.Stdin)
+	fmt.Print("\033[93mEnter the number of Iran servers:\033[0m ")
+	iranServerNumberStr, err := reader.ReadString('\n')
 	if err != nil {
-		continue
+		log.Fatalf("Error reading input: %v", err)
+	}
+	iranServerNumberStr = strings.TrimSpace(iranServerNumberStr)
+
+	iranServerNumber, err := strconv.Atoi(iranServerNumberStr)
+	if err != nil || iranServerNumber <= 0 {
+		log.Fatalf("\033[91minvalid input for the number of Iranian servers:\033[0m %v", err)
 	}
 
-	status := "\033[92m✓ Active      \033[0m"
-	displayName := ""
-	switch service {
-	case "iran-azumi":
-		displayName = "\033[93mIRAN Server   \033[0m"
-	default:
-		displayName = service
+	services := make([]string, 0)
+
+	for i := 1; i <= iranServerNumber; i++ {
+		serviceName := fmt.Sprintf("kharej-azumi%d", i)
+		services = append(services, serviceName)
 	}
 
-	fmt.Printf("           \033[93m ║\033[0m    %s   |    %s\033[93m    ║\033[0m\n", displayName, status)
-}
+	services = append(services, "iran-azumi") 
 
-fmt.Println("\033[93m            ╚════════════════════════════════════════════╝\033[0m")
+	fmt.Println("\033[93m            ╔════════════════════════════════════════════╗\033[0m")
+	fmt.Println("\033[93m            ║               \033[92mReverse Status\033[93m               ║\033[0m")
+	fmt.Println("\033[93m            ╠════════════════════════════════════════════╣\033[0m")
+
+	for _, service := range services {
+		cmd := exec.Command("systemctl", "is-active", "--quiet", service)
+		err := cmd.Run()
+		if err != nil {
+			continue
+		}
+
+		status := "\033[92m✓ Active      \033[0m"
+		displayName := ""
+		switch service {
+		case "iran-azumi":
+			displayName = "\033[93mIRAN Server   \033[0m"
+		default:
+			displayName = service
+		}
+
+		fmt.Printf("           \033[93m ║\033[0m    %s   |    %s\033[93m    ║\033[0m\n", displayName, status)
+	}
+
+	fmt.Println("\033[93m            ╚════════════════════════════════════════════╝\033[0m")
 }
 func UniMenu2() {
 	clearScreen()

@@ -211,7 +211,7 @@ func mainMenu() {
 		displayLogo()
 		border := "\033[93m+" + strings.Repeat("=", 70) + "+\033[0m"
 		content := "\033[93m║            ▌║█║▌│║▌│║▌║▌█║ \033[92mMain Menu\033[93m  ▌│║▌║▌│║║▌█║▌                  ║"
-		footer := " \033[92m            Join Opiran Telegram \033[34m@https://t.me/OPIranClub\033[0m "
+		footer := " \033[97m This is for Compiled Version. If you need binary, use binary version\033[0m "
 
 		borderLength := len(border) - 2
 		centeredContent := fmt.Sprintf("%[1]*s", -borderLength, content)
@@ -225,7 +225,7 @@ func mainMenu() {
 		fmt.Println(border)
 		prompt := &survey.Select{
 			Message: "Enter your choice Please:",
-			Options: []string{"1. \033[92mInstall Binary\033[0m", "2. \033[96m[5]IRAN [1]KHAREJ \033[0m", "3. \033[93m[1]IRAN [10]KHAREJ \033[0m", "q. Exit"},
+			Options: []string{"1. \033[96m[5]IRAN [1]KHAREJ \033[0m", "2. \033[93m[1]IRAN [10]KHAREJ \033[0m", "q. Exit"},
 			
 		}
 		fmt.Println("\033[93m╰─────────────────────────────────────────────────────────────────────╯\033[0m")
@@ -236,11 +236,9 @@ func mainMenu() {
 			log.Fatalf("\033[91muser input is wrong:\033[0m %v", err)
 		}
 		switch choice {
-		case "1. \033[92mInstall Binary\033[93m[Ubuntu 22/24 - Debian 12]\033[0m":
-			binarygo()
-		case "2. \033[96m[5]IRAN [1]KHAREJ \033[0m":
+		case "1. \033[96m[5]IRAN [1]KHAREJ \033[0m":
 			iran5Menu()
-		case "3. \033[93m[1]IRAN [10]KHAREJ \033[0m":
+		case "2. \033[93m[1]IRAN [10]KHAREJ \033[0m":
 			kharej10Menu()
 		case "q. Exit":
 			fmt.Println("Exiting...")

@@ -236,7 +236,7 @@ func mainMenu() {
 			log.Fatalf("\033[91muser input is wrong:\033[0m %v", err)
 		}
 		switch choice {
-		case "1. \033[92mInstall Binary\033[0m":
+		case "1. \033[92mInstall Binary\033[93m[Ubuntu 22/24 - Debian 12]\033[0m":
 			binarygo()
 		case "2. \033[96m[5]IRAN [1]KHAREJ \033[0m":
 			iran5Menu()

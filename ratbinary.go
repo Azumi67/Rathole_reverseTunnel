@@ -1,29 +1,30 @@
-//Author:github.com/Azumi67
-//This script is for educational use and for my own learning, but I'd be happy if you find it useful too.
-//This script simplifies the configuration of Rathole Reverse tunnel.
-//You can send me feedback so I can use it to learn more.
-//This script comes without any warranty
-//Thank you.
+// Author:github.com/Azumi67
+// This script is for educational use and for my own learning, but I'd be happy if you find it useful too.
+// This script simplifies the configuration of Rathole Reverse tunnel.
+// You can send me feedback so I can use it to learn more.
+// This script comes without any warranty
+// Thank you.
 package main
 
 import (
-    "time"
-	"strconv"
 	"bufio"
 	"fmt"
+	"io"
+	"io/ioutil"
+	"log"
+	"net"
 	"os"
 	"os/exec"
+	"strconv"
 	"strings"
-	"github.com/fatih/color"
-	"log"
+	"time"
+
 	"github.com/AlecAivazis/survey/v2"
+	"github.com/fatih/color"
 	"github.com/pkg/sftp"
 	"golang.org/x/crypto/ssh"
-	"net"
-	"io/ioutil"
-	"io"
-
 )
+
 func readInputs(reader *bufio.Reader) string {
 	input, _ := reader.ReadString('\n')
 	return strings.TrimSpace(input)
@@ -35,8 +36,8 @@ func enableResetKharej1() {
 	displayNotification("\033[93mQuestion time !\033[0m")
 	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
 
-	reader := bufio.NewReader(os.Stdin)  
-	fmt.Print("\033[93mDo you want to enable/ \033[96mRathole \033[92mreset time\033[93m? (\033[92myes\033[93m/\033[91mno\033[93m): \033[0m")
+	reader := bufio.NewReader(os.Stdin)
+	fmt.Print("\033[93mDo you want to enable/edit \033[96mRathole \033[92mreset time\033[93m? (\033[92myes\033[93m/\033[91mno\033[93m): \033[0m")
 	enableReset := readInputs(reader)
 
 	if enableReset == "yes" || enableReset == "y" {
@@ -145,8 +146,8 @@ func enableResetKharej() {
 	displayNotification("\033[93mQuestion time !\033[0m")
 	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
 
-	reader := bufio.NewReader(os.Stdin)  
-	fmt.Print("\033[93mDo you want to enable/ \033[96mRathole \033[92mreset time\033[93m? (\033[92myes\033[93m/\033[91mno\033[93m): \033[0m")
+	reader := bufio.NewReader(os.Stdin)
+	fmt.Print("\033[93mDo you want to enable/edit \033[96mRathole \033[92mreset time\033[93m? (\033[92myes\033[93m/\033[91mno\033[93m): \033[0m")
 	enableReset := readInputs(reader)
 
 	if enableReset == "yes" || enableReset == "y" {
@@ -194,8 +195,8 @@ func enableResetIran() {
 	displayNotification("\033[93mQuestion time !\033[0m")
 	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
 
-	reader := bufio.NewReader(os.Stdin)  
-	fmt.Print("\033[93mDo you want to enable/ \033[96mRathole \033[92mreset time\033[93m? (\033[92myes\033[93m/\033[91mno\033[93m): \033[0m")
+	reader := bufio.NewReader(os.Stdin)
+	fmt.Print("\033[93mDo you want to enable/edit \033[96mRathole \033[92mreset time\033[93m? (\033[92myes\033[93m/\033[91mno\033[93m): \033[0m")
 	enableReset := readInputs(reader)
 
 	if enableReset == "yes" || enableReset == "y" {
@@ -373,19 +374,19 @@ func displayCheckmark(message string) {
 }
 
 func displayLoading() {
-    frames := []string{"⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"}
-    delay := 100 * time.Millisecond
-    duration := 5 * time.Second
+	frames := []string{"⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"}
+	delay := 100 * time.Millisecond
+	duration := 5 * time.Second
 
-    endTime := time.Now().Add(duration)
+	endTime := time.Now().Add(duration)
 
-    for time.Now().Before(endTime) {
-        for _, frame := range frames {
-            fmt.Printf("\r[%s] Loading... ", frame)
-            time.Sleep(delay)
-        }
-    }
-    fmt.Println()
+	for time.Now().Before(endTime) {
+		for _, frame := range frames {
+			fmt.Printf("\r[%s] Loading... ", frame)
+			time.Sleep(delay)
+		}
+	}
+	fmt.Println()
 }
 func displayLogo2() error {
 	cmd := exec.Command("bash", "-c", "/etc/./logo.sh")
@@ -409,24 +410,20 @@ func displayLogo() {
 \        // |__/ \     /\  |\  |:  __   \   /   /  \\  \  |    \    \|
  \"_____ / (_______)  (__\_|_) |__|  \___) (___/    \___) \___|\____\)
 `
-	
-    cyan := color.New(color.FgCyan, color.Bold).SprintFunc()
-    blue := color.New(color.FgBlue, color.Bold).SprintFunc()
-	green := color.New(color.FgHiGreen, color.Bold).SprintFunc()      
-    yellow := color.New(color.FgHiYellow, color.Bold).SprintFunc()   
-    red := color.New(color.FgHiRed, color.Bold).SprintFunc()        
 
+	cyan := color.New(color.FgCyan, color.Bold).SprintFunc()
+	blue := color.New(color.FgBlue, color.Bold).SprintFunc()
+	green := color.New(color.FgHiGreen, color.Bold).SprintFunc()
+	yellow := color.New(color.FgHiYellow, color.Bold).SprintFunc()
+	red := color.New(color.FgHiRed, color.Bold).SprintFunc()
 
-	
-
-	    logo = cyan("  ______   ") + blue(" _______  ") + green("  __    ") + yellow("   ______   ") + red("     __      ") + cyan("  _____  ___  \n") +
+	logo = cyan("  ______   ") + blue(" _______  ") + green("  __    ") + yellow("   ______   ") + red("     __      ") + cyan("  _____  ___  \n") +
 		cyan(" /     \" \\  ") + blue("|   __ \" ") + green(" |\" \\  ") + yellow("   /\"     \\   ") + red("   /\"\"\\     ") + cyan(" (\\\"   \\|\"  \\ \n") +
-		cyan("//  ____  \\ ")  + blue("(. |__) :)") + green("||  |  ") + yellow(" |:       |  ") + red("  /    \\   ") + cyan("  |.\\\\   \\   |\n") +
+		cyan("//  ____  \\ ") + blue("(. |__) :)") + green("||  |  ") + yellow(" |:       |  ") + red("  /    \\   ") + cyan("  |.\\\\   \\   |\n") +
 		cyan("/  /    ) :)") + blue("|:  ____/ ") + green("|:  |  ") + yellow(" |_____/  )  ") + red(" /' /\\  \\   ") + cyan(" |: \\.   \\\\ |\n") +
 		cyan("(: (____/ / ") + blue("(|  /     ") + green("|.  | ") + yellow("  //      /  ") + red("//   __'  \\  ") + cyan(" |.  \\    \\ |\n") +
-		cyan("\\        / ") + blue("/|__/ \\   ") + green(" /\\  |\\ ") + yellow(" |:  __  \\ ") + red(" /   /  \\\\   ") + cyan ("  |    \\    \\|\n") +
+		cyan("\\        / ") + blue("/|__/ \\   ") + green(" /\\  |\\ ") + yellow(" |:  __  \\ ") + red(" /   /  \\\\   ") + cyan("  |    \\    \\|\n") +
 		cyan(" \"_____ / ") + blue("(_______)") + green("  (__\\_|_)") + yellow(" (__) \\___)") + red("(___/    \\___)") + cyan(" \\___|\\____\\)\n")
-
 
 	fmt.Println(logo)
 }
@@ -528,7 +525,6 @@ func mainMenu() {
 		prompt := &survey.Select{
 			Message: "Enter your choice Please:",
 			Options: []string{"1. \033[92mInstall Binary \033[93m[Ubuntu 22/24 - Debian 12]\033[0m", "2. \033[96m[5]IRAN [1]KHAREJ \033[0m", "3. \033[93m[1]IRAN [10]KHAREJ \033[0m", "q. Exit"},
-			
 		}
 		fmt.Println("\033[93m╰─────────────────────────────────────────────────────────────────────╯\033[0m")
 
@@ -551,7 +547,6 @@ func mainMenu() {
 			fmt.Println("Invalid choice.")
 		}
 
-		
 		readInput()
 	}
 }
@@ -565,10 +560,8 @@ func kharej10Menu() {
 
 	prompt := &survey.Select{
 		Message: "Enter your choice Please:",
-		Options: []string{"0. \033[91mSTATUS Menu\033[0m", "+. \033[93mEdit \033[92mResetTimer\033[0m", "1. \033[92mStop | Restart Service\033[0m", "2. \033[96mIPV4 \033[92mTCP \033[0m", "3. \033[93mIPV4 \033[92mUDP\033[0m", "4. \033[96mIPV6 \033[92mTCP\033[0m", "5. \033[93mIPV6 \033[92mUDP\033[0m", "6. \033[96mNoise TLS \033[92mIPV4\033[0m", "7. \033[93mNoise TLS \033[92mIPV6\033[0m", "8. \033[96mIPV4 \033[92mWs + TLS\033[0m", "9. \033[93mIPV6 \033[92mWs + TLS\033[0m", "10. \033[91mUninstall\033[0m",  "q. back to the previous menu"},
-			
+		Options: []string{"0. \033[91mSTATUS Menu\033[0m", "+. \033[93mEdit \033[92mResetTimer\033[0m", "1. \033[92mStop | Restart Service\033[0m", "2. \033[96mIPV4 \033[92mTCP \033[0m", "3. \033[93mIPV4 \033[92mUDP\033[0m", "4. \033[96mIPV6 \033[92mTCP\033[0m", "5. \033[93mIPV6 \033[92mUDP\033[0m", "6. \033[96mNoise TLS \033[92mIPV4\033[0m", "7. \033[93mNoise TLS \033[92mIPV6\033[0m", "8. \033[96mIPV4 \033[92mWs + TLS\033[0m", "9. \033[93mIPV6 \033[92mWs + TLS\033[0m", "10. \033[91mUninstall\033[0m", "q. back to the previous menu"},
 	}
-	
 
 	var choice string
 	err := survey.AskOne(prompt, &choice)
@@ -606,7 +599,6 @@ func kharej10Menu() {
 		fmt.Println("Invalid choice.")
 	}
 
-		
 	readInput()
 }
 func status2() {
@@ -621,7 +613,7 @@ func status2() {
 		Message: "Enter your choice Please:",
 		Options: []string{"1. \033[92mTCP | UDP \033[0m", "0. \033[94mBack to the previous menu\033[0m"},
 	}
-	
+
 	var choice string
 	err := survey.AskOne(prompt, &choice)
 	if err != nil {
@@ -661,7 +653,7 @@ func tcpStatus2() {
 		services = append(services, serviceName)
 	}
 
-	services = append(services, "iran-azumi") 
+	services = append(services, "iran-azumi")
 
 	fmt.Println("\033[93m            ╔════════════════════════════════════════════╗\033[0m")
 	fmt.Println("\033[93m            ║               \033[92mReverse Status\033[93m               ║\033[0m")
@@ -700,7 +692,7 @@ func UniMenu2() {
 		Message: "Enter your choice Please:",
 		Options: []string{"1. \033[92mTCP | UDP \033[0m", "0. \033[94mBack to the previous menu\033[0m"},
 	}
-		
+
 	var choice string
 	err := survey.AskOne(prompt, &choice)
 	if err != nil {
@@ -720,8 +712,8 @@ func UniMenu2() {
 	readInput()
 }
 func removews2() {
-    fmt.Println("\033[93m───────────────────────────────────────\033[0m")
-    displayNotification("\033[93mRemoving Config ..\033[0m")
+	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+	displayNotification("\033[93mRemoving Config ..\033[0m")
 	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
 	deleteCron()
 	deleteCron2()
@@ -756,7 +748,6 @@ func removews2() {
 	}
 
 	azumiServices := make([]string, 0)
-
 	for i := 1; i <= iranServerNumber; i++ {
 		serviceName := fmt.Sprintf("kharej-azumi%d", i)
 		azumiServices = append(azumiServices, serviceName)
@@ -767,6 +758,22 @@ func removews2() {
 		hideCmd("systemctl", "stop", serviceName+".service")
 		hideCmd("rm", "/etc/systemd/system/"+serviceName+".service")
 	}
+
+	ratResetServices := make([]string, 0)
+	for i := 1; i <= iranServerNumber; i++ {
+		ratResetName := fmt.Sprintf("rat_reset%d", i)
+		ratResetServices = append(ratResetServices, ratResetName)
+	}
+
+	for _, ratResetName := range ratResetServices {
+		hideCmd("systemctl", "disable", ratResetName+".service")
+		hideCmd("systemctl", "stop", ratResetName+".service")
+		hideCmd("rm", "/etc/systemd/system/"+ratResetName+".service")
+	}
+
+	hideCmd("systemctl", "disable", "iran-azumi.service")
+	hideCmd("systemctl", "stop", "iran-azumi.service")
+	hideCmd("rm", "/etc/systemd/system/iran-azumi.service")
 
 	runCmd("systemctl", "daemon-reload")
 
@@ -798,9 +805,9 @@ func cronMenu() {
 
 	prompt := &survey.Select{
 		Message: "Enter your choice Please:",
-		Options: []string{"1. \033[92mHours\033[0m", "2. \033[93mMinutes\033[0m", "0. \033[94mBack to the main menu\033[0m"},
+		Options: []string{"1. \033[92m[1]IRAN [10]Kharej\033[0m", "2. \033[93m[5]IRAN [1]Kharej\033[0m", "0. \033[94mBack to the main menu\033[0m"},
 	}
-    
+
 	var choice string
 	err := survey.AskOne(prompt, &choice)
 	if err != nil {
@@ -808,12 +815,12 @@ func cronMenu() {
 	}
 
 	switch choice {
-	case "1. \033[92mHours\033[0m":
-		resHourz()
-	case "2. \033[93mMinutes\033[0m":
-		resMins()
+	case "1. \033[92m[1]IRAN [10]Kharej\033[0m":
+		oneiran10kharej()
+	case "2. \033[93m[5]IRAN [1]Kharej\033[0m":
+		fiveiran1kharej()
 	case "0. \033[94mBack to the main menu\033[0m":
-	    clearScreen()
+		clearScreen()
 		mainMenu()
 	default:
 		fmt.Println("\033[91mInvalid choice\033[0m")
@@ -821,10 +828,77 @@ func cronMenu() {
 
 	readInput()
 }
+func fiveiran1kharej() {
+	clearScreen()
+	fmt.Println("\033[92m ^ ^\033[0m")
+	fmt.Println("\033[92m(\033[91mO,O\033[92m)\033[0m")
+	fmt.Println("\033[92m(   ) \033[93m Reset \033[92mTimer \033[93mMenu\033[0m ")
+	fmt.Println("\033[92m \"-\" \033[93m════════════════════════════════════\033[0m")
+	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+
+	prompt := &survey.Select{
+		Message: "Enter your choice Please:",
+		Options: []string{"1. \033[92mIRAN\033[0m", "2. \033[93mKharej\033[0m", "0. \033[94mBack to the main menu\033[0m"},
+	}
+
+	var choice string
+	err := survey.AskOne(prompt, &choice)
+	if err != nil {
+		log.Fatalf("\033[91mCan't read user input, sry!:\033[0m %v", err)
+	}
+
+	switch choice {
+	case "1. \033[92mIRAN\033[0m":
+		enableResetIran()
+	case "2. \033[93mKharej\033[0m":
+		enableResetKharej1()
+	case "0. \033[94mBack to the main menu\033[0m":
+		clearScreen()
+		cronMenu()
+	default:
+		fmt.Println("\033[91mInvalid choice\033[0m")
+	}
+	readInput()
+}
+
+func oneiran10kharej() {
+	clearScreen()
+	fmt.Println("\033[92m ^ ^\033[0m")
+	fmt.Println("\033[92m(\033[91mO,O\033[92m)\033[0m")
+	fmt.Println("\033[92m(   ) \033[93m Reset \033[92mTimer \033[93mMenu\033[0m ")
+	fmt.Println("\033[92m \"-\" \033[93m════════════════════════════════════\033[0m")
+	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+
+	prompt := &survey.Select{
+		Message: "Enter your choice Please:",
+		Options: []string{"1. \033[92mIRAN\033[0m", "2. \033[93mKharej\033[0m", "0. \033[94mBack to the main menu\033[0m"},
+	}
+
+	var choice string
+	err := survey.AskOne(prompt, &choice)
+	if err != nil {
+		log.Fatalf("\033[91mCan't read user input, sry!:\033[0m %v", err)
+	}
+
+	switch choice {
+	case "1. \033[92mIRAN\033[0m":
+		enableResetIran()
+	case "2. \033[93mKharej\033[0m":
+		enableResetKharej()
+	case "0. \033[94mBack to the main menu\033[0m":
+		clearScreen()
+		cronMenu()
+	default:
+		fmt.Println("\033[91mInvalid choice\033[0m")
+	}
+
+	readInput()
+}
+
 func resHourz() {
 	deleteCron()
 	deleteCron2()
-    
+
 	fmt.Println("╭──────────────────────────────────────╮")
 	reader := bufio.NewReader(os.Stdin)
 	fmt.Print("\033[93mEnter \033[92mReset timer\033[93m (hours):\033[0m ")
@@ -959,7 +1033,7 @@ func noise4Menu() {
 		Message: "Enter your choice Please:",
 		Options: []string{"1. \033[92mIRAN\033[0m", "2. \033[93mKHAREJ\033[92m[1]\033[0m", "3. \033[93mKHAREJ\033[92m[2]\033[0m", "4. \033[93mKHAREJ\033[92m[3]\033[0m", "5. \033[93mKHAREJ\033[92m[4]\033[0m", "6. \033[93mKHAREJ\033[92m[5]\033[0m", "7. \033[93mKHAREJ\033[92m[6]\033[0m", "8. \033[93mKHAREJ\033[92m[7]\033[0m", "9. \033[93mKHAREJ\033[92m[8]\033[0m", "10. \033[93mKHAREJ\033[92m[9]\033[0m", "11. \033[93mKHAREJ\033[92m[10]\033[0m", "0. \033[94mBack to the main menu\033[0m"},
 	}
-    
+
 	var choice string
 	err := survey.AskOne(prompt, &choice)
 	if err != nil {
@@ -973,14 +1047,14 @@ func noise4Menu() {
 		kharejno4()
 	case "3. \033[93mKHAREJ\033[92m[2]\033[0m":
 		kharej2no4()
-    case "4. \033[93mKHAREJ\033[92m[3]\033[0m":
+	case "4. \033[93mKHAREJ\033[92m[3]\033[0m":
 		kharej2no4()
 	case "5. \033[93mKHAREJ\033[92m[4]\033[0m":
 		kharej2no4()
 	case "6. \033[93mKHAREJ\033[92m[5]\033[0m":
 		kharej2no4()
 	case "0. \033[94mBack to the main menu\033[0m":
-	    clearScreen()
+		clearScreen()
 		mainMenu()
 	default:
 		fmt.Println("\033[91mInvalid choice\033[0m")
@@ -988,7 +1062,6 @@ func noise4Menu() {
 
 	readInput()
 }
-
 
 func iranno4() {
 	clearScreen()
@@ -1038,20 +1111,20 @@ func iranno4() {
 		fmt.Println("\033[91mCouldn't start the command:\033[0m", err)
 		return
 	}
-    fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
 	scannerOutput := bufio.NewScanner(outputPipe)
 	go func() {
 		for scannerOutput.Scan() {
 			fmt.Println(scannerOutput.Text())
 		}
 	}()
-    
+
 	err = cmd.Wait()
 	if err != nil {
 		fmt.Println("\033[91mThere was sth wrong generating keys with rathole:\033[0m", err)
 		return
 	}
-    fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
 	fmt.Print("\033[93mEnter the \033[92mPrivate Key: \033[0m")
 	scanner.Scan()
 	privateK := scanner.Text()
@@ -1156,10 +1229,6 @@ WantedBy=multi-user.target`
 	displayCheckmark("\033[92mService created successfully!\033[0m")
 }
 
-
-
-
-
 func kharejno4() {
 	clearScreen()
 	fmt.Println("\033[92m ^ ^\033[0m")
@@ -1210,12 +1279,11 @@ func kharejno4() {
 		kharejPorts[i] = scanner.Text()
 	}
 
+	fmt.Print("\033[93mEnter \033[92mIRAN Public Key:\033[0m ")
+	scanner.Scan()
+	iranPublicKey := scanner.Text()
 
-fmt.Print("\033[93mEnter \033[92mIRAN Public Key:\033[0m ")
-scanner.Scan()
-iranPublicKey := scanner.Text()
-
-client := fmt.Sprintf(`[client]
+	client := fmt.Sprintf(`[client]
 remote_addr = "%s:%s"
 default_token = "%s"
 
@@ -1297,7 +1365,7 @@ WantedBy=multi-user.target`
 		fmt.Println("\033[91merror enablin da service:\033[0m", err)
 		return
 	}
-	
+
 	cmd = exec.Command("systemctl", "enable", "kharej-azumi")
 	err = cmd.Run()
 	if err != nil {
@@ -1367,11 +1435,11 @@ func kharej2no4() {
 		kharejPorts[i] = scanner.Text()
 	}
 
-fmt.Print("\033[93mEnter \033[92mIRAN Public Key:\033[0m ")
-scanner.Scan()
-iranPublicKey := scanner.Text()
+	fmt.Print("\033[93mEnter \033[92mIRAN Public Key:\033[0m ")
+	scanner.Scan()
+	iranPublicKey := scanner.Text()
 
-client := fmt.Sprintf(`[client]
+	client := fmt.Sprintf(`[client]
 remote_addr = "%s:%s"
 default_token = "%s"
 
@@ -1447,14 +1515,13 @@ WantedBy=multi-user.target`
 		return
 	}
 
-	
 	cmd = exec.Command("sudo", "chmod", "u+x", "/etc/systemd/system/kharej-azumi.service")
 	err = cmd.Run()
 	if err != nil {
 		fmt.Println("\033[91merror enablin da service:\033[0m", err)
 		return
 	}
-	
+
 	cmd = exec.Command("systemctl", "enable", "kharej-azumi")
 	err = cmd.Run()
 	if err != nil {
@@ -1471,11 +1538,11 @@ WantedBy=multi-user.target`
 	enableResetKharej()
 	displayCheckmark("\033[92mService created successfully!\033[0m")
 	if numConfigs == 1 {
-	    fmt.Println("╭─────────────────────────────────────────────╮")
+		fmt.Println("╭─────────────────────────────────────────────╮")
 		fmt.Printf("\033[92m  Starting number for the next server:\033[96m %d\n\033[0m", startingNumber+1)
 		fmt.Println("╰─────────────────────────────────────────────╯")
 	} else {
-	    fmt.Println("╭─────────────────────────────────────────────╮")
+		fmt.Println("╭─────────────────────────────────────────────╮")
 		fmt.Printf("\033[92m  Starting number for the next server:\033[96m %d\n\033[0m", numConfigs+startingNumber)
 		fmt.Println("╰─────────────────────────────────────────────╯")
 	}
@@ -1492,7 +1559,7 @@ func noise6Menu() {
 		Message: "Enter your choice Please:",
 		Options: []string{"1. \033[92mIRAN\033[0m", "2. \033[93mKHAREJ\033[92m[1]\033[0m", "3. \033[93mKHAREJ\033[92m[2]\033[0m", "4. \033[93mKHAREJ\033[92m[3]\033[0m", "5. \033[93mKHAREJ\033[92m[4]\033[0m", "6. \033[93mKHAREJ\033[92m[5]\033[0m", "7. \033[93mKHAREJ\033[92m[6]\033[0m", "8. \033[93mKHAREJ\033[92m[7]\033[0m", "9. \033[93mKHAREJ\033[92m[8]\033[0m", "10. \033[93mKHAREJ\033[92m[9]\033[0m", "11. \033[93mKHAREJ\033[92m[10]\033[0m", "0. \033[94mBack to the main menu\033[0m"},
 	}
-    
+
 	var choice string
 	err := survey.AskOne(prompt, &choice)
 	if err != nil {
@@ -1506,14 +1573,14 @@ func noise6Menu() {
 		kharejno6()
 	case "3. \033[93mKHAREJ\033[92m[2]\033[0m":
 		kharej2no6()
-    case "4. \033[93mKHAREJ\033[92m[3]\033[0m":
+	case "4. \033[93mKHAREJ\033[92m[3]\033[0m":
 		kharej2no6()
 	case "5. \033[93mKHAREJ\033[92m[4]\033[0m":
 		kharej2no6()
 	case "6. \033[93mKHAREJ\033[92m[5]\033[0m":
 		kharej2no6()
 	case "0. \033[94mBack to the main menu\033[0m":
-	    clearScreen()
+		clearScreen()
 		mainMenu()
 	default:
 		fmt.Println("\033[91mInvalid choice\033[0m")
@@ -1521,7 +1588,6 @@ func noise6Menu() {
 
 	readInput()
 }
-
 
 func iranno6() {
 	clearScreen()
@@ -1571,7 +1637,7 @@ func iranno6() {
 		fmt.Println("\033[91mCouldn't start the command:\033[0m", err)
 		return
 	}
-    fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
 	scannerOutput := bufio.NewScanner(outputPipe)
 	go func() {
 		for scannerOutput.Scan() {
@@ -1583,7 +1649,7 @@ func iranno6() {
 		fmt.Println("\033[91mThere was sth wrong generating keys with rathole:\033[0m", err)
 		return
 	}
-    fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
 	fmt.Print("\033[93mEnter the \033[92mPrivate Key: \033[0m")
 	scanner.Scan()
 	privateK := scanner.Text()
@@ -1688,8 +1754,6 @@ WantedBy=multi-user.target`
 	displayCheckmark("\033[92mService created successfully!\033[0m")
 }
 
-
-
 func kharejno6() {
 	clearScreen()
 	fmt.Println("\033[92m ^ ^\033[0m")
@@ -1740,12 +1804,11 @@ func kharejno6() {
 		kharejPorts[i] = scanner.Text()
 	}
 
+	fmt.Print("\033[93mEnter \033[92mIRAN Public Key:\033[0m ")
+	scanner.Scan()
+	iranPublicKey := scanner.Text()
 
-fmt.Print("\033[93mEnter \033[92mIRAN Public Key:\033[0m ")
-scanner.Scan()
-iranPublicKey := scanner.Text()
-
-client := fmt.Sprintf(`[client]
+	client := fmt.Sprintf(`[client]
 remote_addr = "[%s]:%s"
 default_token = "%s"
 
@@ -1827,7 +1890,7 @@ WantedBy=multi-user.target`
 		fmt.Println("\033[91merror enablin da service:\033[0m", err)
 		return
 	}
-	
+
 	cmd = exec.Command("systemctl", "enable", "kharej-azumi")
 	err = cmd.Run()
 	if err != nil {
@@ -1897,11 +1960,11 @@ func kharej2no6() {
 		kharejPorts[i] = scanner.Text()
 	}
 
-fmt.Print("\033[93mEnter \033[92mIRAN Public Key:\033[0m ")
-scanner.Scan()
-iranPublicKey := scanner.Text()
+	fmt.Print("\033[93mEnter \033[92mIRAN Public Key:\033[0m ")
+	scanner.Scan()
+	iranPublicKey := scanner.Text()
 
-client := fmt.Sprintf(`[client]
+	client := fmt.Sprintf(`[client]
 remote_addr = "[%s]:%s"
 default_token = "%s"
 
@@ -1977,14 +2040,13 @@ WantedBy=multi-user.target`
 		return
 	}
 
-	
 	cmd = exec.Command("sudo", "chmod", "u+x", "/etc/systemd/system/kharej-azumi.service")
 	err = cmd.Run()
 	if err != nil {
 		fmt.Println("\033[91merror enablin da service:\033[0m", err)
 		return
 	}
-	
+
 	cmd = exec.Command("systemctl", "enable", "kharej-azumi")
 	err = cmd.Run()
 	if err != nil {
@@ -2001,23 +2063,36 @@ WantedBy=multi-user.target`
 	enableResetKharej()
 	displayCheckmark("\033[92mService created successfully!\033[0m")
 	if numConfigs == 1 {
-	    fmt.Println("╭─────────────────────────────────────────────╮")
+		fmt.Println("╭─────────────────────────────────────────────╮")
 		fmt.Printf("\033[92m  Starting number for the next server:\033[96m %d\n\033[0m", startingNumber+1)
 		fmt.Println("╰─────────────────────────────────────────────╯")
 	} else {
-	    fmt.Println("╭─────────────────────────────────────────────╮")
+		fmt.Println("╭─────────────────────────────────────────────╮")
 		fmt.Printf("\033[92m  Starting number for the next server:\033[96m %d\n\033[0m", numConfigs+startingNumber)
 		fmt.Println("╰─────────────────────────────────────────────╯")
 	}
 }
 func rmv() error {
-	file := "/etc/rat.sh"
-	if _, err := os.Stat(file); err == nil {
-		err := os.Remove(file)
-		if err != nil {
-			return fmt.Errorf("\033[91mbash file doesn't exists:\033[0m %v", err)
+	files := []string{
+		"/etc/rat.sh",
+		"/usr/local/bin/rat_daemon.sh",
+	}
+
+	for i := 1; i <= 5; i++ {
+		files = append(files, fmt.Sprintf("/etc/rat%d.sh", i))
+		files = append(files, fmt.Sprintf("/usr/local/bin/rat_daemon%d.sh", i))
+	}
+
+	for _, file := range files {
+		if _, err := os.Stat(file); err == nil {
+			err := os.Remove(file)
+			if err != nil {
+				return fmt.Errorf("\033[91mError removing file %s:\033[0m %v", file, err)
+			}
+			fmt.Printf("\033[92mFile removed successfully!\033[0m\n", file)
+		} else {
+			fmt.Printf("\033[93mFile does not exist, skipping.\033[0m\n", file)
 		}
-		fmt.Println("\033[92mbash file removed successfully!\033[0m")
 	}
 	return nil
 }
@@ -2102,8 +2177,8 @@ func deleteCron2() {
 		cmd.Stdin = strings.NewReader(newCrontab)
 
 		_, err = cmd.CombinedOutput()
-        if err != nil {
-            fmt.Printf("\033[91mfailed to delete some cron entries. don't worry about it \033[0m\n")
+		if err != nil {
+			fmt.Printf("\033[91mfailed to delete some cron entries. don't worry about it \033[0m\n")
 		} else {
 			displayNotification("\033[92mDeleting Previous Crons..\033[0m")
 		}
@@ -2156,8 +2231,8 @@ func deleteCron() {
 		cmd.Stdin = strings.NewReader(newCrontab)
 
 		_, err = cmd.CombinedOutput()
-        if err != nil {
-            fmt.Printf("\033[91mfailed to delete some cron entries. don't worry about it \033[0m\n")
+		if err != nil {
+			fmt.Printf("\033[91mfailed to delete some cron entries. don't worry about it \033[0m\n")
 		} else {
 			displayNotification("\033[92mDeleting Previous Crons..\033[0m")
 		}
@@ -2247,8 +2322,8 @@ func deleteCron4() {
 		cmd.Stdin = strings.NewReader(newCrontab)
 
 		_, err = cmd.CombinedOutput()
-        if err != nil {
-            fmt.Printf("\033[91mfailed to delete some cron entries. don't worry about it \033[0m\n")
+		if err != nil {
+			fmt.Printf("\033[91mfailed to delete some cron entries. don't worry about it \033[0m\n")
 		} else {
 			displayNotification("\033[92mDeleting Previous Crons..\033[0m")
 		}
@@ -2301,8 +2376,8 @@ func deleteCron3() {
 		cmd.Stdin = strings.NewReader(newCrontab)
 
 		_, err = cmd.CombinedOutput()
-        if err != nil {
-            fmt.Printf("\033[91mfailed to delete some cron entries. don't worry about it \033[0m\n")
+		if err != nil {
+			fmt.Printf("\033[91mfailed to delete some cron entries. don't worry about it \033[0m\n")
 		} else {
 			displayNotification("\033[92mDeleting Previous Crons..\033[0m")
 		}
@@ -2491,7 +2566,7 @@ func startMain() {
 		Message: "Enter your choice Please:",
 		Options: []string{"1. \033[92mRestart\033[0m", "2. \033[93mStop \033[0m", "0. \033[94mBack to the main menu\033[0m"},
 	}
-    
+
 	var choice string
 	err := survey.AskOne(prompt, &choice)
 	if err != nil {
@@ -2504,7 +2579,7 @@ func startMain() {
 	case "2. \033[93mStop \033[0m":
 		stop()
 	case "0. \033[94mBack to the main menu\033[0m":
-	    clearScreen()
+		clearScreen()
 		mainMenu()
 	default:
 		fmt.Println("\033[91mInvalid choice\033[0m")
@@ -2524,7 +2599,7 @@ func start() {
 		Message: "Enter your choice Please:",
 		Options: []string{"1. \033[92mTCP | UDP | Noise\033[0m", "2. \033[93mWS +TLS \033[0m", "0. \033[94mBack to the previous menu\033[0m"},
 	}
-    
+
 	var choice string
 	err := survey.AskOne(prompt, &choice)
 	if err != nil {
@@ -2537,7 +2612,7 @@ func start() {
 	case "2. \033[93mWS +TLS \033[0m":
 		restarttcp()
 	case "0. \033[94mBack to the previous menu\033[0m":
-	    clearScreen()
+		clearScreen()
 		startMain()
 	default:
 		fmt.Println("\033[91mInvalid choice\033[0m")
@@ -2591,7 +2666,7 @@ func stop() {
 		Message: "Enter your choice Please:",
 		Options: []string{"1. \033[92mTCP | UDP | Noise\033[0m", "2. \033[93mWS +TLS \033[0m", "0. \033[94mBack to the previous menu\033[0m"},
 	}
-    
+
 	var choice string
 	err := survey.AskOne(prompt, &choice)
 	if err != nil {
@@ -2604,7 +2679,7 @@ func stop() {
 	case "2. \033[93mWS +TLS \033[0m":
 		stoptcp()
 	case "0. \033[94mBack to the previous menu\033[0m":
-	    clearScreen()
+		clearScreen()
 		startMain()
 	default:
 		fmt.Println("\033[91mInvalid choice\033[0m")
@@ -2658,7 +2733,7 @@ func status() {
 		Message: "Enter your choice Please:",
 		Options: []string{"1. \033[92mTCP | UDP | Noise\033[0m", "2. \033[93mWS + TLS \033[0m", "0. \033[94mBack to the main menu\033[0m"},
 	}
-    
+
 	var choice string
 	err := survey.AskOne(prompt, &choice)
 	if err != nil {
@@ -2671,7 +2746,7 @@ func status() {
 	case "2. \033[93mWS + TLS \033[0m":
 		tcpStatus()
 	case "0. \033[94mBack to the main menu\033[0m":
-	    clearScreen()
+		clearScreen()
 		mainMenu()
 	default:
 		fmt.Println("\033[91mInvalid choice\033[0m")
@@ -2721,7 +2796,7 @@ func UniMenu() {
 		Message: "Enter your choice Please:",
 		Options: []string{"1. \033[92mTCP | UDP | Noise\033[0m", "2. \033[93mWS + TLS \033[0m", "0. \033[94mBack to the main menu\033[0m"},
 	}
-    
+
 	var choice string
 	err := survey.AskOne(prompt, &choice)
 	if err != nil {
@@ -2734,7 +2809,7 @@ func UniMenu() {
 	case "2. \033[93mWS + TLS \033[0m":
 		removews()
 	case "0. \033[94mBack to the main menu\033[0m":
-	    clearScreen()
+		clearScreen()
 		mainMenu()
 	default:
 		fmt.Println("\033[91mInvalid choice\033[0m")
@@ -2769,7 +2844,7 @@ func removews() {
 	}
 
 	azumiServices := []string{
-		"iran-azumi", "kharej-azumi",
+		"iran-azumi", "kharej-azumi", "rat_reset", "rat_reset1", "rat_reset2", "rat_reset3", "rat_reset4", "rat_reset5",
 	}
 
 	for _, serviceName := range azumiServices {
@@ -2829,7 +2904,7 @@ func tcp4Menu() {
 		Message: "Enter your choice Please:",
 		Options: []string{"1. \033[92mIRAN\033[0m", "2. \033[93mKHAREJ\033[92m[1]\033[0m", "3. \033[93mKHAREJ\033[92m[2]\033[0m", "4. \033[93mKHAREJ\033[92m[3]\033[0m", "5. \033[93mKHAREJ\033[92m[4]\033[0m", "6. \033[93mKHAREJ\033[92m[5]\033[0m", "7. \033[93mKHAREJ\033[92m[6]\033[0m", "8. \033[93mKHAREJ\033[92m[7]\033[0m", "9. \033[93mKHAREJ\033[92m[8]\033[0m", "10. \033[93mKHAREJ\033[92m[9]\033[0m", "11. \033[93mKHAREJ\033[92m[10]\033[0m", "0. \033[94mBack to the main menu\033[0m"},
 	}
-    
+
 	var choice string
 	err := survey.AskOne(prompt, &choice)
 	if err != nil {
@@ -2843,7 +2918,7 @@ func tcp4Menu() {
 		kharejTcp4()
 	case "3. \033[93mKHAREJ\033[92m[2]\033[0m":
 		kharej2Tcp4()
-    case "4. \033[93mKHAREJ\033[92m[3]\033[0m":
+	case "4. \033[93mKHAREJ\033[92m[3]\033[0m":
 		kharej2Tcp4()
 	case "5. \033[93mKHAREJ\033[92m[4]\033[0m":
 		kharej2Tcp4()
@@ -2860,7 +2935,7 @@ func tcp4Menu() {
 	case "11. \033[93mKHAREJ\033[92m[10]\033[0m":
 		kharej2Tcp4()
 	case "0. \033[94mBack to the main menu\033[0m":
-	    clearScreen()
+		clearScreen()
 		mainMenu()
 	default:
 		fmt.Println("\033[91mInvalid choice\033[0m")
@@ -3012,7 +3087,7 @@ WantedBy=multi-user.target`
 		fmt.Println("\033[91merror restarting da service:\033[0m", err)
 		return
 	}
-    enableResetIran()
+	enableResetIran()
 	displayCheckmark("\033[92mService created successfully!\033[0m")
 }
 func kharejTcp4() {
@@ -3342,11 +3417,11 @@ WantedBy=multi-user.target`
 	enableResetKharej()
 	displayCheckmark("\033[92mService created successfully!\033[0m")
 	if numConfigs == 1 {
-	    fmt.Println("╭─────────────────────────────────────────────╮")
+		fmt.Println("╭─────────────────────────────────────────────╮")
 		fmt.Printf("\033[92m  Starting number for the next server:\033[96m %d\n\033[0m", startingNumber+1)
 		fmt.Println("╰─────────────────────────────────────────────╯")
 	} else {
-	    fmt.Println("╭─────────────────────────────────────────────╮")
+		fmt.Println("╭─────────────────────────────────────────────╮")
 		fmt.Printf("\033[92m  Starting number for the next server:\033[96m %d\n\033[0m", numConfigs+startingNumber)
 		fmt.Println("╰─────────────────────────────────────────────╯")
 	}
@@ -3363,7 +3438,7 @@ func udp4Menu() {
 		Message: "Enter your choice Please:",
 		Options: []string{"1. \033[92mIRAN\033[0m", "2. \033[93mKHAREJ\033[92m[1]\033[0m", "3. \033[93mKHAREJ\033[92m[2]\033[0m", "4. \033[93mKHAREJ\033[92m[3]\033[0m", "5. \033[93mKHAREJ\033[92m[4]\033[0m", "6. \033[93mKHAREJ\033[92m[5]\033[0m", "7. \033[93mKHAREJ\033[92m[6]\033[0m", "8. \033[93mKHAREJ\033[92m[7]\033[0m", "9. \033[93mKHAREJ\033[92m[8]\033[0m", "10. \033[93mKHAREJ\033[92m[9]\033[0m", "11. \033[93mKHAREJ\033[92m[10]\033[0m", "0. \033[94mBack to the main menu\033[0m"},
 	}
-    
+
 	var choice string
 	err := survey.AskOne(prompt, &choice)
 	if err != nil {
@@ -3377,7 +3452,7 @@ func udp4Menu() {
 		kharejUdp4()
 	case "3. \033[93mKHAREJ\033[92m[2]\033[0m":
 		kharej2Udp4()
-    case "4. \033[93mKHAREJ\033[92m[3]\033[0m":
+	case "4. \033[93mKHAREJ\033[92m[3]\033[0m":
 		kharej2Udp4()
 	case "5. \033[93mKHAREJ\033[92m[4]\033[0m":
 		kharej2Udp4()
@@ -3394,7 +3469,7 @@ func udp4Menu() {
 	case "11. \033[93mKHAREJ\033[92m[10]\033[0m":
 		kharej2Udp4()
 	case "0. \033[94mBack to the main menu\033[0m":
-	    clearScreen()
+		clearScreen()
 		mainMenu()
 	default:
 		fmt.Println("\033[91mInvalid choice\033[0m")
@@ -3438,7 +3513,6 @@ func iranUdp4() {
 		scanner.Scan()
 		kharejPorts[i] = scanner.Text()
 	}
-
 
 	server := fmt.Sprintf(`[server]
 bind_addr = "0.0.0.0:%s"
@@ -3532,7 +3606,7 @@ WantedBy=multi-user.target`
 		fmt.Println("\033[91merror restarting da service:\033[0m", err)
 		return
 	}
-    enableResetIran()
+	enableResetIran()
 	displayCheckmark("\033[92mService created successfully!\033[0m")
 }
 func kharejUdp4() {
@@ -3584,7 +3658,6 @@ func kharejUdp4() {
 		scanner.Scan()
 		kharejPorts[i] = scanner.Text()
 	}
-
 
 	client := fmt.Sprintf(`[client]
 remote_addr = "%s:%s"
@@ -3737,7 +3810,6 @@ func kharej2Udp4() {
 		kharejPorts[i] = scanner.Text()
 	}
 
-
 	client := fmt.Sprintf(`[client]
 remote_addr = "%s:%s"
 default_token = "%s"
@@ -3836,11 +3908,11 @@ WantedBy=multi-user.target`
 	enableResetKharej()
 	displayCheckmark("\033[92mService created successfully!\033[0m")
 	if numConfigs == 1 {
-	    fmt.Println("╭─────────────────────────────────────────────╮")
+		fmt.Println("╭─────────────────────────────────────────────╮")
 		fmt.Printf("\033[92m  Starting number for the next server:\033[96m %d\n\033[0m", startingNumber+1)
 		fmt.Println("╰─────────────────────────────────────────────╯")
 	} else {
-	    fmt.Println("╭─────────────────────────────────────────────╮")
+		fmt.Println("╭─────────────────────────────────────────────╮")
 		fmt.Printf("\033[92m  Starting number for the next server:\033[96m %d\n\033[0m", numConfigs+startingNumber)
 		fmt.Println("╰─────────────────────────────────────────────╯")
 	}
@@ -3857,7 +3929,7 @@ func tcp6Menu() {
 		Message: "Enter your choice Please:",
 		Options: []string{"1. \033[92mIRAN\033[0m", "2. \033[93mKHAREJ\033[92m[1]\033[0m", "3. \033[93mKHAREJ\033[92m[2]\033[0m", "4. \033[93mKHAREJ\033[92m[3]\033[0m", "5. \033[93mKHAREJ\033[92m[4]\033[0m", "6. \033[93mKHAREJ\033[92m[5]\033[0m", "7. \033[93mKHAREJ\033[92m[6]\033[0m", "8. \033[93mKHAREJ\033[92m[7]\033[0m", "9. \033[93mKHAREJ\033[92m[8]\033[0m", "10. \033[93mKHAREJ\033[92m[9]\033[0m", "11. \033[93mKHAREJ\033[92m[10]\033[0m", "0. \033[94mBack to the main menu\033[0m"},
 	}
-    
+
 	var choice string
 	err := survey.AskOne(prompt, &choice)
 	if err != nil {
@@ -3871,7 +3943,7 @@ func tcp6Menu() {
 		kharejTcp6()
 	case "3. \033[93mKHAREJ\033[92m[2]\033[0m":
 		kharej2Tcp6()
-    case "4. \033[93mKHAREJ\033[92m[3]\033[0m":
+	case "4. \033[93mKHAREJ\033[92m[3]\033[0m":
 		kharej2Tcp6()
 	case "5. \033[93mKHAREJ\033[92m[4]\033[0m":
 		kharej2Tcp6()
@@ -3888,7 +3960,7 @@ func tcp6Menu() {
 	case "11. \033[93mKHAREJ\033[92m[10]\033[0m":
 		kharej2Tcp6()
 	case "0. \033[94mBack to the main menu\033[0m":
-	    clearScreen()
+		clearScreen()
 		mainMenu()
 	default:
 		fmt.Println("\033[91mInvalid choice\033[0m")
@@ -4040,7 +4112,7 @@ WantedBy=multi-user.target`
 		fmt.Println("\033[91merror restarting da service:\033[0m", err)
 		return
 	}
-    enableResetIran()
+	enableResetIran()
 	displayCheckmark("\033[92mService created successfully!\033[0m")
 }
 func kharejTcp6() {
@@ -4369,11 +4441,11 @@ WantedBy=multi-user.target`
 	enableResetKharej()
 	displayCheckmark("\033[92mService created successfully!\033[0m")
 	if numConfigs == 1 {
-	    fmt.Println("╭─────────────────────────────────────────────╮")
+		fmt.Println("╭─────────────────────────────────────────────╮")
 		fmt.Printf("\033[92m  Starting number for the next server:\033[96m %d\n\033[0m", startingNumber+1)
 		fmt.Println("╰─────────────────────────────────────────────╯")
 	} else {
-	    fmt.Println("╭─────────────────────────────────────────────╮")
+		fmt.Println("╭─────────────────────────────────────────────╮")
 		fmt.Printf("\033[92m  Starting number for the next server:\033[96m %d\n\033[0m", numConfigs+startingNumber)
 		fmt.Println("╰─────────────────────────────────────────────╯")
 	}
@@ -4390,7 +4462,7 @@ func udp6Menu() {
 		Message: "Enter your choice Please:",
 		Options: []string{"1. \033[92mIRAN\033[0m", "2. \033[93mKHAREJ\033[92m[1]\033[0m", "3. \033[93mKHAREJ\033[92m[2]\033[0m", "4. \033[93mKHAREJ\033[92m[3]\033[0m", "5. \033[93mKHAREJ\033[92m[4]\033[0m", "6. \033[93mKHAREJ\033[92m[5]\033[0m", "7. \033[93mKHAREJ\033[92m[6]\033[0m", "8. \033[93mKHAREJ\033[92m[7]\033[0m", "9. \033[93mKHAREJ\033[92m[8]\033[0m", "10. \033[93mKHAREJ\033[92m[9]\033[0m", "11. \033[93mKHAREJ\033[92m[10]\033[0m", "0. \033[94mBack to the main menu\033[0m"},
 	}
-    
+
 	var choice string
 	err := survey.AskOne(prompt, &choice)
 	if err != nil {
@@ -4404,7 +4476,7 @@ func udp6Menu() {
 		kharejUdp6()
 	case "3. \033[93mKHAREJ\033[92m[2]\033[0m":
 		kharej2Udp6()
-    case "4. \033[93mKHAREJ\033[92m[3]\033[0m":
+	case "4. \033[93mKHAREJ\033[92m[3]\033[0m":
 		kharej2Udp6()
 	case "5. \033[93mKHAREJ\033[92m[4]\033[0m":
 		kharej2Udp6()
@@ -4421,7 +4493,7 @@ func udp6Menu() {
 	case "11. \033[93mKHAREJ\033[92m[10]\033[0m":
 		kharej2Udp6()
 	case "0. \033[94mBack to the main menu\033[0m":
-	    clearScreen()
+		clearScreen()
 		mainMenu()
 	default:
 		fmt.Println("\033[91mInvalid choice\033[0m")
@@ -4544,7 +4616,7 @@ WantedBy=multi-user.target`
 		fmt.Println("\033[91merror enablin da service:\033[0m", err)
 		return
 	}
-	
+
 	cmd = exec.Command("systemctl", "enable", "iran-azumi")
 	err = cmd.Run()
 	if err != nil {
@@ -4558,7 +4630,7 @@ WantedBy=multi-user.target`
 		fmt.Println("\033[91merror restarting da service:\033[0m", err)
 		return
 	}
-    enableResetIran()
+	enableResetIran()
 	displayCheckmark("\033[92mService created successfully!\033[0m")
 }
 func kharejUdp6() {
@@ -4691,7 +4763,7 @@ WantedBy=multi-user.target`
 		fmt.Println("\033[91merror enablin da service:\033[0m", err)
 		return
 	}
-	
+
 	cmd = exec.Command("systemctl", "enable", "kharej-azumi")
 	err = cmd.Run()
 	if err != nil {
@@ -4835,14 +4907,13 @@ WantedBy=multi-user.target`
 		return
 	}
 
-	
 	cmd = exec.Command("sudo", "chmod", "u+x", "/etc/systemd/system/kharej-azumi.service")
 	err = cmd.Run()
 	if err != nil {
 		fmt.Println("\033[91merror enablin da service:\033[0m", err)
 		return
 	}
-	
+
 	cmd = exec.Command("systemctl", "enable", "kharej-azumi")
 	err = cmd.Run()
 	if err != nil {
@@ -4859,11 +4930,11 @@ WantedBy=multi-user.target`
 	enableResetKharej()
 	displayCheckmark("\033[92mService created successfully!\033[0m")
 	if numConfigs == 1 {
-	    fmt.Println("╭─────────────────────────────────────────────╮")
+		fmt.Println("╭─────────────────────────────────────────────╮")
 		fmt.Printf("\033[92m  Starting number for the next server:\033[96m %d\n\033[0m", startingNumber+1)
 		fmt.Println("╰─────────────────────────────────────────────╯")
 	} else {
-	    fmt.Println("╭─────────────────────────────────────────────╮")
+		fmt.Println("╭─────────────────────────────────────────────╮")
 		fmt.Printf("\033[92m  Starting number for the next server:\033[96m %d\n\033[0m", numConfigs+startingNumber)
 		fmt.Println("╰─────────────────────────────────────────────╯")
 	}
@@ -5103,7 +5174,7 @@ func copy() {
 	}
 	defer sftpClient.Close()
 
-	file, err := os.Open("/root/rathole/rootCA.crt") 
+	file, err := os.Open("/root/rathole/rootCA.crt")
 	if err != nil {
 		log.Fatalf("\033[91mThere is no rootCA key in your dir:\033[0m %v", err)
 	}
@@ -5135,7 +5206,7 @@ func ws4Menu() {
 		Message: "Enter your choice Please:",
 		Options: []string{"1. \033[92mIRAN\033[0m", "2. \033[93mKHAREJ\033[92m[1]\033[0m", "3. \033[93mKHAREJ\033[92m[2]\033[0m", "4. \033[93mKHAREJ\033[92m[3]\033[0m", "5. \033[93mKHAREJ\033[92m[4]\033[0m", "6. \033[93mKHAREJ\033[92m[5]\033[0m", "0. \033[94mBack to the main menu\033[0m"},
 	}
-    
+
 	var choice string
 	err := survey.AskOne(prompt, &choice)
 	if err != nil {
@@ -5149,14 +5220,14 @@ func ws4Menu() {
 		kharejWs4()
 	case "3. \033[93mKHAREJ\033[92m[2]\033[0m":
 		kharej2Ws4()
-    case "4. \033[93mKHAREJ\033[92m[3]\033[0m":
+	case "4. \033[93mKHAREJ\033[92m[3]\033[0m":
 		kharej2Ws4()
 	case "5. \033[93mKHAREJ\033[92m[4]\033[0m":
 		kharej2Ws4()
 	case "6. \033[93mKHAREJ\033[92m[5]\033[0m":
 		kharej2Ws4()
 	case "0. \033[94mBack to the main menu\033[0m":
-	    clearScreen()
+		clearScreen()
 		mainMenu()
 	default:
 		fmt.Println("\033[91mInvalid choice\033[0m")
@@ -5176,7 +5247,7 @@ func iranWs4M() {
 		Message: "Enter your choice Please:",
 		Options: []string{"1. \033[92mIRAN Config \033[96m[Method 1]\033[0m", "2. \033[92mIRAN Config \033[96m[Method 2]\033[0m", "3. \033[93mCopy Cert\033[0m", "0. \033[94mBack to the previous menu\033[0m"},
 	}
-    
+
 	var choice string
 	err := survey.AskOne(prompt, &choice)
 	if err != nil {
@@ -5187,11 +5258,11 @@ func iranWs4M() {
 	case "1. \033[92mIRAN Config \033[96m[Method 1]\033[0m":
 		iranWs4()
 	case "2. \033[92mIRAN Config \033[96m[Method 2]\033[0m":
-		iranWs42()	
+		iranWs42()
 	case "3. \033[93mCopy Cert\033[0m":
 		copy()
 	case "0. \033[94mBack to the previous menu\033[0m":
-	    clearScreen()
+		clearScreen()
 		ws4Menu()
 	default:
 		fmt.Println("\033[91mInvalid choice\033[0m")
@@ -5322,14 +5393,13 @@ WantedBy=multi-user.target`
 		return
 	}
 
-	
 	cmd = exec.Command("sudo", "chmod", "u+x", "/etc/systemd/system/iran-azumi.service")
 	err = cmd.Run()
 	if err != nil {
 		fmt.Println("\033[91merror enablin da service:\033[0m", err)
 		return
 	}
-	
+
 	cmd = exec.Command("systemctl", "enable", "iran-azumi")
 	err = cmd.Run()
 	if err != nil {
@@ -5343,7 +5413,7 @@ WantedBy=multi-user.target`
 		fmt.Println("\033[91merror restarting da service:\033[0m", err)
 		return
 	}
-    enableResetIran()
+	enableResetIran()
 	displayCheckmark("\033[92mService created successfully!\033[0m")
 }
 func iranWs42() {
@@ -5488,7 +5558,7 @@ WantedBy=multi-user.target`
 		fmt.Println("\033[91merror restarting da service:\033[0m", err)
 		return
 	}
-    enableResetIran()
+	enableResetIran()
 	displayCheckmark("\033[92mService created successfully!\033[0m")
 }
 func kharejWs4() {
@@ -5629,7 +5699,7 @@ WantedBy=multi-user.target`
 		fmt.Println("\033[91merror enablin da service:\033[0m", err)
 		return
 	}
-	
+
 	cmd = exec.Command("systemctl", "enable", "kharej-azumi")
 	err = cmd.Run()
 	if err != nil {
@@ -5787,7 +5857,7 @@ WantedBy=multi-user.target`
 		fmt.Println("\033[91merror enablin da service:\033[0m", err)
 		return
 	}
-	
+
 	cmd = exec.Command("systemctl", "enable", "kharej-azumi")
 	err = cmd.Run()
 	if err != nil {
@@ -5804,11 +5874,11 @@ WantedBy=multi-user.target`
 	enableResetKharej()
 	displayCheckmark("\033[92mService created successfully!\033[0m")
 	if numConfigs == 1 {
-	    fmt.Println("╭─────────────────────────────────────────────╮")
+		fmt.Println("╭─────────────────────────────────────────────╮")
 		fmt.Printf("\033[92m  Starting number for the next server:\033[96m %d\n\033[0m", startingNumber+1)
 		fmt.Println("╰─────────────────────────────────────────────╯")
 	} else {
-	    fmt.Println("╭─────────────────────────────────────────────╮")
+		fmt.Println("╭─────────────────────────────────────────────╮")
 		fmt.Printf("\033[92m  Starting number for the next server:\033[96m %d\n\033[0m", numConfigs+startingNumber)
 		fmt.Println("╰─────────────────────────────────────────────╯")
 	}
@@ -5825,7 +5895,7 @@ func ws6Menu() {
 		Message: "Enter your choice Please:",
 		Options: []string{"1. \033[92mIRAN\033[0m", "2. \033[93mKHAREJ\033[92m[1]\033[0m", "3. \033[93mKHAREJ\033[92m[2]\033[0m", "4. \033[93mKHAREJ\033[92m[3]\033[0m", "5. \033[93mKHAREJ\033[92m[4]\033[0m", "6. \033[93mKHAREJ\033[92m[5]\033[0m", "0. \033[94mBack to the main menu\033[0m"},
 	}
-    
+
 	var choice string
 	err := survey.AskOne(prompt, &choice)
 	if err != nil {
@@ -5839,14 +5909,14 @@ func ws6Menu() {
 		kharejWs6()
 	case "3. \033[93mKHAREJ\033[92m[2]\033[0m":
 		kharej2Ws6()
-    case "4. \033[93mKHAREJ\033[92m[3]\033[0m":
+	case "4. \033[93mKHAREJ\033[92m[3]\033[0m":
 		kharej2Ws6()
 	case "5. \033[93mKHAREJ\033[92m[4]\033[0m":
 		kharej2Ws6()
 	case "6. \033[93mKHAREJ\033[92m[5]\033[0m":
 		kharej2Ws6()
 	case "0. \033[94mBack to the main menu\033[0m":
-	    clearScreen()
+		clearScreen()
 		mainMenu()
 	default:
 		fmt.Println("\033[91mInvalid choice\033[0m")
@@ -5866,7 +5936,7 @@ func iranWs6M() {
 		Message: "Enter your choice Please:",
 		Options: []string{"1. \033[92mIRAN Config \033[96m[Method 1]\033[0m", "2. \033[92mIRAN Config \033[96m[Method 2]\033[0m", "3. \033[93mCopy Cert\033[0m", "0. \033[94mBack to the previous menu\033[0m"},
 	}
-    
+
 	var choice string
 	err := survey.AskOne(prompt, &choice)
 	if err != nil {
@@ -5881,7 +5951,7 @@ func iranWs6M() {
 	case "3. \033[93mCopy Cert\033[0m":
 		copy()
 	case "0. \033[94mBack to the previous menu\033[0m":
-	    clearScreen()
+		clearScreen()
 		ws4Menu()
 	default:
 		fmt.Println("\033[91mInvalid choice\033[0m")
@@ -6018,7 +6088,7 @@ WantedBy=multi-user.target`
 		fmt.Println("\033[91merror enablin da service:\033[0m", err)
 		return
 	}
-	
+
 	cmd = exec.Command("systemctl", "enable", "iran-azumi")
 	err = cmd.Run()
 	if err != nil {
@@ -6032,7 +6102,7 @@ WantedBy=multi-user.target`
 		fmt.Println("\033[91merror restarting da service:\033[0m", err)
 		return
 	}
-    enableResetIran()
+	enableResetIran()
 	displayCheckmark("\033[92mService created successfully!\033[0m")
 }
 func iranWs62() {
@@ -6164,7 +6234,7 @@ WantedBy=multi-user.target`
 		fmt.Println("\033[91merror enablin da service:\033[0m", err)
 		return
 	}
-	
+
 	cmd = exec.Command("systemctl", "enable", "iran-azumi")
 	err = cmd.Run()
 	if err != nil {
@@ -6178,7 +6248,7 @@ WantedBy=multi-user.target`
 		fmt.Println("\033[91merror restarting da service:\033[0m", err)
 		return
 	}
-    enableResetIran()
+	enableResetIran()
 	displayCheckmark("\033[92mService created successfully!\033[0m")
 }
 func kharejWs6() {
@@ -6319,7 +6389,7 @@ WantedBy=multi-user.target`
 		fmt.Println("\033[91merror enablin da service:\033[0m", err)
 		return
 	}
-	
+
 	cmd = exec.Command("systemctl", "enable", "kharej-azumi")
 	err = cmd.Run()
 	if err != nil {
@@ -6477,7 +6547,7 @@ WantedBy=multi-user.target`
 		fmt.Println("\033[91merror enablin da service:\033[0m", err)
 		return
 	}
-	
+
 	cmd = exec.Command("systemctl", "enable", "kharej-azumi")
 	err = cmd.Run()
 	if err != nil {
@@ -6494,16 +6564,17 @@ WantedBy=multi-user.target`
 	enableResetKharej()
 	displayCheckmark("\033[92mService created successfully!\033[0m")
 	if numConfigs == 1 {
-	    fmt.Println("╭─────────────────────────────────────────────╮")
+		fmt.Println("╭─────────────────────────────────────────────╮")
 		fmt.Printf("\033[92m  Starting number for the next server:\033[96m %d\n\033[0m", startingNumber+1)
-	    fmt.Println("╰─────────────────────────────────────────────╯")
+		fmt.Println("╰─────────────────────────────────────────────╯")
 	} else {
-	    fmt.Println("╭─────────────────────────────────────────────╮")
+		fmt.Println("╭─────────────────────────────────────────────╮")
 		fmt.Printf("\033[92m  Starting number for the next server:\033[96m %d\n\033[0m", numConfigs+startingNumber)
-	    fmt.Println("╰─────────────────────────────────────────────╯")
+		fmt.Println("╰─────────────────────────────────────────────╯")
 	}
 }
-//iran
+
+// iran
 func iran5Menu() {
 	clearScreen()
 	fmt.Println("\033[92m ^ ^\033[0m")
@@ -6514,13 +6585,11 @@ func iran5Menu() {
 
 	prompt := &survey.Select{
 		Message: "Enter your choice Please:",
-		Options: []string{"0. \033[91mSTATUS Menu\033[0m", "+. \033[93mEdit \033[92mResetTimer\033[0m", "1. \033[92mStop | Restart Service\033[0m", "2. \033[96mIPV4 \033[92mTCP \033[0m", "3. \033[93mIPV4 \033[92mUDP\033[0m", "4. \033[96mIPV6 \033[92mTCP\033[0m", "5. \033[93mIPV6 \033[92mUDP\033[0m", "6. \033[91mUninstall\033[0m",  "q. back to the previous menu"},
-			
+		Options: []string{"0. \033[91mSTATUS Menu\033[0m", "+. \033[93mEdit \033[92mResetTimer\033[0m", "1. \033[92mStop | Restart Service\033[0m", "2. \033[96mIPV4 \033[92mTCP \033[0m", "3. \033[93mIPV4 \033[92mUDP\033[0m", "4. \033[96mIPV6 \033[92mTCP\033[0m", "5. \033[93mIPV6 \033[92mUDP\033[0m", "6. \033[91mUninstall\033[0m", "q. back to the previous menu"},
 	}
-		
 
 	var choice string
-	var err error 
+	var err error
 	err = survey.AskOne(prompt, &choice)
 	if err != nil {
 		log.Fatalf("\033[91muser input is wrong:\033[0m %v", err)
@@ -6563,7 +6632,7 @@ func tcp4Menu2() {
 		Message: "Enter your choice Please:",
 		Options: []string{"1. \033[92mKHAREJ\033[0m", "2. \033[93mIRAN\033[92m[1]\033[0m", "3. \033[93mIRAN\033[92m[2]\033[0m", "4. \033[93mIRAN\033[92m[3]\033[0m", "5. \033[93mIRAN\033[92m[4]\033[0m", "6. \033[93mIRAN\033[92m[5]\033[0m", "q. \033[94mBack to the previous menu\033[0m"},
 	}
-		
+
 	var choice string
 	err := survey.AskOne(prompt, &choice)
 	if err != nil {
@@ -6649,7 +6718,7 @@ keepalive_secs = 10
 keepalive_interval = 5
 	
 `, tunnelPort, defaultToken, nodelay)
-	
+
 	for i := 0; i < numConfigs; i++ {
 		config := fmt.Sprintf(`[server.services.kharej%d]
 type = "tcp"
@@ -6750,17 +6819,17 @@ func kharejTcp42() {
 	displayNotification("Configuring KHAREJ")
 	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
 	scanner := bufio.NewScanner(os.Stdin)
-	
+
 	fmt.Print("\033[93mHow many \033[92mIRAN Servers\033[93m do you have?\033[0m ")
 	scanner.Scan()
 	numServersStr := scanner.Text()
-	
+
 	numServers, err := strconv.Atoi(numServersStr)
 	if err != nil || numServers < 1 {
 		fmt.Println("\033[91mPlz enter a valid number (minimum 1).\033[0m")
 		return
 	}
-	
+
 	serverConfigs := make([]string, numServers)
 	for i := 0; i < numServers; i++ {
 		fmt.Println("\033[93m───────────────────────────────────────\033[0m")
@@ -6778,26 +6847,24 @@ func kharejTcp42() {
 		fmt.Printf("\033[93mEnter \033[92mTunnel port\033[93m for server %d:\033[0m ", i+1)
 		scanner.Scan()
 		tunnelPort := scanner.Text()
-	
 
-	
 		fmt.Printf("\033[93mHow many \033[92mConfigs\033[93m do you have for server %d?\033[0m ", i+1)
 		scanner.Scan()
 		numConfigsStr := scanner.Text()
-	
+
 		numConfigs, err := strconv.Atoi(numConfigsStr)
 		if err != nil {
 			fmt.Println("\033[91mPlz enter a valid number\033[0m")
 			return
 		}
-	
+
 		kharejPorts := make([]string, numConfigs+1)
 		for j := 1; j <= numConfigs; j++ {
 			fmt.Printf("\033[93mEnter \033[92mconfig %d\033[93m port for server %d:\033[0m ", j, i+1)
 			scanner.Scan()
 			kharejPorts[j-1] = scanner.Text()
 		}
-	
+
 		fmt.Printf("\033[93mDo you want nodelay enabled for server %d? (\033[92my/\033[91mn\033[93m): \033[0m", i+1)
 		scanner.Scan()
 		nodelayOp := scanner.Text()
@@ -6805,7 +6872,7 @@ func kharejTcp42() {
 		if strings.ToLower(nodelayOp) == "y" {
 			nodelay = "true"
 		}
-	
+
 		config := ""
 		for j := 1; j <= numConfigs; j++ {
 			config += fmt.Sprintf(`[client.services.kharej%d]
@@ -6869,74 +6936,74 @@ ExecStart=/root/rathole/./rathole /root/rathole/%s
 [Install]
 WantedBy=multi-user.target
 		`, i+1, clientFilename)
-			 
-	serviceFilename := fmt.Sprintf("kharej-azumi%d.service", i+1)
-	serviceFilePath := fmt.Sprintf("/etc/systemd/system/%s", serviceFilename)
 
-	err = os.Remove(serviceFilePath)
-	if err != nil && !os.IsNotExist(err) {
-		fmt.Println("\033[91mError deleting kharej-azumi:\033[0m", err)
-		return
+		serviceFilename := fmt.Sprintf("kharej-azumi%d.service", i+1)
+		serviceFilePath := fmt.Sprintf("/etc/systemd/system/%s", serviceFilename)
+
+		err = os.Remove(serviceFilePath)
+		if err != nil && !os.IsNotExist(err) {
+			fmt.Println("\033[91mError deleting kharej-azumi:\033[0m", err)
+			return
+		}
+
+		serviceFile, err := os.Create(serviceFilePath)
+		if err != nil {
+			fmt.Println("\033[91mError creating kharej-azumi:\033[0m", err)
+			return
+		}
+		defer serviceFile.Close()
+
+		_, err = serviceFile.WriteString(service)
+		if err != nil {
+			fmt.Println("\033[91mError constructing kharej-azumi:\033[0m", err)
+			return
+		}
+
+		cmd := exec.Command("systemctl", "daemon-reload")
+		err = cmd.Run()
+		if err != nil {
+			fmt.Println("\033[91merror reloading:\033[0m", err)
+			return
+		}
+
+		cmd = exec.Command("sudo", "chmod", "u+x", serviceFilePath)
+		err = cmd.Run()
+		if err != nil {
+			fmt.Println("\033[91merror enabling da service:\033[0m", err)
+			return
+		}
+
+		cmd = exec.Command("systemctl", "enable", serviceFilename)
+		err = cmd.Run()
+		if err != nil {
+			fmt.Println("\033[91merror enabling da service:\033[0m", err)
+			return
+		}
+
+		cmd = exec.Command("systemctl", "restart", serviceFilename)
+		err = cmd.Run()
+		if err != nil {
+			fmt.Println("\033[91merror restarting da service:\033[0m", err)
+			return
+		}
+
+		displayCheckmark("\033[92mService created successfully!\033[0m")
 	}
 
-	serviceFile, err := os.Create(serviceFilePath)
-	if err != nil {
-		fmt.Println("\033[91mError creating kharej-azumi:\033[0m", err)
-		return
-	}
-	defer serviceFile.Close()
-
-	_, err = serviceFile.WriteString(service)
-	if err != nil {
-		fmt.Println("\033[91mError constructing kharej-azumi:\033[0m", err)
-		return
-	}
-
-	cmd := exec.Command("systemctl", "daemon-reload")
-	err = cmd.Run()
-	if err != nil {
-		fmt.Println("\033[91merror reloading:\033[0m", err)
-		return
-	}
-
-	cmd = exec.Command("sudo", "chmod", "u+x", serviceFilePath)
-	err = cmd.Run()
-	if err != nil {
-		fmt.Println("\033[91merror enabling da service:\033[0m", err)
-		return
-	}
-
-	cmd = exec.Command("systemctl", "enable", serviceFilename)
-	err = cmd.Run()
-	if err != nil {
-		fmt.Println("\033[91merror enabling da service:\033[0m", err)
-		return
-	}
-
-	cmd = exec.Command("systemctl", "restart", serviceFilename)
-	err = cmd.Run()
-	if err != nil {
-		fmt.Println("\033[91merror restarting da service:\033[0m", err)
-		return
-	}
-						
-	displayCheckmark("\033[92mService created successfully!\033[0m")
-	}
-		
 	enableResetKharej1()
 }
 func resKharejz() {
 	deleteCron()
 	ratName := "/etc/rat.sh"
-	
+
 	file, err := os.Create(ratName)
 	if err != nil {
 		log.Fatalf("\033[91mbash creation error:\033[0m %v", err)
 	}
 	defer file.Close()
-	
+
 	file.WriteString("#!/bin/bash\n")
-	
+
 	fmt.Println("╭──────────────────────────────────────╮")
 	reader := bufio.NewReader(os.Stdin)
 	fmt.Print("\033[93mEnter the number of Iran servers:\033[0m ")
@@ -6946,23 +7013,23 @@ func resKharejz() {
 	}
 	serverNumberStr = strings.TrimSpace(serverNumberStr)
 	fmt.Println("╰──────────────────────────────────────╯")
-	
+
 	serverNumber, err := strconv.Atoi(serverNumberStr)
 	if err != nil || serverNumber <= 0 {
 		log.Fatalf("\033[91mInvalid input for da number of Iranian servers:\033[0m %v", err)
 	}
-	
+
 	for i := 1; i <= serverNumber; i++ {
 		file.WriteString(fmt.Sprintf("sudo systemctl restart kharej-azumi%d\n", i))
 	}
-	
+
 	file.WriteString("sudo journalctl --vacuum-size=1M\n")
-	
+
 	cmd := exec.Command("chmod", "+x", ratName)
 	if err := cmd.Run(); err != nil {
 		log.Fatalf("\033[91mchmod cmd error:\033[0m %v", err)
 	}
-	
+
 	fmt.Println("╭──────────────────────────────────────╮")
 	fmt.Print("\033[93mEnter Reset timer (hours):\033[0m ")
 	hoursStr, err := reader.ReadString('\n')
@@ -6971,25 +7038,25 @@ func resKharejz() {
 	}
 	hoursStr = strings.TrimSpace(hoursStr)
 	fmt.Println("╰──────────────────────────────────────╯")
-	
+
 	hours, err := strconv.Atoi(hoursStr)
 	if err != nil {
 		log.Fatalf("\033[91mInvalid input for reset timer:\033[0m %v", err)
 	}
-	
+
 	var cronInput string
 	if hours == 1 {
 		cronInput = fmt.Sprintf("0 * * * * %s", ratName)
 	} else if hours >= 2 {
 		cronInput = fmt.Sprintf("0 */%d * * * %s", hours, ratName)
 	}
-	
+
 	crontabFile, err := os.OpenFile(crontabFilePath, os.O_RDWR|os.O_CREATE, 0644)
 	if err != nil {
 		log.Fatalf("\033[91mCouldn't open Cron:\033[0m %v", err)
 	}
 	defer crontabFile.Close()
-	
+
 	var crontabContent strings.Builder
 	scanner := bufio.NewScanner(crontabFile)
 	entryExists := false
@@ -7002,28 +7069,28 @@ func resKharejz() {
 		crontabContent.WriteString(line)
 		crontabContent.WriteString("\n")
 	}
-	
+
 	if !entryExists {
 		crontabContent.WriteString(cronInput)
 		crontabContent.WriteString("\n")
 	}
-	
+
 	if err := scanner.Err(); err != nil {
 		log.Fatalf("\033[91mcrontab Reading error:\033[0m %v", err)
 	}
-	
+
 	if err := crontabFile.Truncate(0); err != nil {
 		log.Fatalf("\033[91mcouldn't truncate cron file:\033[0m %v", err)
 	}
-	
+
 	if _, err := crontabFile.Seek(0, 0); err != nil {
 		log.Fatalf("\033[91mcouldn't find cron file: \033[0m%v", err)
 	}
-	
+
 	if _, err := crontabFile.WriteString(crontabContent.String()); err != nil {
 		log.Fatalf("\033[91mCouldn't write cron file:\033[0m %v", err)
 	}
-	
+
 	fmt.Println("\033[92mCron entry added successfully!\033[0m")
 }
 func tcp6Menu2() {
@@ -7038,7 +7105,7 @@ func tcp6Menu2() {
 		Message: "Enter your choice Please:",
 		Options: []string{"1. \033[92mKHAREJ\033[0m", "2. \033[93mIRAN\033[92m[1]\033[0m", "3. \033[93mIRAN\033[92m[2]\033[0m", "4. \033[93mIRAN\033[92m[3]\033[0m", "5. \033[93mIRAN\033[92m[4]\033[0m", "6. \033[93mIRAN\033[92m[5]\033[0m", "q. \033[94mBack to the previous menu\033[0m"},
 	}
-		
+
 	var choice string
 	err := survey.AskOne(prompt, &choice)
 	if err != nil {
@@ -7123,7 +7190,7 @@ keepalive_secs = 10
 keepalive_interval = 5
 	
 `, tunnelPort, defaultToken, nodelay)
-	
+
 	for i := 0; i < numConfigs; i++ {
 		config := fmt.Sprintf(`[server.services.kharej%d]
 type = "tcp"
@@ -7340,60 +7407,60 @@ ExecStart=/root/rathole/./rathole /root/rathole/%s
 [Install]
 WantedBy=multi-user.target
 		`, i+1, clientFilename)
-			
-	serviceFilename := fmt.Sprintf("kharej-azumi%d.service", i+1)
-	serviceFilePath := fmt.Sprintf("/etc/systemd/system/%s", serviceFilename)
-	
-	err = os.Remove(serviceFilePath)
-	if err != nil && !os.IsNotExist(err) {
-		fmt.Println("\033[91mError deleting kharej-azumi:\033[0m", err)
-		return
+
+		serviceFilename := fmt.Sprintf("kharej-azumi%d.service", i+1)
+		serviceFilePath := fmt.Sprintf("/etc/systemd/system/%s", serviceFilename)
+
+		err = os.Remove(serviceFilePath)
+		if err != nil && !os.IsNotExist(err) {
+			fmt.Println("\033[91mError deleting kharej-azumi:\033[0m", err)
+			return
+		}
+
+		serviceFile, err := os.Create(serviceFilePath)
+		if err != nil {
+			fmt.Println("\033[91mError creating kharej-azumi:\033[0m", err)
+			return
+		}
+		defer serviceFile.Close()
+
+		_, err = serviceFile.WriteString(service)
+		if err != nil {
+			fmt.Println("\033[91mError constructing kharej-azumi:\033[0m", err)
+			return
+		}
+
+		cmd := exec.Command("systemctl", "daemon-reload")
+		err = cmd.Run()
+		if err != nil {
+			fmt.Println("\033[91merror reloading:\033[0m", err)
+			return
+		}
+
+		cmd = exec.Command("sudo", "chmod", "u+x", serviceFilePath)
+		err = cmd.Run()
+		if err != nil {
+			fmt.Println("\033[91merror enabling da service:\033[0m", err)
+			return
+		}
+
+		cmd = exec.Command("systemctl", "enable", serviceFilename)
+		err = cmd.Run()
+		if err != nil {
+			fmt.Println("\033[91merror enabling da service:\033[0m", err)
+			return
+		}
+
+		cmd = exec.Command("systemctl", "restart", serviceFilename)
+		err = cmd.Run()
+		if err != nil {
+			fmt.Println("\033[91merror restarting da service:\033[0m", err)
+			return
+		}
+
+		displayCheckmark("\033[92mService created successfully!\033[0m")
 	}
-	
-	serviceFile, err := os.Create(serviceFilePath)
-	if err != nil {
-		fmt.Println("\033[91mError creating kharej-azumi:\033[0m", err)
-		return
-	}
-	defer serviceFile.Close()
-	
-	_, err = serviceFile.WriteString(service)
-	if err != nil {
-		fmt.Println("\033[91mError constructing kharej-azumi:\033[0m", err)
-		return
-	}
-	
-	cmd := exec.Command("systemctl", "daemon-reload")
-	err = cmd.Run()
-	if err != nil {
-		fmt.Println("\033[91merror reloading:\033[0m", err)
-		return
-	}
-	
-	cmd = exec.Command("sudo", "chmod", "u+x", serviceFilePath)
-	err = cmd.Run()
-	if err != nil {
-		fmt.Println("\033[91merror enabling da service:\033[0m", err)
-		return
-	}
-	
-	cmd = exec.Command("systemctl", "enable", serviceFilename)
-	err = cmd.Run()
-	if err != nil {
-		fmt.Println("\033[91merror enabling da service:\033[0m", err)
-		return
-	}
-	
-	cmd = exec.Command("systemctl", "restart", serviceFilename)
-	err = cmd.Run()
-	if err != nil {
-		fmt.Println("\033[91merror restarting da service:\033[0m", err)
-		return
-	}
-							
-	displayCheckmark("\033[92mService created successfully!\033[0m")
-	}
-			
+
 	enableResetKharej1()
 }
 func udp4Menu2() {
@@ -7408,7 +7475,7 @@ func udp4Menu2() {
 		Message: "Enter your choice Please:",
 		Options: []string{"1. \033[92mKHAREJ\033[0m", "2. \033[93mIRAN\033[92m[1]\033[0m", "3. \033[93mIRAN\033[92m[2]\033[0m", "4. \033[93mIRAN\033[92m[3]\033[0m", "5. \033[93mIRAN\033[92m[4]\033[0m", "6. \033[93mIRAN\033[92m[5]\033[0m", "q. \033[94mBack to the previous menu\033[0m"},
 	}
-		
+
 	var choice string
 	err := survey.AskOne(prompt, &choice)
 	if err != nil {
@@ -7472,14 +7539,13 @@ func iranUdp42() {
 		kharejPorts[i] = scanner.Text()
 	}
 
-
 	server := fmt.Sprintf(`[server]
 bind_addr = "0.0.0.0:%s"
 default_token = "%s"
 	
 	
 `, tunnelPort, defaultToken)
-	
+
 	for i := 0; i < numConfigs; i++ {
 		config := fmt.Sprintf(`[server.services.kharej%d]
 type = "udp"
@@ -7625,7 +7691,6 @@ func kharejUdp42() {
 			kharejPorts[j-1] = scanner.Text()
 		}
 
-
 		configs := ""
 
 		for j := 0; j < numConfigs; j++ {
@@ -7679,60 +7744,60 @@ ExecStart=/root/rathole/./rathole /root/rathole/%s
 [Install]
 WantedBy=multi-user.target
 		`, i+1, clientFilename)
-			
-	serviceFilename := fmt.Sprintf("kharej-azumi%d.service", i+1)
-	serviceFilePath := fmt.Sprintf("/etc/systemd/system/%s", serviceFilename)
-		
-	err = os.Remove(serviceFilePath)
-	if err != nil && !os.IsNotExist(err) {
-		fmt.Println("\033[91mError deleting kharej-azumi:\033[0m", err)
-		return
+
+		serviceFilename := fmt.Sprintf("kharej-azumi%d.service", i+1)
+		serviceFilePath := fmt.Sprintf("/etc/systemd/system/%s", serviceFilename)
+
+		err = os.Remove(serviceFilePath)
+		if err != nil && !os.IsNotExist(err) {
+			fmt.Println("\033[91mError deleting kharej-azumi:\033[0m", err)
+			return
+		}
+
+		serviceFile, err := os.Create(serviceFilePath)
+		if err != nil {
+			fmt.Println("\033[91mError creating kharej-azumi:\033[0m", err)
+			return
+		}
+		defer serviceFile.Close()
+
+		_, err = serviceFile.WriteString(service)
+		if err != nil {
+			fmt.Println("\033[91mError constructing kharej-azumi:\033[0m", err)
+			return
+		}
+
+		cmd := exec.Command("systemctl", "daemon-reload")
+		err = cmd.Run()
+		if err != nil {
+			fmt.Println("\033[91merror reloading:\033[0m", err)
+			return
+		}
+
+		cmd = exec.Command("sudo", "chmod", "u+x", serviceFilePath)
+		err = cmd.Run()
+		if err != nil {
+			fmt.Println("\033[91merror enabling da service:\033[0m", err)
+			return
+		}
+
+		cmd = exec.Command("systemctl", "enable", serviceFilename)
+		err = cmd.Run()
+		if err != nil {
+			fmt.Println("\033[91merror enabling da service:\033[0m", err)
+			return
+		}
+
+		cmd = exec.Command("systemctl", "restart", serviceFilename)
+		err = cmd.Run()
+		if err != nil {
+			fmt.Println("\033[91merror restarting da service:\033[0m", err)
+			return
+		}
+
+		displayCheckmark("\033[92mService created successfully!\033[0m")
 	}
-		
-	serviceFile, err := os.Create(serviceFilePath)
-	if err != nil {
-		fmt.Println("\033[91mError creating kharej-azumi:\033[0m", err)
-		return
-	}
-	defer serviceFile.Close()
-		
-	_, err = serviceFile.WriteString(service)
-	if err != nil {
-		fmt.Println("\033[91mError constructing kharej-azumi:\033[0m", err)
-		return
-	}
-		
-	cmd := exec.Command("systemctl", "daemon-reload")
-	err = cmd.Run()
-	if err != nil {
-		fmt.Println("\033[91merror reloading:\033[0m", err)
-		return
-	}
-		
-	cmd = exec.Command("sudo", "chmod", "u+x", serviceFilePath)
-	err = cmd.Run()
-	if err != nil {
-		fmt.Println("\033[91merror enabling da service:\033[0m", err)
-		return
-	}
-		
-	cmd = exec.Command("systemctl", "enable", serviceFilename)
-	err = cmd.Run()
-	if err != nil {
-		fmt.Println("\033[91merror enabling da service:\033[0m", err)
-		return
-	}
-		
-	cmd = exec.Command("systemctl", "restart", serviceFilename)
-	err = cmd.Run()
-	if err != nil {
-		fmt.Println("\033[91merror restarting da service:\033[0m", err)
-		return
-	}
-								
-	displayCheckmark("\033[92mService created successfully!\033[0m")
-	}
-				
+
 	enableResetKharej1()
 }
 func udp6Menu2() {
@@ -7747,7 +7812,7 @@ func udp6Menu2() {
 		Message: "Enter your choice Please:",
 		Options: []string{"1. \033[92mKHAREJ\033[0m", "2. \033[93mIRAN\033[92m[1]\033[0m", "3. \033[93mIRAN\033[92m[2]\033[0m", "4. \033[93mIRAN\033[92m[3]\033[0m", "5. \033[93mIRAN\033[92m[4]\033[0m", "6. \033[93mIRAN\033[92m[5]\033[0m", "q. \033[94mBack to the previous menu\033[0m"},
 	}
-		
+
 	var choice string
 	err := survey.AskOne(prompt, &choice)
 	if err != nil {
@@ -7817,7 +7882,7 @@ default_token = "%s"
 	
 	
 `, tunnelPort, defaultToken)
-	
+
 	for i := 0; i < numConfigs; i++ {
 		config := fmt.Sprintf(`[server.services.kharej%d]
 type = "udp"
@@ -8018,58 +8083,58 @@ ExecStart=/root/rathole/./rathole /root/rathole/%s
 WantedBy=multi-user.target
 		`, i+1, clientFilename)
 
-	serviceFilename := fmt.Sprintf("kharej-azumi%d.service", i+1)
-	serviceFilePath := fmt.Sprintf("/etc/systemd/system/%s", serviceFilename)
-	
-	err = os.Remove(serviceFilePath)
-	if err != nil && !os.IsNotExist(err) {
-		fmt.Println("\033[91mError deleting kharej-azumi:\033[0m", err)
-		return
+		serviceFilename := fmt.Sprintf("kharej-azumi%d.service", i+1)
+		serviceFilePath := fmt.Sprintf("/etc/systemd/system/%s", serviceFilename)
+
+		err = os.Remove(serviceFilePath)
+		if err != nil && !os.IsNotExist(err) {
+			fmt.Println("\033[91mError deleting kharej-azumi:\033[0m", err)
+			return
+		}
+
+		serviceFile, err := os.Create(serviceFilePath)
+		if err != nil {
+			fmt.Println("\033[91mError creating kharej-azumi:\033[0m", err)
+			return
+		}
+		defer serviceFile.Close()
+
+		_, err = serviceFile.WriteString(service)
+		if err != nil {
+			fmt.Println("\033[91mError constructing kharej-azumi:\033[0m", err)
+			return
+		}
+
+		cmd := exec.Command("systemctl", "daemon-reload")
+		err = cmd.Run()
+		if err != nil {
+			fmt.Println("\033[91merror reloading:\033[0m", err)
+			return
+		}
+
+		cmd = exec.Command("sudo", "chmod", "u+x", serviceFilePath)
+		err = cmd.Run()
+		if err != nil {
+			fmt.Println("\033[91merror enabling da service:\033[0m", err)
+			return
+		}
+
+		cmd = exec.Command("systemctl", "enable", serviceFilename)
+		err = cmd.Run()
+		if err != nil {
+			fmt.Println("\033[91merror enabling da service:\033[0m", err)
+			return
+		}
+
+		cmd = exec.Command("systemctl", "restart", serviceFilename)
+		err = cmd.Run()
+		if err != nil {
+			fmt.Println("\033[91merror restarting da service:\033[0m", err)
+			return
+		}
+
+		displayCheckmark("\033[92mService created successfully!\033[0m")
 	}
-	
-	serviceFile, err := os.Create(serviceFilePath)
-	if err != nil {
-		fmt.Println("\033[91mError creating kharej-azumi:\033[0m", err)
-		return
-    }
-	defer serviceFile.Close()
-	
-	_, err = serviceFile.WriteString(service)
-	if err != nil {
-		fmt.Println("\033[91mError constructing kharej-azumi:\033[0m", err)
-		return
-	}
-	
-	cmd := exec.Command("systemctl", "daemon-reload")
-	err = cmd.Run()
-	if err != nil {
-		fmt.Println("\033[91merror reloading:\033[0m", err)
-		return
-	}
-	
-	cmd = exec.Command("sudo", "chmod", "u+x", serviceFilePath)
-	err = cmd.Run()
-	if err != nil {
-		fmt.Println("\033[91merror enabling da service:\033[0m", err)
-		return
-	}
-	
-	cmd = exec.Command("systemctl", "enable", serviceFilename)
-	err = cmd.Run()
-	if err != nil {
-		fmt.Println("\033[91merror enabling da service:\033[0m", err)
-		return
-	}
-	
-	cmd = exec.Command("systemctl", "restart", serviceFilename)
-	err = cmd.Run()
-	if err != nil {
-		fmt.Println("\033[91merror restarting da service:\033[0m", err)
-		return
-	}
-									
-	displayCheckmark("\033[92mService created successfully!\033[0m")
-    }  
 	enableResetKharej1()
 }
 func startMain2() {
@@ -8084,7 +8149,7 @@ func startMain2() {
 		Message: "Enter your choice Please:",
 		Options: []string{"1. \033[92mRestart\033[0m", "2. \033[93mStop \033[0m", "0. \033[94mBack to the previous menu\033[0m"},
 	}
-		
+
 	var choice string
 	err := survey.AskOne(prompt, &choice)
 	if err != nil {
@@ -8117,7 +8182,7 @@ func start2() {
 		Message: "Enter your choice Please:",
 		Options: []string{"1. \033[92mTCP | UDP \033[0m", "0. \033[94mBack to the previous menu\033[0m"},
 	}
-		
+
 	var choice string
 	err := survey.AskOne(prompt, &choice)
 	if err != nil {
@@ -8195,7 +8260,7 @@ func stop2() {
 		Message: "Enter your choice Please:",
 		Options: []string{"1. \033[92mTCP | UDP \033[0m", "0. \033[94mBack to the previous menu\033[0m"},
 	}
-		
+
 	var choice string
 	err := survey.AskOne(prompt, &choice)
 	if err != nil {

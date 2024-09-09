@@ -24,6 +24,308 @@ import (
 	"io"
 
 )
+func readInputs(reader *bufio.Reader) string {
+	input, _ := reader.ReadString('\n')
+	return strings.TrimSpace(input)
+}
+
+func enableResetKharej1() {
+	deleteCron()
+	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+	displayNotification("\033[93mQuestion time !\033[0m")
+	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+
+	reader := bufio.NewReader(os.Stdin)  
+	fmt.Print("\033[93mDo you want to enable/ \033[96mRathole \033[92mreset time\033[93m? (\033[92myes\033[93m/\033[91mno\033[93m): \033[0m")
+	enableReset := readInputs(reader)
+
+	if enableReset == "yes" || enableReset == "y" {
+		fmt.Println("\033[93m╭───────────────────────────────────────╮\033[0m")
+		fmt.Print("\033[93mEnter the number of \033[92mIRAN servers\033[93m:\033[0m ")
+		serverNumberStr := readInputs(reader)
+
+		serverNumber, err := strconv.Atoi(serverNumberStr)
+		if err != nil || serverNumber <= 0 {
+			fmt.Println("\033[91mInvalid input for the number of Iranian servers.\033[0m")
+			return
+		}
+		fmt.Println("\033[93m╰───────────────────────────────────────╯\033[0m")
+
+		fmt.Println("\033[93m╭───────────────────────────────────────╮\033[0m")
+		fmt.Println("1. \033[92mHour\033[0m")
+		fmt.Println("2. \033[93mMinute\033[0m")
+		fmt.Println("\033[93m╰───────────────────────────────────────╯\033[0m")
+
+		fmt.Print("\033[93mEnter your choice: \033[0m")
+		timeUnitChoice := readInputs(reader)
+
+		var timeUnit string
+		if timeUnitChoice == "1" {
+			timeUnit = "hour"
+		} else if timeUnitChoice == "2" {
+			timeUnit = "minute"
+		} else {
+			fmt.Println("\033[91mWrong choice\033[0m")
+			return
+		}
+
+		fmt.Print("\033[93mEnter the \033[92mdesired input\033[93m: \033[0m")
+		timeValue := readInputs(reader)
+		timeInt, err := strconv.Atoi(timeValue)
+		if err != nil || timeInt <= 0 {
+			fmt.Println("\033[91mInvalid input for time value\033[0m")
+			return
+		}
+
+		var intervalSeconds int
+		if timeUnit == "hour" {
+			intervalSeconds = timeInt * 3600
+		} else {
+			intervalSeconds = timeInt * 60
+		}
+
+		resetRatKharej1(intervalSeconds, serverNumber)
+		fmt.Println("\033[93m────────────────────────────────────────\033[0m")
+	} else {
+		fmt.Println("\033[91mReset was not enabled.\033[0m")
+	}
+}
+
+func resetRatKharej1(interval int, serverNumber int) {
+	for i := 1; i <= serverNumber; i++ {
+		daemonScriptPath := fmt.Sprintf("/usr/local/bin/rat_daemon%d.sh", i)
+		daemonScript := fmt.Sprintf("#!/bin/bash\nINTERVAL=%d\n\nwhile true; do\n    /bin/bash /etc/rat%d.sh\n    sleep $INTERVAL\n\ndone\n", interval, i)
+
+		err := os.WriteFile(daemonScriptPath, []byte(daemonScript), 0755)
+		if err != nil {
+			fmt.Printf("Error writing daemon script for server %d: %v\n", i, err)
+			return
+		}
+
+		exec.Command("chmod", "+x", daemonScriptPath).Run()
+
+		serviceContent := fmt.Sprintf(`[Unit]
+Description=Custom Daemon for kharej-azumi%d
+
+[Service]
+ExecStart=%s
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+`, i, daemonScriptPath)
+
+		servicePath := fmt.Sprintf("/etc/systemd/system/rat_reset%d.service", i)
+		err = os.WriteFile(servicePath, []byte(serviceContent), 0644)
+		if err != nil {
+			fmt.Printf("Error writing service file for server %d: %v\n", i, err)
+			return
+		}
+
+		resetScript := fmt.Sprintf("#!/bin/bash\nsudo systemctl restart kharej-azumi%d\nsudo journalctl --vacuum-size=1M\n", i)
+		resetScriptPath := fmt.Sprintf("/etc/rat%d.sh", i)
+
+		err = os.WriteFile(resetScriptPath, []byte(resetScript), 0755)
+		if err != nil {
+			fmt.Printf("Error writing reset script for server %d: %v\n", i, err)
+			return
+		}
+
+		exec.Command("chmod", "+x", resetScriptPath).Run()
+
+		exec.Command("systemctl", "daemon-reload").Run()
+		exec.Command("systemctl", "enable", fmt.Sprintf("rat_reset%d.service", i)).Run()
+		exec.Command("systemctl", "start", fmt.Sprintf("rat_reset%d.service", i)).Run()
+	}
+}
+
+func enableResetKharej() {
+	deleteCron()
+	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+	displayNotification("\033[93mQuestion time !\033[0m")
+	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+
+	reader := bufio.NewReader(os.Stdin)  
+	fmt.Print("\033[93mDo you want to enable/ \033[96mRathole \033[92mreset time\033[93m? (\033[92myes\033[93m/\033[91mno\033[93m): \033[0m")
+	enableReset := readInputs(reader)
+
+	if enableReset == "yes" || enableReset == "y" {
+		fmt.Println("\033[93m╭───────────────────────────────────────╮\033[0m")
+		fmt.Println("1. \033[92mHour\033[0m")
+		fmt.Println("2. \033[93mMinute\033[0m")
+		fmt.Println("\033[93m╰───────────────────────────────────────╯\033[0m")
+
+		fmt.Print("\033[93mEnter your choice: \033[0m")
+		timeUnitChoice := readInputs(reader)
+
+		var timeUnit string
+		if timeUnitChoice == "1" {
+			timeUnit = "hour"
+		} else if timeUnitChoice == "2" {
+			timeUnit = "minute"
+		} else {
+			fmt.Println("\033[91mWrong choice\033[0m")
+			return
+		}
+
+		fmt.Print("\033[93mEnter the \033[92mdesired input\033[93m: \033[0m")
+		timeValue := readInputs(reader)
+		timeInt, err := strconv.Atoi(timeValue)
+		if err != nil {
+			fmt.Println("\033[91mInvalid input for time value\033[0m")
+			return
+		}
+
+		var intervalSeconds int
+		if timeUnit == "hour" {
+			intervalSeconds = timeInt * 3600
+		} else {
+			intervalSeconds = timeInt * 60
+		}
+
+		resetRatKharej(intervalSeconds)
+		fmt.Println("\033[93m────────────────────────────────────────\033[0m")
+	}
+}
+
+func enableResetIran() {
+	deleteCron()
+	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+	displayNotification("\033[93mQuestion time !\033[0m")
+	fmt.Println("\033[93m───────────────────────────────────────\033[0m")
+
+	reader := bufio.NewReader(os.Stdin)  
+	fmt.Print("\033[93mDo you want to enable/ \033[96mRathole \033[92mreset time\033[93m? (\033[92myes\033[93m/\033[91mno\033[93m): \033[0m")
+	enableReset := readInputs(reader)
+
+	if enableReset == "yes" || enableReset == "y" {
+		fmt.Println("\033[93m╭───────────────────────────────────────╮\033[0m")
+		fmt.Println("1. \033[92mHour\033[0m")
+		fmt.Println("2. \033[93mMinute\033[0m")
+		fmt.Println("\033[93m╰───────────────────────────────────────╯\033[0m")
+
+		fmt.Print("\033[93mEnter your choice: \033[0m")
+		timeUnitChoice := readInputs(reader)
+
+		var timeUnit string
+		if timeUnitChoice == "1" {
+			timeUnit = "hour"
+		} else if timeUnitChoice == "2" {
+			timeUnit = "minute"
+		} else {
+			fmt.Println("\033[91mWrong choice\033[0m")
+			return
+		}
+
+		fmt.Print("\033[93mEnter the \033[92mdesired input\033[93m: \033[0m")
+		timeValue := readInputs(reader)
+		timeInt, err := strconv.Atoi(timeValue)
+		if err != nil {
+			fmt.Println("\033[91mInvalid input for time value\033[0m")
+			return
+		}
+
+		var intervalSeconds int
+		if timeUnit == "hour" {
+			intervalSeconds = timeInt * 3600
+		} else {
+			intervalSeconds = timeInt * 60
+		}
+
+		resetRatIran(intervalSeconds)
+		fmt.Println("\033[93m────────────────────────────────────────\033[0m")
+	}
+}
+
+func resetRatKharej(interval int) {
+	daemonScript := fmt.Sprintf("#!/bin/bash\nINTERVAL=%d\n\nwhile true; do\n    /bin/bash /etc/rat.sh\n    sleep $INTERVAL\n\n", interval)
+
+	err := os.WriteFile("/usr/local/bin/rat_daemon.sh", []byte(daemonScript), 0755)
+	if err != nil {
+		fmt.Println("Error writing daemon script:", err)
+		return
+	}
+
+	exec.Command("chmod", "+x", "/usr/local/bin/rat_daemon.sh").Run()
+
+	serviceContent := `[Unit]
+Description=Custom Daemon
+
+[Service]
+ExecStart=/usr/local/bin/rat_daemon.sh
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+`
+
+	err = os.WriteFile("/etc/systemd/system/rat_reset.service", []byte(serviceContent), 0644)
+	if err != nil {
+		fmt.Println("Error writing service file:", err)
+		return
+	}
+
+	ipsecScript := `#!/bin/bash
+systemctl daemon-reload
+sudo systemctl restart kharej-azumi
+sudo journalctl --vacuum-size=1M
+`
+	err = os.WriteFile("/etc/rat.sh", []byte(ipsecScript), 0755)
+	if err != nil {
+		fmt.Println("Error writing IPSec reset script:", err)
+		return
+	}
+
+	exec.Command("chmod", "+x", "/etc/rat.sh").Run()
+	exec.Command("systemctl", "daemon-reload").Run()
+	exec.Command("systemctl", "enable", "rat_reset.service").Run()
+	exec.Command("systemctl", "restart", "rat_reset.service").Run()
+}
+
+func resetRatIran(interval int) {
+	daemonScript := fmt.Sprintf("#!/bin/bash\nINTERVAL=%d\n\nwhile true; do\n    /bin/bash /etc/rat.sh\n    sleep $INTERVAL\n\n", interval)
+
+	err := os.WriteFile("/usr/local/bin/rat_daemon.sh", []byte(daemonScript), 0755)
+	if err != nil {
+		fmt.Println("Error writing daemon script:", err)
+		return
+	}
+
+	exec.Command("chmod", "+x", "/usr/local/bin/rat_daemon.sh").Run()
+
+	serviceContent := `[Unit]
+Description=Custom Daemon
+
+[Service]
+ExecStart=/usr/local/bin/rat_daemon.sh
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+`
+
+	err = os.WriteFile("/etc/systemd/system/rat_reset.service", []byte(serviceContent), 0644)
+	if err != nil {
+		fmt.Println("Error writing service file:", err)
+		return
+	}
+
+	ipsecScript := `#!/bin/bash
+systemctl daemon-reload
+sudo systemctl restart iran-azumi
+sudo journalctl --vacuum-size=1M
+`
+	err = os.WriteFile("/etc/rat.sh", []byte(ipsecScript), 0755)
+	if err != nil {
+		fmt.Println("Error writing IPSec reset script:", err)
+		return
+	}
+
+	exec.Command("chmod", "+x", "/etc/rat.sh").Run()
+	exec.Command("systemctl", "daemon-reload").Run()
+	exec.Command("systemctl", "enable", "rat_reset.service").Run()
+	exec.Command("systemctl", "restart", "rat_reset.service").Run()
+}
 func getIPv4() string {
 	interfaces, err := net.Interfaces()
 	if err != nil {
@@ -850,7 +1152,7 @@ WantedBy=multi-user.target`
 		return
 	}
 
-	resIran()
+	enableResetIran()
 	displayCheckmark("\033[92mService created successfully!\033[0m")
 }
 
@@ -1009,7 +1311,7 @@ WantedBy=multi-user.target`
 		fmt.Println("\033[91merror restarting da service:\033[0m", err)
 		return
 	}
-	resKharej()
+	enableResetKharej()
 	displayCheckmark("\033[92mService created successfully!\033[0m")
 	fmt.Println("╭─────────────────────────────────────────────╮")
 	fmt.Printf("\033[92m Starting number for the next server : \033[96m%-9d\n\033[0m", numConfigs+1)
@@ -1166,7 +1468,7 @@ WantedBy=multi-user.target`
 		fmt.Println("\033[91merror restarting da service:\033[0m", err)
 		return
 	}
-	resKharej()
+	enableResetKharej()
 	displayCheckmark("\033[92mService created successfully!\033[0m")
 	if numConfigs == 1 {
 	    fmt.Println("╭─────────────────────────────────────────────╮")
@@ -1382,7 +1684,7 @@ WantedBy=multi-user.target`
 		return
 	}
 
-	resIran()
+	enableResetIran()
 	displayCheckmark("\033[92mService created successfully!\033[0m")
 }
 
@@ -1539,7 +1841,7 @@ WantedBy=multi-user.target`
 		fmt.Println("\033[91merror restarting da service:\033[0m", err)
 		return
 	}
-	resKharej()
+	enableResetKharej()
 	displayCheckmark("\033[92mService created successfully!\033[0m")
 	fmt.Println("╭─────────────────────────────────────────────╮")
 	fmt.Printf("\033[92m Starting number for the next server : \033[96m%-9d\n\033[0m", numConfigs+1)
@@ -1696,7 +1998,7 @@ WantedBy=multi-user.target`
 		fmt.Println("\033[91merror restarting da service:\033[0m", err)
 		return
 	}
-	resKharej()
+	enableResetKharej()
 	displayCheckmark("\033[92mService created successfully!\033[0m")
 	if numConfigs == 1 {
 	    fmt.Println("╭─────────────────────────────────────────────╮")
@@ -2710,7 +3012,7 @@ WantedBy=multi-user.target`
 		fmt.Println("\033[91merror restarting da service:\033[0m", err)
 		return
 	}
-    resIran()
+    enableResetIran()
 	displayCheckmark("\033[92mService created successfully!\033[0m")
 }
 func kharejTcp4() {
@@ -2872,7 +3174,7 @@ WantedBy=multi-user.target`
 		fmt.Println("\033[91merror restarting da service:\033[0m", err)
 		return
 	}
-	resKharej()
+	enableResetKharej()
 	displayCheckmark("\033[92mService created successfully!\033[0m")
 	fmt.Println("╭─────────────────────────────────────────────╮")
 	fmt.Printf("\033[92m Starting number for the next server : \033[96m%-9d\n\033[0m", numConfigs+1)
@@ -3037,7 +3339,7 @@ WantedBy=multi-user.target`
 		fmt.Println("\033[91merror restarting da service:\033[0m", err)
 		return
 	}
-	resKharej()
+	enableResetKharej()
 	displayCheckmark("\033[92mService created successfully!\033[0m")
 	if numConfigs == 1 {
 	    fmt.Println("╭─────────────────────────────────────────────╮")
@@ -3230,7 +3532,7 @@ WantedBy=multi-user.target`
 		fmt.Println("\033[91merror restarting da service:\033[0m", err)
 		return
 	}
-    resIran()
+    enableResetIran()
 	displayCheckmark("\033[92mService created successfully!\033[0m")
 }
 func kharejUdp4() {
@@ -3379,7 +3681,7 @@ WantedBy=multi-user.target`
 		fmt.Println("\033[91merror restarting da service:\033[0m", err)
 		return
 	}
-	resKharej()
+	enableResetKharej()
 	displayCheckmark("\033[92mService created successfully!\033[0m")
 	fmt.Println("╭─────────────────────────────────────────────╮")
 	fmt.Printf("\033[92m Starting number for the next server : \033[96m%-9d\n\033[0m", numConfigs+1)
@@ -3531,7 +3833,7 @@ WantedBy=multi-user.target`
 		fmt.Println("\033[91merror restarting da service:\033[0m", err)
 		return
 	}
-	resKharej()
+	enableResetKharej()
 	displayCheckmark("\033[92mService created successfully!\033[0m")
 	if numConfigs == 1 {
 	    fmt.Println("╭─────────────────────────────────────────────╮")
@@ -3738,7 +4040,7 @@ WantedBy=multi-user.target`
 		fmt.Println("\033[91merror restarting da service:\033[0m", err)
 		return
 	}
-    resIran()
+    enableResetIran()
 	displayCheckmark("\033[92mService created successfully!\033[0m")
 }
 func kharejTcp6() {
@@ -3900,7 +4202,7 @@ WantedBy=multi-user.target`
 		fmt.Println("\033[91merror restarting da service:\033[0m", err)
 		return
 	}
-	resKharej()
+	enableResetKharej()
 	displayCheckmark("\033[92mService created successfully!\033[0m")
 	fmt.Println("╭─────────────────────────────────────────────╮")
 	fmt.Printf("\033[92m Starting number for the next server : \033[96m%-9d\n\033[0m", numConfigs+1)
@@ -4064,7 +4366,7 @@ WantedBy=multi-user.target`
 		fmt.Println("\033[91merror restarting da service:\033[0m", err)
 		return
 	}
-	resKharej()
+	enableResetKharej()
 	displayCheckmark("\033[92mService created successfully!\033[0m")
 	if numConfigs == 1 {
 	    fmt.Println("╭─────────────────────────────────────────────╮")
@@ -4256,7 +4558,7 @@ WantedBy=multi-user.target`
 		fmt.Println("\033[91merror restarting da service:\033[0m", err)
 		return
 	}
-    resIran()
+    enableResetIran()
 	displayCheckmark("\033[92mService created successfully!\033[0m")
 }
 func kharejUdp6() {
@@ -4403,7 +4705,7 @@ WantedBy=multi-user.target`
 		fmt.Println("\033[91merror restarting da service:\033[0m", err)
 		return
 	}
-	resKharej()
+	enableResetKharej()
 	displayCheckmark("\033[92mService created successfully!\033[0m")
 	fmt.Println("╭─────────────────────────────────────────────╮")
 	fmt.Printf("\033[92m Starting number for the next server : \033[96m%-9d\n\033[0m", numConfigs+1)
@@ -4554,7 +4856,7 @@ WantedBy=multi-user.target`
 		fmt.Println("\033[91merror restarting da service:\033[0m", err)
 		return
 	}
-	resKharej()
+	enableResetKharej()
 	displayCheckmark("\033[92mService created successfully!\033[0m")
 	if numConfigs == 1 {
 	    fmt.Println("╭─────────────────────────────────────────────╮")
@@ -5041,7 +5343,7 @@ WantedBy=multi-user.target`
 		fmt.Println("\033[91merror restarting da service:\033[0m", err)
 		return
 	}
-    resIran()
+    enableResetIran()
 	displayCheckmark("\033[92mService created successfully!\033[0m")
 }
 func iranWs42() {
@@ -5186,7 +5488,7 @@ WantedBy=multi-user.target`
 		fmt.Println("\033[91merror restarting da service:\033[0m", err)
 		return
 	}
-    resIran()
+    enableResetIran()
 	displayCheckmark("\033[92mService created successfully!\033[0m")
 }
 func kharejWs4() {
@@ -5341,7 +5643,7 @@ WantedBy=multi-user.target`
 		fmt.Println("\033[91merror restarting da service:\033[0m", err)
 		return
 	}
-	resKharej()
+	enableResetKharej()
 	displayCheckmark("\033[92mService created successfully!\033[0m")
 	fmt.Println("╭─────────────────────────────────────────────╮")
 	fmt.Printf("\033[92m Starting number for the next server : \033[96m%-9d\n\033[0m", numConfigs+1)
@@ -5499,7 +5801,7 @@ WantedBy=multi-user.target`
 		fmt.Println("\033[91merror restarting da service:\033[0m", err)
 		return
 	}
-	resKharej()
+	enableResetKharej()
 	displayCheckmark("\033[92mService created successfully!\033[0m")
 	if numConfigs == 1 {
 	    fmt.Println("╭─────────────────────────────────────────────╮")
@@ -5730,7 +6032,7 @@ WantedBy=multi-user.target`
 		fmt.Println("\033[91merror restarting da service:\033[0m", err)
 		return
 	}
-    resIran()
+    enableResetIran()
 	displayCheckmark("\033[92mService created successfully!\033[0m")
 }
 func iranWs62() {
@@ -5876,7 +6178,7 @@ WantedBy=multi-user.target`
 		fmt.Println("\033[91merror restarting da service:\033[0m", err)
 		return
 	}
-    resIran()
+    enableResetIran()
 	displayCheckmark("\033[92mService created successfully!\033[0m")
 }
 func kharejWs6() {
@@ -6031,7 +6333,7 @@ WantedBy=multi-user.target`
 		fmt.Println("\033[91merror restarting da service:\033[0m", err)
 		return
 	}
-	resKharej()
+	enableResetKharej()
 	displayCheckmark("\033[92mService created successfully!\033[0m")
 	fmt.Println("╭─────────────────────────────────────────────╮")
 	fmt.Printf("\033[92m Starting number for the next server : \033[96m%-9d\n\033[0m", numConfigs+1)
@@ -6189,7 +6491,7 @@ WantedBy=multi-user.target`
 		fmt.Println("\033[91merror restarting da service:\033[0m", err)
 		return
 	}
-	resKharej()
+	enableResetKharej()
 	displayCheckmark("\033[92mService created successfully!\033[0m")
 	if numConfigs == 1 {
 	    fmt.Println("╭─────────────────────────────────────────────╮")
@@ -6434,7 +6736,7 @@ WantedBy=multi-user.target`
 		fmt.Println("\033[91merror restarting da service:\033[0m", err)
 		return
 	}
-	resIran()
+	enableResetIran()
 	displayCheckmark("\033[92mService created successfully!\033[0m")
 }
 
@@ -6621,7 +6923,7 @@ WantedBy=multi-user.target
 	displayCheckmark("\033[92mService created successfully!\033[0m")
 	}
 		
-	resKharejz()
+	enableResetKharej1()
 }
 func resKharejz() {
 	deleteCron()
@@ -6908,7 +7210,7 @@ WantedBy=multi-user.target`
 		fmt.Println("\033[91merror restarting da service:\033[0m", err)
 		return
 	}
-	resIran()
+	enableResetIran()
 	displayCheckmark("\033[92mService created successfully!\033[0m")
 }
 func kharejTcp62() {
@@ -7092,7 +7394,7 @@ WantedBy=multi-user.target
 	displayCheckmark("\033[92mService created successfully!\033[0m")
 	}
 			
-	resKharejz()
+	enableResetKharej1()
 }
 func udp4Menu2() {
 	clearScreen()
@@ -7264,7 +7566,7 @@ WantedBy=multi-user.target`
 		fmt.Println("\033[91merror restarting da service:\033[0m", err)
 		return
 	}
-	resIran()
+	enableResetIran()
 	displayCheckmark("\033[92mService created successfully!\033[0m")
 }
 func kharejUdp42() {
@@ -7431,7 +7733,7 @@ WantedBy=multi-user.target
 	displayCheckmark("\033[92mService created successfully!\033[0m")
 	}
 				
-	resKharejz()
+	enableResetKharej1()
 }
 func udp6Menu2() {
 	clearScreen()
@@ -7602,7 +7904,7 @@ WantedBy=multi-user.target`
 		fmt.Println("\033[91merror restarting da service:\033[0m", err)
 		return
 	}
-	resIran()
+	enableResetIran()
 	displayCheckmark("\033[92mService created successfully!\033[0m")
 }
 func kharejUdp62() {
@@ -7768,7 +8070,7 @@ WantedBy=multi-user.target
 									
 	displayCheckmark("\033[92mService created successfully!\033[0m")
     }  
-	resKharejz()
+	enableResetKharej1()
 }
 func startMain2() {
 	clearScreen()

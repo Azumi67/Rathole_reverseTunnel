@@ -239,7 +239,14 @@ func enableResetIran() {
 }
 
 func resetRatKharej(interval int) {
-	daemonScript := fmt.Sprintf("#!/bin/bash\nINTERVAL=%d\n\nwhile true; do\n    /bin/bash /etc/rat.sh\n    sleep $INTERVAL\n\n", interval)
+	daemonScript := fmt.Sprintf(`#!/bin/bash
+INTERVAL=%d
+
+while true; do
+    /bin/bash /etc/rat.sh
+    sleep $INTERVAL
+done
+`, interval)
 
 	err := os.WriteFile("/usr/local/bin/rat_daemon.sh", []byte(daemonScript), 0755)
 	if err != nil {
@@ -284,7 +291,14 @@ sudo journalctl --vacuum-size=1M
 }
 
 func resetRatIran(interval int) {
-	daemonScript := fmt.Sprintf("#!/bin/bash\nINTERVAL=%d\n\nwhile true; do\n    /bin/bash /etc/rat.sh\n    sleep $INTERVAL\n\n", interval)
+	daemonScript := fmt.Sprintf(`#!/bin/bash
+INTERVAL=%d
+
+while true; do
+    /bin/bash /etc/rat.sh
+    sleep $INTERVAL
+done
+`, interval)
 
 	err := os.WriteFile("/usr/local/bin/rat_daemon.sh", []byte(daemonScript), 0755)
 	if err != nil {
